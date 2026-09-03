@@ -1,0 +1,16 @@
+
+/* MyShort Premium Gold Brand */
+.sp-brand{display:flex;align-items:center;justify-content:center;gap:11px;margin:0 auto 10px;position:relative;z-index:2}
+.sp-logo{width:52px;height:52px;display:block;object-fit:cover;border-radius:15px;border:1px solid rgba(243,201,95,.78);box-shadow:0 0 0 4px rgba(243,201,95,.035),0 10px 28px rgba(0,0,0,.32);background:#17130b}
+.sp-brand-text{text-align:left;line-height:1.05}
+.sp-brand-text strong{display:block;color:#f7f7f7;font-size:17px;font-weight:800;letter-spacing:-.2px}
+.sp-brand-text small{display:block;color:#9b9da5;font-size:10px;margin-top:5px}
+.sp-page-brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.sp-page-brand .sp-logo{width:40px;height:40px;border-radius:12px}
+.sp-page-brand strong{color:#ffe7a0;font-size:15px}
+.sp-page-brand small{display:block;color:#888c94;font-size:9px;margin-top:3px}
+.sp-header-brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
+.sp-header-brand .sp-logo{width:40px;height:40px;border-radius:12px}
+.sp-header-brand strong{display:block;color:#ffe7a0;font-size:14px}
+.sp-header-brand small{display:block;color:#888c94;font-size:9px;margin-top:3px}
+@media(max-width:420px){.sp-logo{width:48px;height:48px}.sp-brand-text strong{font-size:16px}}

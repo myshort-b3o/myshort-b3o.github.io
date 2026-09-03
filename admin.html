@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090b">
+<title>MyShort App - Admin Panel</title>
+<style>
+*{box-sizing:border-box}:root{--g:#e8bd58;--g2:#ffe39a;--bg:#08090b;--red:#ffaaa0;--ok:#9ce5b2}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 50% -8%,#4a3611 0,#17171a 23%,#08090b 63%);color:#f5f5f5}
+body{padding-bottom:30px}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;background-image:radial-gradient(#e8bd58 .55px,transparent .55px);background-size:20px 20px}
+.app{position:relative;z-index:1;max-width:1250px;margin:auto}.head{padding:20px 18px 22px;background:linear-gradient(145deg,#1d1e22,#0c0d10);border-bottom:1px solid #4b3b1b;border-radius:0 0 28px 28px}
+.brand{display:flex;gap:11px;align-items:center}.logo{width:48px;height:48px;border:1px solid var(--g);border-radius:14px;display:grid;place-items:center;color:var(--g2);font-weight:900;background:#0d0e10}.logo .sp-logo{width:100%;height:100%;object-fit:cover;border:0;box-shadow:none;border-radius:inherit}.brand b{font-size:18px}.brand small{display:block;color:#777;font-size:9px;margin-top:3px}
+.headrow{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:20px}.head h1{margin:0;font-size:25px}.head p{margin:6px 0 0;color:#888;font-size:10px}
+.adminbox{border:1px solid #624c1b;background:#111216;border-radius:14px;padding:9px 12px;text-align:right;min-width:190px}.adminbox small{display:block;color:#777;font-size:8px}.adminbox b{display:block;color:var(--g2);font-size:10px;margin-top:3px;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.wrap{padding:16px}.msg{display:none;padding:11px 13px;border-radius:12px;margin-bottom:12px;font-size:10px}.err{background:#211312;border:1px solid #703a34;color:var(--red)}.ok{background:#102018;border:1px solid #315d40;color:var(--ok)}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.stat{background:linear-gradient(145deg,#1a1c20,#111317);border:1px solid #332a18;border-radius:16px;padding:13px;box-shadow:0 9px 24px #0007}.stat span{display:block;color:#888;font-size:8px}.stat b{display:block;color:var(--g2);font-size:18px;margin-top:6px;white-space:nowrap}
+.tabs{display:flex;gap:7px;overflow:auto;margin:17px 0 12px}.tabs button{white-space:nowrap;border:1px solid #2b2d32;background:#15171b;color:#8a8c92;border-radius:22px;padding:10px 13px;font-size:9px}.tabs button.active{background:#2a2110;color:var(--g2);border-color:#6b531e}
+.panel{display:none;background:linear-gradient(145deg,#17191d,#101114);border:1px solid #302a1d;border-radius:20px;overflow:hidden;box-shadow:0 12px 32px #0008}.panel.active{display:block}
+.ph{padding:14px 15px;border-bottom:1px solid #292a2e;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.ph h2{margin:0;font-size:15px}.ph p{margin:4px 0 0;color:#777;font-size:8px}.tools{display:flex;gap:6px;flex-wrap:wrap}
+.search,.filter{background:#0d0f12;color:#eee;border:1px solid #33363b;border-radius:9px;padding:9px;font-size:9px;outline:none}.search{min-width:200px}.search:focus,.filter:focus{border-color:#806323}
+.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:10px 11px;border-bottom:1px solid #25272b;text-align:left;font-size:9px;vertical-align:middle}th{color:#a6a8ad;font-size:8px;text-transform:uppercase;background:#111317;position:sticky;top:0}td{color:#d7d7da}.muted{color:#777}.money{color:var(--g2);font-weight:800;white-space:nowrap}
+.badge{display:inline-block;padding:5px 7px;border-radius:20px;font-size:8px;border:1px solid #484848;background:#1c1e22;color:#aaa}.badge.pending{color:var(--g2);border-color:#665020;background:#241d10}.badge.approved,.badge.completed,.badge.active{color:var(--ok);border-color:#315d40;background:#102018}.badge.rejected,.badge.inactive{color:var(--red);border-color:#63352f;background:#211311}
+.btn{border:0;border-radius:8px;padding:8px 10px;font-size:8px;font-weight:800;background:linear-gradient(135deg,#ffe7a0,#d8a63b);color:#17130a;cursor:pointer}.btn.sec{background:#211a0d;color:var(--g2);border:1px solid #665020}.btn.red{background:#281513;color:var(--red);border:1px solid #63352f}.btn:disabled{opacity:.5}.actions{display:flex;gap:4px;flex-wrap:wrap}
+.empty,.loading{padding:28px;text-align:center;color:#777;font-size:9px}.overview{display:grid;grid-template-columns:1.3fr 1fr;gap:11px;padding:11px}.card{background:#121418;border:1px solid #2e2b23;border-radius:16px;padding:13px}.card h3{margin:0 0 9px;font-size:11px}.mini{display:grid;gap:6px}.mini div{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #25272b;font-size:9px}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:16px;z-index:20}.modal.show{display:flex}.modalbox{width:min(520px,100%);background:#15171b;border:1px solid #604b1b;border-radius:19px;padding:17px;box-shadow:0 20px 60px #000}.modalbox h3{margin:0 0 12px;color:var(--g2);font-size:15px}.modalbox textarea{width:100%;min-height:100px;background:#0d0f12;color:#eee;border:1px solid #33363b;border-radius:9px;padding:10px;font-size:9px}
+.ma{display:flex;justify-content:flex-end;gap:6px;margin-top:10px}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#17191d;border:1px solid #665020;color:var(--g2);padding:10px 14px;border-radius:11px;font-size:9px;display:none;z-index:30}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}.overview{grid-template-columns:1fr}}@media(max-width:620px){.wrap{padding:11px}.headrow{flex-direction:column;align-items:stretch}.adminbox{text-align:left;max-width:none}.stats{grid-template-columns:repeat(2,1fr)}.search{width:100%;min-width:0}.tools{width:100%}.filter{flex:1}}
+</style>
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+<body>
+<div class="app">
+<header class="head">
+  <div class="brand"><div class="logo"><img class="sp-logo" src="logo.png" alt="MyShort Logo"></div><div><b>MyShort App</b><small>Premium Gold • Admin Panel</small></div></div>
+  <div class="headrow">
+    <div><h1>Dashboard Admin</h1><p>Kelola member, saldo, deposit, withdrawal, misi, referral & transaksi.</p></div>
+    <div class="adminbox"><small>ADMIN LOGIN</small><b id="adminEmail">Memeriksa...</b><div style="margin-top:7px"><button class="btn sec" id="logout">Logout</button></div></div>
+  </div>
+</header>
+<main class="wrap">
+<div id="err" class="msg err"></div><div id="ok" class="msg ok"></div>
+<section class="stats">
+<div class="stat"><span>Total Member</span><b id="sm">0</b></div>
+<div class="stat"><span>Total Saldo</span><b id="sb">Rp 0</b></div>
+<div class="stat"><span>Deposit Approved</span><b id="sd">Rp 0</b></div>
+<div class="stat"><span>Withdrawal</span><b id="sw">Rp 0</b></div>
+<div class="stat"><span>Reward Mission</span><b id="si">Rp 0</b></div>
+<div class="stat"><span>Bonus Referral</span><b id="sr">Rp 0</b></div>
+</section>
+<nav class="tabs">
+<button class="active" data-t="dash">Dashboard</button><button data-t="members">👥 Member</button><button data-t="deposits">💰 Deposit</button><button data-t="withdrawals">💸 Withdrawal</button><button data-t="missions">🎯 Mission</button><button data-t="referrals">🎁 Referral</button><button data-t="aimax">🤖 AI-MAX</button><button data-t="transactions">📋 Transaksi</button>
+</nav>
+
+<section id="dash" class="panel active">
+<div class="ph"><div><h2>Ringkasan Sistem</h2><p>Data langsung dari Supabase.</p></div><button class="btn sec" id="refresh">↻ Refresh</button></div>
+<div class="overview"><div class="card"><h3>Status Deposit & Withdrawal</h3><div class="mini" id="status"><div class="loading">Memuat...</div></div></div>
+<div class="card"><h3>Transaksi Terbaru</h3><div class="mini" id="recent"><div class="loading">Memuat...</div></div></div></div>
+</section>
+
+<section id="members" class="panel"><div class="ph"><div><h2>Data Member</h2><p>Profil, kontak, saldo dan data rekening member.</p></div><div class="tools"><input class="search" id="msrch" placeholder="Cari member..."></div></div>
+<div class="tablewrap"><table><thead><tr><th>Member</th><th>Email</th><th>HP</th><th>Saldo</th><th>Referral</th><th>Role</th><th>Status</th><th>Daftar</th></tr></thead><tbody id="mb"></tbody></table></div></section>
+
+<section id="deposits" class="panel"><div class="ph"><div><h2>Deposit</h2><p>Termasuk metode pembayaran seperti ShopeePay jika tersimpan pada kolom method.</p></div><div class="tools"><input class="search" id="dsrch" placeholder="Cari member/metode..."><select class="filter" id="df"><option value="all">Semua</option><option>pending</option><option>approved</option><option>rejected</option></select></div></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Member</th><th>Nominal</th><th>Metode</th><th>Status</th><th>Bukti</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody id="db"></tbody></table></div></section>
+
+<section id="withdrawals" class="panel"><div class="ph"><div><h2>Withdrawal</h2><p>Menampilkan metode, nama pemilik, bank/ShopeePay, rekening/nomor, dan status.</p></div><div class="tools"><input class="search" id="wsrch" placeholder="Cari member/rekening..."><select class="filter" id="wf"><option value="all">Semua</option><option>pending</option><option>approved</option><option>rejected</option></select></div></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Member</th><th>Nominal</th><th>Metode</th><th>Detail Pembayaran</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody id="wb"></tbody></table></div></section>
+
+<section id="missions" class="panel"><div class="ph"><div><h2>Mission</h2><p>Kelola misi dan lihat klaim member.</p></div><div class="tools"><button class="btn" id="newm">+ Misi Baru</button><input class="search" id="misrch" placeholder="Cari misi..."></div></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Misi</th><th>Reward</th><th>Status</th><th>Klaim</th><th>Dibuat</th><th>Aksi</th></tr></thead><tbody id="mib"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Member</th><th>Misi</th><th>Reward</th><th>Status</th><th>Waktu</th></tr></thead><tbody id="cb"></tbody></table></div></section>
+
+<section id="referrals" class="panel"><div class="ph"><div><h2>Referral</h2><p>Pengundang, member baru dan bonus.</p></div><input class="search" id="rsrch" placeholder="Cari referral..."></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Pengundang</th><th>Member Baru</th><th>Kode</th><th>Reward</th><th>Status</th><th>Tanggal</th></tr></thead><tbody id="rb"></tbody></table></div></section>
+
+<section id="aimax" class="panel"><div class="ph"><div><h2>AI-MAX</h2><p>Memantau pembelian paket Rp100.000 dan status hadiah harian.</p></div><input class="search" id="asrch" placeholder="Cari member..."></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>Member</th><th>Harga</th><th>Hadiah/Hari</th><th>Waktu Beli</th><th>Status</th></tr></thead><tbody id="ab"></tbody></table></div></section>
+
+<section id="transactions" class="panel"><div class="ph"><div><h2>History Transaksi</h2><p>Semua transaksi yang dapat dilihat admin.</p></div><input class="search" id="tsrch" placeholder="Cari transaksi..."></div>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>Member</th><th>Tipe</th><th>Nominal</th><th>Ref</th><th>Deskripsi</th><th>Waktu</th></tr></thead><tbody id="tb"></tbody></table></div></section>
+</main></div>
+
+<div class="modal" id="modal"><div class="modalbox"><h3 id="mt">Catatan Admin</h3><textarea id="note" placeholder="Catatan (opsional)"></textarea><div class="ma"><button class="btn sec" id="mc">Batal</button><button class="btn" id="mok">Konfirmasi</button></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://jywzhwvbyifulqqvgxxd.supabase.co";
+const SUPABASE_KEY="sb_publishable_2leqwU4YWbTg--GCIfQMmA_zOEKKG60";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+let P=[],W=[],D=[],WD=[],M=[],C=[],R=[],T=[],A=[],act=null;
+const $=x=>document.getElementById(x);
+const money=n=>"Rp "+new Intl.NumberFormat("id-ID").format(Number(n||0));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+const dt=s=>s?new Date(s).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}):"-";
+const pm=()=>Object.fromEntries(P.map(x=>[x.id,x]));
+const pn=id=>pm()[id]?.full_name||pm()[id]?.username||pm()[id]?.name||pm()[id]?.email||String(id);
+const ps=id=>pm()[id]?.username||pm()[id]?.full_name||pm()[id]?.name||pm()[id]?.email||String(id);
+const badge=s=>{let x=String(s||"").toLowerCase();return '<span class="badge '+esc(x)+'">'+esc(s||"-")+'</span>'};
+
+function toast(t){let e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(window.tt);window.tt=setTimeout(()=>e.style.display="none",2700)}
+function msg(id,t){let e=$(id);e.textContent=t;e.style.display=t?"block":"none";clearTimeout(e.tt);if(t)e.tt=setTimeout(()=>e.style.display="none",8000)}
+function detail(x){
+  const method=x.method||x.payment_method||x.bank_name||x.channel||"-";
+  const number=x.account_number||x.account||x.account_no||x.phone||x.wallet_number||"-";
+  const name=x.account_name||x.bank_account_name||x.owner_name||x.name||"-";
+  const bank=x.bank_name||x.bank||x.provider||x.wallet_provider||"";
+  return esc(method)+(bank&&bank!==method?"<br><span class='muted'>"+esc(bank)+"</span>":"")+"<br><b>"+esc(number)+"</b><br><span class='muted'>"+esc(name)+"</span>";
+}
+
+async function guard(){
+  $("adminEmail").textContent="Memeriksa...";
+  const {data,error}=await sb.auth.getUser();
+  if(error) throw new Error("Auth Supabase: "+error.message);
+  const user=data && data.user;
+  if(!user){$("adminEmail").textContent="Belum login";throw new Error("Session login tidak ditemukan. Silakan login kembali dengan akun admin.");}
+  $("adminEmail").textContent=user.email||"Admin";
+  const r=await sb.from("profiles").select("id,email,username,role").eq("id",user.id).maybeSingle();
+  if(r.error) throw new Error("Cek profil admin gagal: "+r.error.message);
+  if(!r.data) throw new Error("Profil admin tidak ditemukan untuk Auth ID "+user.id+".");
+  if(String(r.data.role||"").toLowerCase()!=="admin") throw new Error("Akun ditemukan tetapi role bukan admin.");
+  msg("ok","Login admin terverifikasi: "+(user.email||"Admin"));
+  return user;
+}
+
+async function load(){
+  msg("err","");
+  $("status").innerHTML='<div class="loading">Memuat data Supabase...</div>';
+  async function read(name,q){
+    const r=await q;
+    if(r.error){console.warn(name,r.error.message);return {data:[],error:r.error};}
+    return {data:r.data||[],error:null};
+  }
+  const rs=await Promise.all([
+    read("profiles",sb.from("profiles").select("*").order("created_at",{ascending:false}).limit(1000)),
+    read("wallets",sb.from("wallets").select("*").limit(1000)),
+    read("deposits",sb.from("deposits").select("*").order("created_at",{ascending:false}).limit(1000)),
+    read("withdrawals",sb.from("withdrawals").select("*").order("created_at",{ascending:false}).limit(1000)),
+    read("missions",sb.from("missions").select("*").order("id")),
+    read("user_missions",sb.from("user_missions").select("*").order("completed_at",{ascending:false}).limit(1000)),
+    read("referrals",sb.from("referrals").select("*").order("created_at",{ascending:false}).limit(1000)),
+    read("transactions",sb.from("transactions").select("*").order("created_at",{ascending:false}).limit(1000)),
+    read("ai_max_purchases",sb.from("ai_max_purchases").select("*").order("purchased_at",{ascending:false}).limit(1000))
+  ]);
+  const names=["profiles","wallets","deposits","withdrawals","missions","user_missions","referrals","transactions","ai_max_purchases"];
+  [P,W,D,WD,M,C,R,T,A]=rs.map(r=>r.data||[]);
+  const failed=rs.map((r,i)=>r.error?names[i]+": "+r.error.message:null).filter(Boolean);
+  stats();render();
+  if(failed.length) msg("err","Login admin berhasil, tetapi sebagian tabel tidak dapat dibaca: "+failed.join(" | "));
+  else msg("ok","Data berhasil dimuat: "+P.length+" profil, "+D.length+" deposit, "+WD.length+" withdrawal, "+T.length+" transaksi.");
+}
+function stats(){
+ const ws=Object.fromEntries(W.map(x=>[(x.user_id||x.uid||x.profile_id),x]));
+ $("sm").textContent=P.filter(x=>String(x.role||"").toLowerCase()!=="admin").length.toLocaleString("id-ID");
+ $("sb").textContent=money(W.reduce((a,x)=>a+Number(x.balance||x.saldo||0),0));
+ $("sd").textContent=money(D.filter(x=>String(x.status||"").toLowerCase()==="approved").reduce((a,x)=>a+Number(x.amount||x.nominal||0),0));
+ $("sw").textContent=money(WD.filter(x=>String(x.status||"").toLowerCase()==="approved").reduce((a,x)=>a+Number(x.amount||x.nominal||0),0));
+ $("si").textContent=money(C.reduce((a,x)=>a+Number(x.claimed_reward||x.reward||x.amount||0),0));
+ $("sr").textContent=money(R.reduce((a,x)=>a+Number(x.reward||x.amount||0),0));
+ let d={pending:0,approved:0,rejected:0},w={pending:0,approved:0,rejected:0};
+ D.forEach(x=>{let s=String(x.status||"").toLowerCase();if(d[s]!=null)d[s]++});
+ WD.forEach(x=>{let s=String(x.status||"").toLowerCase();if(w[s]!=null)w[s]++});
+ $("status").innerHTML=["pending","approved","rejected"].map(x=>'<div><span>Deposit '+x+'</span>'+badge(d[x])+'</div>').join("")+
+ ["pending","approved","rejected"].map(x=>'<div><span>Withdrawal '+x+'</span>'+badge(w[x])+'</div>').join("");
+ $("recent").innerHTML=T.slice(0,7).map(x=>'<div><span>'+esc(pn(x.user_id||x.uid))+'<br><span class="muted">'+esc(x.type||x.transaction_type||"-")+'</span></span><b class="money">'+money(x.amount||x.nominal)+'</b></div>').join("")||'<div class="empty">Belum ada transaksi.</div>';
+}
+
+function render(){members();deposits();withdrawals();missions();refs();aimax();tx()}
+function aimax(){let q=$("asrch").value.toLowerCase();let a=A.filter(x=>[pn(x.user_id),ps(x.user_id),x.price,x.daily_reward,x.active].join(" ").toLowerCase().includes(q));$("ab").innerHTML=a.map(x=>`<tr><td>#${x.id}</td><td><b>${esc(pn(x.user_id))}</b><br><span class="muted">@${esc(ps(x.user_id))}</span></td><td class="money">${money(x.price)}</td><td class="money">${money(x.daily_reward)}</td><td>${dt(x.purchased_at)}</td><td>${badge(x.active?"active":"inactive")}</td></tr>`).join("")||'<tr><td colspan="6" class="empty">Belum ada pembelian AI-MAX.</td></tr>'}
+function memberObj(id){return pm()[id]||pm()[String(id)]}
+function memberId(x){return x.user_id||x.uid||x.profile_id}
+function members(){
+ let q=$("msrch").value.toLowerCase();
+ let a=P.filter(p=>String(p.role||"").toLowerCase()!=="admin"&&[p.full_name,p.username,p.email,p.phone,p.referral_code,p.name].join(" ").toLowerCase().includes(q));
+ let ws=Object.fromEntries(W.map(x=>[(x.user_id||x.uid||x.profile_id),x]));
+ $("mb").innerHTML=a.map(p=>{
+   let w=ws[p.id]||ws[p.uid]||{};
+   return '<tr><td><b>'+esc(p.full_name||p.name||p.username||"-")+'</b><br><span class="muted">@'+esc(p.username||"-")+' • '+esc(p.uid||p.id||"")+'</span></td><td>'+esc(p.email||"-")+'</td><td>'+esc(p.phone||p.no_hp||"-")+'</td><td class="money">'+money(w.balance||w.saldo)+'</td><td>'+esc(p.referral_code||"-")+'</td><td>'+badge(p.role||"-")+'</td><td>'+badge(p.status||"-")+'</td><td>'+dt(p.created_at)+'</td></tr>'
+ }).join("")||'<tr><td colspan="8" class="empty">Member tidak ditemukan.</td></tr>';
+}
+function deposits(){
+ let q=$("dsrch").value.toLowerCase(),f=$("df").value;
+ let a=D.filter(x=>{let s=String(x.status||"").toLowerCase();return(f==="all"||s===f)&&[pn(memberId(x)),ps(memberId(x)),x.method,x.payment_method,x.status,x.amount,x.nominal].join(" ").toLowerCase().includes(q)});
+ $("db").innerHTML=a.map(x=>'<tr><td>#'+esc(x.id)+'</td><td><b>'+esc(pn(memberId(x)))+'</b><br><span class="muted">@'+esc(ps(memberId(x)))+'</span></td><td class="money">'+money(x.amount||x.nominal)+'</td><td>'+esc(x.method||x.payment_method||"-")+'</td><td>'+badge(x.status)+'</td><td>'+(x.proof_url?'<a class="btn sec" target="_blank" rel="noopener" href="'+esc(x.proof_url)+'">Lihat</a>':'-')+'</td><td>'+dt(x.created_at)+'</td><td>'+(String(x.status).toLowerCase()==="pending"?'<div class="actions"><button class="btn" onclick="statusAsk(\'deposit\','+JSON.stringify(x.id)+',\'approved\')">Approve</button><button class="btn red" onclick="statusAsk(\'deposit\','+JSON.stringify(x.id)+',\'rejected\')">Reject</button></div>':dt(x.processed_at))+'</td></tr>').join("")||'<tr><td colspan="8" class="empty">Deposit tidak ditemukan.</td></tr>';
+}
+function withdrawals(){
+ let q=$("wsrch").value.toLowerCase(),f=$("wf").value;
+ let a=WD.filter(x=>{let s=String(x.status||"").toLowerCase();return(f==="all"||s===f)&&[pn(memberId(x)),ps(memberId(x)),x.method,x.payment_method,x.account_number,x.account_name,x.bank_name,x.bank,x.phone,x.wallet_number,x.status].join(" ").toLowerCase().includes(q)});
+ $("wb").innerHTML=a.map(x=>'<tr><td>#'+esc(x.id)+'</td><td><b>'+esc(pn(memberId(x)))+'</b><br><span class="muted">@'+esc(ps(memberId(x)))+'</span></td><td class="money">'+money(x.amount||x.nominal)+'</td><td>'+detail(x)+'</td><td>'+badge(x.status)+'</td><td>'+dt(x.created_at)+'</td><td>'+(String(x.status).toLowerCase()==="pending"?'<div class="actions"><button class="btn" onclick="statusAsk(\'withdrawal\','+JSON.stringify(x.id)+',\'approved\')">Approve</button><button class="btn red" onclick="statusAsk(\'withdrawal\','+JSON.stringify(x.id)+',\'rejected\')">Reject</button></div>':dt(x.processed_at))+'</td></tr>').join("")||'<tr><td colspan="8" class="empty">Withdrawal tidak ditemukan.</td></tr>';
+}
+function missions(){
+ let q=$("misrch").value.toLowerCase(),cc={};C.forEach(x=>{let id=x.mission_id||x.missionId;cc[id]=(cc[id]||0)+1});
+ let a=M.filter(x=>(x.title+" "+(x.description||x.name||"")).toLowerCase().includes(q));
+ $("mib").innerHTML=a.map(x=>'<tr><td>#'+esc(x.id)+'</td><td><b>'+esc(x.title||x.name||"-")+'</b><br><span class="muted">'+esc(x.description||"")+'</span></td><td class="money">'+money(x.reward||x.amount)+'</td><td>'+badge(x.active===false?"inactive":"active")+'</td><td>'+(cc[x.id]||0)+'</td><td>'+dt(x.created_at)+'</td><td><button class="btn sec" onclick="toggleM('+JSON.stringify(x.id)+','+(x.active===false)+')">'+(x.active===false?"Aktifkan":"Nonaktifkan")+'</button></td></tr>').join("")||'<tr><td colspan="7" class="empty">Misi tidak ditemukan.</td></tr>';
+ let mm=Object.fromEntries(M.map(x=>[x.id,x]));
+ $("cb").innerHTML=C.map(x=>'<tr><td><b>'+esc(pn(memberId(x)))+'</b><br><span class="muted">@'+esc(ps(memberId(x)))+'</span></td><td>'+esc(mm[x.mission_id]?.title||mm[x.mission_id]?.name||("#"+(x.mission_id||"-")))+'</td><td class="money">'+money(x.claimed_reward||x.reward||x.amount)+'</td><td>'+badge(x.status||"-")+'</td><td>'+dt(x.completed_at||x.claimed_at||x.created_at)+'</td></tr>').join("")||'<tr><td colspan="5" class="empty">Belum ada klaim.</td></tr>';
+}
+function refs(){
+ let q=$("rsrch").value.toLowerCase(),a=R.filter(x=>[pn(x.referrer_id),pn(x.referred_id),ps(x.referrer_id),ps(x.referred_id),x.referral_code,x.status].join(" ").toLowerCase().includes(q));
+ $("rb").innerHTML=a.map(x=>'<tr><td>#'+esc(x.id)+'</td><td>'+esc(pn(x.referrer_id))+'</td><td>'+esc(pn(x.referred_id))+'</td><td>'+esc(x.referral_code||"-")+'</td><td class="money">'+money(x.reward||x.amount)+'</td><td>'+badge(x.status||"-")+'</td><td>'+dt(x.created_at)+'</td></tr>').join("")||'<tr><td colspan="7" class="empty">Referral tidak ditemukan.</td></tr>';
+}
+function tx(){
+ let q=$("tsrch").value.toLowerCase(),a=T.filter(x=>[pn(memberId(x)),ps(memberId(x)),x.type,x.transaction_type,x.description,x.reference_id,x.amount].join(" ").toLowerCase().includes(q));
+ $("tb").innerHTML=a.map(x=>'<tr><td>#'+esc(x.id)+'</td><td>'+esc(pn(memberId(x)))+'</td><td>'+esc(x.type||x.transaction_type||"-")+'</td><td class="money">'+money(x.amount||x.nominal)+'</td><td>'+esc(x.reference_id??"-")+'</td><td>'+esc(x.description||"-")+'</td><td>'+dt(x.created_at)+'</td></tr>').join("")||'<tr><td colspan="7" class="empty">Transaksi tidak ditemukan.</td></tr>';
+}
+function statusAsk(kind,id,status){
+ $("mt").textContent=(status==="approved"?"Approve ":"Reject ")+(kind==="deposit"?"Deposit":"Withdrawal")+" #"+id;
+ $("note").value="";
+ act=async note=>{
+   let fn=kind==="deposit"?"admin_set_deposit_status":"admin_set_withdrawal_status";
+   let {error}=await sb.rpc(fn,{p_id:id,p_status:status,p_note:note||null});
+   if(error)throw error;
+   close();toast("Status berhasil diperbarui.");await load();
+ };
+ $("modal").classList.add("show");
+}
+function close(){$("modal").classList.remove("show");act=null}
+$("mc").onclick=close;
+$("mok").onclick=async()=>{if(!act)return;$("mok").disabled=true;try{await act($("note").value.trim())}catch(e){msg("err",e.message||"Gagal memperbarui status.")}finally{$("mok").disabled=false}};
+$("modal").onclick=e=>{if(e.target===$("modal"))close()};
+async function toggleM(id,active){let {error}=await sb.from("missions").update({active}).eq("id",id);if(error)return msg("err",error.message);toast(active?"Misi diaktifkan.":"Misi dinonaktifkan.");load()}
+$("newm").onclick=()=>{
+ $("mt").textContent="Misi Baru";
+ $("note").placeholder="Format: Judul | Deskripsi | Reward.\\nContoh: Check-in | Login setiap hari | 1000";
+ $("note").value="";
+ act=async s=>{let a=s.split("|").map(x=>x.trim()),reward=Number(a[2]);if(a.length<3||!a[0]||!Number.isFinite(reward)||reward<0)throw new Error("Format: Judul | Deskripsi | Reward");let {error}=await sb.from("missions").insert({title:a[0],description:a[1]||"",reward,active:true});if(error)throw error;close();toast("Misi berhasil dibuat.");await load()};
+ $("modal").classList.add("show");
+};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));$(b.dataset.t).classList.add("active")});
+["msrch","dsrch","wsrch","misrch","rsrch","asrch","tsrch"].forEach(id=>$(id).addEventListener("input",render));
+["df","wf"].forEach(id=>$(id).addEventListener("change",render));
+$("refresh").onclick=()=>load().catch(e=>msg("err",e.message));
+$("logout").onclick=async()=>{await sb.auth.signOut();location.href="index.html"};
+sb.auth.onAuthStateChange(e=>{if(e==="SIGNED_OUT")location.href="index.html"});
+(async()=>{try{if(await guard())await load()}catch(e){console.error(e);msg("err",e.message||"Gagal memuat Admin Panel")}})();
+</script>
+</body>
+</html>

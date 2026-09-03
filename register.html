@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Daftar Akun - MyShort App</title>
+
+
+
+<style>
+:root{--bg:#07090b;--panel:#15171b;--gold:#f3c95f;--gold2:#ffe7a0;--muted:#92959e;--text:#f7f7f7}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+html{background:var(--bg)}
+body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;color:var(--text);background:radial-gradient(circle at 15% 5%,rgba(243,201,95,.14),transparent 28%),radial-gradient(circle at 90% 90%,rgba(243,201,95,.08),transparent 30%),linear-gradient(145deg,#07090b,#15171b 52%,#07090b)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:radial-gradient(rgba(243,201,95,.72) 1px,transparent 1px);background-size:27px 27px}
+.container{position:relative;z-index:1;width:100%;max-width:430px;background:linear-gradient(145deg,rgba(25,27,30,.98),rgba(10,12,15,.99));padding:24px 20px 20px;border:1px solid rgba(243,201,95,.28);border-radius:25px;box-shadow:0 24px 65px rgba(0,0,0,.48)}
+.logo{text-align:center;margin-bottom:18px}.logo h2{margin-top:10px;color:var(--gold2);font-size:23px}.input-group{margin-bottom:14px}label{display:block;margin-bottom:7px;font-weight:650;color:#c8c9cd;font-size:12px}input{width:100%;height:47px;padding:0 13px;border:1px solid rgba(243,201,95,.20);border-radius:12px;background:#0b0d10;color:#fff;outline:none;font-size:13px}input:focus{border-color:rgba(243,201,95,.75);box-shadow:0 0 0 3px rgba(243,201,95,.07)}input::placeholder{color:#656872}button{width:100%;padding:13px 14px;background:linear-gradient(135deg,#ffe8a6,#d8a83a);color:#18140b;border:1px solid rgba(255,231,160,.72);border-radius:13px;font-size:14px;font-weight:850;cursor:pointer;box-shadow:0 9px 25px rgba(243,201,95,.14)}button:hover{transform:translateY(-1px)}.success,.error{margin-top:13px;padding:11px 12px;border-radius:12px;text-align:center;font-size:11px;line-height:1.5}.success{display:none;color:#9df0bc;background:rgba(66,199,122,.08);border:1px solid rgba(66,199,122,.25)}.error{display:none;color:#ffb7ae;background:rgba(210,70,60,.08);border:1px solid rgba(210,70,60,.25)}.bottom{margin-top:16px;text-align:center;color:#777b84;font-size:11px}.bottom a{color:var(--gold2);text-decoration:none;font-weight:700}.hint{margin-top:10px;color:#70747d;text-align:center;font-size:9px;line-height:1.5}
+</style>
+
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo"><div class="sp-brand"><img class="sp-logo" src="logo.png" alt="MyShort Logo"><div class="sp-brand-text"><strong>MyShort Platform</strong><small>Member Area</small></div></div><h2>Daftar Member</h2></div>
+
+<div class="input-group">
+
+<label>Nama Lengkap</label>
+
+<input
+type="text"
+id="nama"
+placeholder="Masukkan Nama">
+
+</div>
+
+<div class="input-group">
+
+<label>Email</label>
+
+<input
+type="email"
+id="email"
+placeholder="Masukkan Email">
+
+</div>
+
+<div class="input-group">
+
+<label>Nomor HP</label>
+
+<input
+type="text"
+id="hp"
+placeholder="08xxxxxxxxxx">
+
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+type="password"
+id="password"
+placeholder="Minimal 6 karakter">
+
+</div>
+
+<div class="input-group">
+
+<label>Kode Referral (Opsional)</label>
+
+<input
+type="text"
+id="referral"
+placeholder="Masukkan kode referral">
+
+</div>
+
+<button type="button" onclick="register()">
+
+DAFTAR SEKARANG
+
+</button>
+
+<p class="success" id="success">
+Pendaftaran berhasil.
+</p>
+
+<p class="error" id="error">
+Semua data wajib diisi.
+</p>
+
+<p class="hint">Jika verifikasi email aktif, setelah daftar silakan cek email dan klik link verifikasi.</p>
+
+<div class="bottom">
+
+Sudah punya akun?
+
+<a href="index.html">
+
+Login
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="app.js"></script>
+<script src="pages.js"></script>
+</body>
+
+</html>

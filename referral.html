@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Referral Center</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+:root{--bg:#07090b;--panel:#121417;--gold:#f3c95f;--gold2:#ffe7a0;--muted:#92959e;--text:#f5f5f6;--line:rgba(243,201,95,.30);--green:#65d39a}
+html{background:var(--bg)}
+body{min-height:100vh;padding-bottom:88px;color:var(--text);background:radial-gradient(circle at 12% 3%,rgba(243,201,95,.14),transparent 25%),radial-gradient(circle at 92% 36%,rgba(243,201,95,.07),transparent 28%),linear-gradient(145deg,#07090b,#121417 52%,#07090b);-webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:radial-gradient(rgba(243,201,95,.72) 1px,transparent 1px);background-size:27px 27px}
+header{position:relative;z-index:1;text-align:center;padding:23px 18px 19px;background:linear-gradient(180deg,rgba(15,17,19,.96),rgba(15,17,19,.72));border-bottom:1px solid rgba(243,201,95,.22)}
+header h2{font-size:24px;color:var(--gold2);font-weight:800}
+.container{position:relative;z-index:1;max-width:760px;margin:auto;padding:18px 15px}
+.card,.reward,.activity{position:relative;overflow:hidden;background:radial-gradient(circle at 100% 0%,rgba(243,201,95,.045),transparent 34%),linear-gradient(145deg,rgba(27,29,29,.98),rgba(11,13,16,.99));border:1px solid var(--line);border-radius:22px;padding:20px;margin-bottom:15px;box-shadow:0 18px 55px rgba(0,0,0,.38)}
+.card h3,.reward h3,.activity h3{font-size:19px;color:var(--text);margin-bottom:14px}
+.code{font-size:24px;font-weight:850;color:var(--gold2);text-align:center;margin:13px 0}
+.link{background:#0b0d10;border:1px solid rgba(243,201,95,.16);padding:12px;border-radius:11px;font-size:12px;color:#aaaeb7;word-break:break-all}
+button{margin-top:14px;width:100%;padding:13px;border:1px solid rgba(255,231,160,.65);border-radius:13px;background:linear-gradient(135deg,#ffe8a6,#d8a83a);color:#18140b;font-size:14px;font-weight:850;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:15px}
+.box{background:linear-gradient(145deg,rgba(243,201,95,.09),rgba(243,201,95,.025));border:1px solid rgba(243,201,95,.19);padding:17px;text-align:center;border-radius:16px}
+.box h2{color:var(--gold2);font-size:22px}.box p{color:#858993;font-size:12px;margin-top:4px}
+.reward{background:linear-gradient(145deg,rgba(243,201,95,.14),rgba(243,201,95,.035))}
+.reward-title{color:var(--gold2);font-weight:800;font-size:17px}.reward p{color:#aeb1b8;font-size:12px;line-height:1.65;margin-top:7px}.reward-status{margin-top:9px;color:#8f949e;font-size:11px}
+.activity-list{display:grid;gap:9px}.activity-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-radius:13px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06)}
+.activity-row b{display:block;color:#dddfe3;font-size:12px}.activity-row small{color:#747983;font-size:10px}.activity-row .amount{color:var(--gold2);font-weight:800;font-size:12px;white-space:nowrap}
+.sim-badge{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:999px;border:1px solid rgba(243,201,95,.25);color:var(--gold);font-size:8px;font-weight:700}
+.member{background:linear-gradient(145deg,rgba(243,201,95,.07),rgba(243,201,95,.02));border:1px solid rgba(243,201,95,.16);padding:14px;margin-top:10px;border-radius:14px;color:#9da1aa;font-size:12px}.member b{display:block;color:var(--gold2);font-size:13px}
+.empty{color:#777b84;text-align:center;padding:22px 8px;font-size:12px}
+.bottom{position:fixed;z-index:20;bottom:0;left:0;width:100%;height:78px;background:rgba(7,9,11,.97);backdrop-filter:blur(16px);border-top:1px solid rgba(243,201,95,.18);display:flex;justify-content:space-around;padding:7px 4px}
+.bottom a{flex:1;text-decoration:none;color:#777b84;text-align:center;font-size:10px;padding-top:1px}.bottom span{display:block;font-size:19px;line-height:24px;margin-bottom:2px;filter:grayscale(.15);transform:scale(.72)}
+@media(max-width:420px){.container{padding:14px 12px}.card,.reward,.activity{padding:18px;border-radius:21px}header h2{font-size:22px}.bottom span{font-size:18px;transform:scale(.70)}}
+</style>
+
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+<header><div class="sp-header-brand"><img class="sp-logo" src="logo.png" alt="MyShort Logo"><div><strong>MyShort Platform</strong><small>Member Area</small></div></div><h2>Referral Center</h2></header>
+<main class="container">
+<section class="card"><h3>Kode Referral Anda</h3><div class="code" id="kode">REF000001</div><div class="link" id="link"></div><button onclick="copyLink()">Salin Link Referral</button></section>
+<section class="summary"><div class="box"><h2 id="anggota">0</h2><p>Member</p></div><div class="box"><h2 id="bonus">Rp 0</h2><p>Bonus</p></div></section>
+<section class="reward"><h3>🎁 Hadiah 3 Teman</h3><div class="reward-title">Rp25.000 untuk 3 Teman</div><p>Undang 3 teman. <b>Verifikasi email saja tidak cukup</b>; setiap teman harus sudah membeli AI-MAX Rp100.000. Setelah 3 teman pembeli AI-MAX valid, hadiah Rp25.000 dapat diklaim satu kali.</p><button id="claimBtn" onclick="claimReward()">Klaim Hadiah</button><div class="reward-status" id="rewardStatus">Belum ada hadiah yang dapat diklaim.</div></section>
+<section class="activity"><h3> Status Teman Referral<span class="sim-badge">AI-MAX</span></h3><div class="activity-list" id="activityList"></div></section>
+<section class="card"><h3>Member Referral</h3><div id="listMember"></div></section>
+</main>
+<div class="bottom"><a href="dashboard.html"><span>⌂</span>Home</a><a href="mission.html"><span>◎</span>Mission</a><a href="wallet.html"><span>▣</span>Wallet</a><a href="profile.html"><span>♙</span>Profile</a></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="app.js"></script>
+<script src="pages.js"></script>
+</body>
+
+</html>

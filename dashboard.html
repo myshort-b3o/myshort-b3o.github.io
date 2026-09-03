@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b0c0f">
+<title>MyShort App - Member Dashboard</title>
+
+<style>
+:root{
+  --bg:#090a0c;
+  --bg2:#101216;
+  --card:#15171b;
+  --card2:#1b1d22;
+  --gold:#e6b84f;
+  --gold2:#f5d77b;
+  --gold3:#b88628;
+  --text:#f7f7f7;
+  --muted:#9699a1;
+  --line:rgba(230,184,79,.18);
+  --green:#42c77a;
+  --shadow:0 14px 38px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(230,184,79,.13),transparent 32%),
+    radial-gradient(circle at 100% 55%,rgba(230,184,79,.055),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:82px;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.16;
+  background-image:radial-gradient(rgba(230,184,79,.5) .7px,transparent .7px);
+  background-size:18px 18px;
+  mask-image:linear-gradient(90deg,transparent,black 25%,black 75%,transparent);
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit;border:0;cursor:pointer}
+
+/* HEADER */
+.top{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 85% 15%,rgba(230,184,79,.13),transparent 30%),
+    linear-gradient(145deg,#17191e,#0d0f12 72%);
+  padding:20px 18px 38px;
+  border-bottom:1px solid rgba(230,184,79,.24);
+  border-radius:0 0 30px 30px;
+  box-shadow:0 15px 45px rgba(0,0,0,.32);
+}
+.top:after{
+  content:"";
+  position:absolute;
+  width:250px;height:250px;
+  right:-145px;bottom:-170px;
+  border:1px solid rgba(230,184,79,.22);
+  border-radius:50%;
+  box-shadow:0 0 0 16px rgba(230,184,79,.025),0 0 0 34px rgba(230,184,79,.02);
+}
+.top-inner{max-width:760px;margin:auto;position:relative;z-index:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:45px;height:45px;border-radius:13px;
+  border:1px solid rgba(230,184,79,.65);
+  background:linear-gradient(145deg,#242018,#0b0c0e);
+  display:grid;place-items:center;
+  color:var(--gold2);font-weight:800;font-size:17px;
+  box-shadow:0 7px 20px rgba(0,0,0,.25);
+}
+.brand-text{font-size:16px;font-weight:750;line-height:1.1}
+.brand-text small{
+  display:block;color:#999ba2;font-size:10px;font-weight:500;
+  margin-top:4px;
+}
+.logout{
+  background:transparent;
+  border:1px solid rgba(230,184,79,.72);
+  color:var(--gold2);
+  padding:9px 14px;border-radius:10px;
+  font-size:11px;font-weight:750;
+}
+.greeting{margin-top:23px}
+.greeting .hello{font-size:12px;color:#b8bbc2}
+.greeting h1{
+  font-size:23px;line-height:1.2;margin-top:4px;
+  font-weight:750;letter-spacing:-.4px;
+}
+.greeting p{font-size:11px;color:#888b93;margin-top:6px}
+
+/* CONTENT */
+.container{
+  max-width:760px;margin:-18px auto 0;
+  padding:0 14px;position:relative;z-index:2;
+}
+
+/* BALANCE */
+.balance{
+  background:linear-gradient(145deg,#1b1d22,#111317);
+  border:1px solid rgba(230,184,79,.16);
+  border-radius:20px;
+  padding:17px;
+  box-shadow:var(--shadow);
+}
+.balance-head{display:flex;justify-content:space-between;align-items:center}
+.balance-label{
+  font-size:11px;color:#a9abb2;font-weight:700;
+  letter-spacing:.3px;
+}
+.eye{
+  width:32px;height:32px;border-radius:10px;
+  background:#211e17;color:var(--gold2);
+  border:1px solid rgba(230,184,79,.18);
+  display:grid;place-items:center;font-size:13px;
+}
+.balance-value{
+  font-size:30px;font-weight:800;letter-spacing:-1px;
+  margin-top:7px;color:#fff;
+}
+.balance-value span{
+  font-size:16px;font-weight:750;
+  color:var(--gold2);margin-right:4px;
+}
+.balance-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:13px;padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.07);
+  font-size:10px;color:#898c94;
+}
+.balance-footer b{color:var(--green);font-weight:700}
+
+/* SECTION */
+.section-title{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:22px 2px 10px;
+}
+.section-title h2{font-size:14px;font-weight:750;color:#f2f2f3}
+.section-title span{font-size:10px;color:#777b84}
+
+/* MENU */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+}
+.action{
+  background:linear-gradient(145deg,#181a1f,#121418);
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:16px;
+  padding:12px 5px 11px;
+  min-height:108px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:7px;
+  box-shadow:0 9px 25px rgba(0,0,0,.22);
+  transition:.18s ease;
+}
+.action:hover{
+  border-color:rgba(230,184,79,.35);
+  transform:translateY(-2px);
+}
+.action:active{transform:scale(.97)}
+.icon{
+  width:42px;height:42px;border-radius:13px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#292315,#18150f);
+  color:var(--gold2);
+  border:1px solid rgba(230,184,79,.16);
+}
+.icon svg{width:23px;height:23px}
+.action strong{
+  font-size:10px;font-weight:700;
+  color:#e7e7e9;text-align:center;
+}
+.action small{font-size:8.5px;color:#777b84;margin-top:-3px}
+
+/* PROFILE */
+.profile-card{
+  background:linear-gradient(145deg,#181a1f,#121418);
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:18px;padding:14px;
+  box-shadow:var(--shadow);
+}
+.profile-row{display:flex;align-items:center;gap:11px}
+.avatar{
+  width:43px;height:43px;border-radius:14px;
+  background:linear-gradient(145deg,#4b3a1a,#211b10);
+  border:1px solid rgba(230,184,79,.25);
+  color:var(--gold2);display:grid;place-items:center;
+  font-size:16px;font-weight:800;
+}
+.profile-info{min-width:0}
+.profile-info b{
+  font-size:12px;display:block;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.profile-info span{
+  font-size:9px;color:#7f828a;display:block;margin-top:3px;
+}
+.level{
+  margin-left:auto;
+  background:#282116;color:var(--gold2);
+  border:1px solid rgba(230,184,79,.18);
+  font-size:8px;font-weight:750;
+  padding:6px 8px;border-radius:8px;
+}
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  margin-top:13px;border-top:1px solid rgba(255,255,255,.07);
+  padding-top:12px;
+}
+.stat{text-align:center;border-right:1px solid rgba(255,255,255,.07)}
+.stat:last-child{border:0}
+.stat b{font-size:12px;display:block;color:#f2f2f3}
+.stat span{font-size:8px;color:#747881;display:block;margin-top:3px}
+
+.notice{
+  margin-top:11px;padding:11px 12px;border-radius:13px;
+  background:rgba(230,184,79,.055);
+  color:#8d9098;font-size:9px;line-height:1.5;
+  border:1px solid rgba(230,184,79,.12);
+}
+.notice b{color:var(--gold2)}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;z-index:20;left:0;right:0;bottom:0;
+  background:rgba(15,16,19,.97);
+  backdrop-filter:blur(14px);
+  border-top:1px solid rgba(230,184,79,.15);
+  padding:7px 10px calc(7px + env(safe-area-inset-bottom));
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:#70747d;font-size:8.5px;font-weight:650;padding:3px 0;
+}
+.nav-item svg{width:20px;height:20px}
+.nav-item.active{color:var(--gold2)}
+.nav-item.active .nav-icon{
+  background:#211d14;border:1px solid rgba(230,184,79,.18);
+  border-radius:8px;width:29px;height:29px;
+  margin-top:-3px;
+}
+.nav-icon{display:grid;place-items:center;width:29px;height:29px}
+
+/* TOAST */
+.toast{
+  position:fixed;left:50%;bottom:82px;
+  transform:translate(-50%,15px);
+  background:#202329;color:#fff;
+  border:1px solid rgba(230,184,79,.28);
+  padding:9px 13px;border-radius:9px;
+  font-size:10px;opacity:0;pointer-events:none;
+  transition:.22s;z-index:50;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(min-width:600px){
+  .grid{gap:12px}
+  .action{min-height:115px}
+}
+@media(max-width:360px){
+  .top{padding-left:14px;padding-right:14px}
+  .container{padding:0 10px}
+  .greeting h1{font-size:21px}
+  .balance-value{font-size:27px}
+  .grid{gap:7px}
+  .action{min-height:102px}
+  .action strong{font-size:9.5px}
+}
+
+/* MYSHORT PROMO */
+.promo-banner{
+  position:relative;overflow:hidden;margin-top:12px;min-height:126px;
+  border:1px solid rgba(230,184,79,.24);border-radius:18px;padding:17px 16px;
+  background:
+    radial-gradient(circle at 88% 18%,rgba(245,215,123,.25),transparent 18%),
+    radial-gradient(circle at 72% 85%,rgba(90,80,190,.20),transparent 35%),
+    linear-gradient(135deg,#1b1d34 0%,#24224a 48%,#11131a 100%);
+  box-shadow:0 14px 34px rgba(0,0,0,.30);
+}
+.promo-banner:before{
+  content:"";position:absolute;width:270px;height:170px;right:-105px;top:-86px;
+  border:1px solid rgba(230,184,79,.24);border-radius:50%;
+  box-shadow:0 0 0 18px rgba(230,184,79,.025),0 0 0 38px rgba(230,184,79,.018);
+  transform:rotate(-18deg);
+}
+.promo-banner:after{
+  content:"✦   •   ✦";position:absolute;right:18px;bottom:15px;
+  color:rgba(245,215,123,.58);font-size:14px;letter-spacing:10px;
+}
+.promo-inner{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.promo-copy{min-width:0}
+.promo-kicker{color:var(--gold2);font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.promo-title{color:#f5d77b;font-size:25px;font-weight:900;letter-spacing:1px;line-height:1.05}
+.promo-text{color:#f2f2f4;font-size:10px;line-height:1.45;margin-top:7px}
+.promo-text b{color:#f5d77b}
+.promo-badge{
+  flex:0 0 auto;min-width:122px;padding:10px 11px;border:1px solid rgba(245,215,123,.55);
+  border-radius:14px;background:rgba(9,10,12,.34);text-align:center
+}
+.promo-badge .amount{display:block;color:#fff;font-size:17px;font-weight:850}
+.promo-badge .label{display:block;color:#aaaeb7;font-size:8.5px;margin-top:3px}
+.promo-badge .reward{display:block;color:var(--gold2);font-size:10px;font-weight:800;margin-top:6px}
+@media(max-width:390px){
+  .promo-banner{min-height:118px;padding:14px}
+  .promo-title{font-size:22px}.promo-text{font-size:9px}
+  .promo-badge{min-width:108px;padding:9px 8px}
+  .promo-badge .amount{font-size:15px}
+}
+
+</style>
+<link rel="stylesheet" href="premium-brand.css">
+
+
+</head>
+
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"><img class="sp-logo" src="logo.png" alt="MyShort Logo"></div>
+        <div class="brand-text">MyShort App<small>Member Area</small></div>
+      </div>
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="greeting">
+      <div class="hello">Selamat datang 👋</div>
+      <h1 id="memberName">Member Dashboard</h1>
+      <p>Kelola saldo, misi, referral, dan akun Anda.</p>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="balance">
+    <div class="balance-head">
+      <div class="balance-label">TOTAL SALDO</div>
+      <button class="eye" id="eyeBtn" onclick="toggleBalance()">◉</button>
+    </div>
+   <div class="balance-value" id="balanceValue"><span>Rp</span>0</div>
+    <div class="balance-footer">
+      <span>Saldo tersedia</span>
+      <b>● Aktif</b>
+    </div>
+  </section>
+
+  <section class="promo-banner" aria-label="MyShort Promo">
+    <div class="promo-inner">
+      <div class="promo-copy">
+        <div class="promo-kicker">✨ Promo Member</div>
+        <div class="promo-title">MyShort Promo</div>
+        <div class="promo-text">
+          Beli <b>AI-MAX Rp100.000</b> dan undang <b>3 teman</b>.
+          Dapatkan hadiah referral <b>Rp25.000</b>.
+        </div>
+      </div>
+      <div class="promo-badge">
+        <span class="amount">AI-MAX</span>
+        <span class="label">Harga paket</span>
+        <span class="reward">Rp100.000</span>
+        <span class="label">3 teman • Rp25.000</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-title">
+    <h2>Akses Cepat</h2>
+    <span>Menu member</span>
+  </div>
+
+  <section class="grid">
+    <a class="action" href="wallet.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H19a2 2 0 0 1 2 2v11a1 1 0 0 1-1 1H5.5A2.5 2.5 0 0 1 3 16.5v-9Z"/><path d="M3 8h15.5A2.5 2.5 0 0 1 21 10.5v2H17a2 2 0 0 1 0-4h4"/><circle cx="17" cy="10.5" r=".7" fill="currentColor"/></svg></div>
+      <strong>Wallet</strong><small>Saldo</small>
+    </a>
+
+    <a class="action" href="mission.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><path d="m15.5 8.5 5-5M20.5 3.5h-4M20.5 3.5v4"/></svg></div>
+      <strong>Mission</strong><small>Misi harian</small>
+    </a>
+
+    <a class="action" href="referral.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3.5 19c.7-3.2 2.5-4.8 5.5-4.8s4.8 1.6 5.5 4.8M15 14.2c2.8-.2 4.6 1.3 5.3 3.8"/></svg></div>
+      <strong>Referral</strong><small>Ajak teman</small>
+    </a>
+
+    <a class="action" href="history.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3.5h7l4 4V21H7a2 2 0 0 1-2-2V5.5a2 2 0 0 1 2-2Z"/><path d="M14 3.5V8h4M8.5 12h7M8.5 15h7M8.5 18h4.5"/></svg></div>
+      <strong>History</strong><small>Riwayat</small>
+    </a>
+
+    <a class="action" href="bank.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 14h4"/></svg></div>
+      <strong>Bank</strong><small>Rekening</small>
+    </a>
+
+    <a class="action" href="deposit.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M5 14.5V20h14v-5.5M8 17h8"/></svg></div>
+      <strong>Deposit</strong><small>Tambah saldo</small>
+    </a>
+
+    <a class="action" href="profile.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/></svg></div>
+      <strong>Profile</strong><small>Akun saya</small>
+    </a>
+
+    <a class="action" href="profile.html">
+      <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V20h-2.6v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H6v-2.6h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V5h2.6v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v2.6h-.1a1.7 1.7 0 0 0-1.6 1Z"/></svg></div>
+      <strong>Pengaturan</strong><small>Akun</small>
+    </a>
+  </section>
+
+  <div class="section-title">
+    <h2>Ringkasan Akun</h2>
+    <span>Informasi member</span>
+  </div>
+
+  <section class="profile-card">
+    <div class="profile-row">
+      <div class="avatar" id="avatar">M</div>
+      <div class="profile-info">
+        <b id="profileName">Member MyShort App App</b>
+        <span id="profileEmail">member@email.com</span>
+      </div>
+      <div class="level">MEMBER</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="missionCount">0</b><span>Misi selesai</span></div>
+      <div class="stat"><b id="refCount">0</b><span>Referral</span></div>
+      <div class="stat"><b>Aktif</b><span>Status akun</span></div>
+    </div>
+  </section>
+
+  <div class="notice">
+    <b>Tips:</b> Gunakan menu di atas untuk mengelola saldo, menyelesaikan misi,
+    melihat riwayat transaksi, mengatur rekening, dan membuka profil member.
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <a class="nav-item active" href="dashboard.html">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z"/></svg></div>
+    Home
+  </a>
+  <a class="nav-item" href="mission.html">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>
+    Mission
+  </a>
+  <a class="nav-item" href="wallet.html">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H19a2 2 0 0 1 2 2v11H5.5A2.5 2.5 0 0 1 3 15.5v-8Z"/><path d="M3 8h18v5h-4a2.5 2.5 0 0 1 0-5"/></svg></div>
+    Wallet
+  </a>
+  <a class="nav-item" href="profile.html">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/></svg></div>
+    Profile
+  </a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+"use strict";
+
+const sb = window.sb;
+
+async function loadDashboardData(){
+
+    try {
+
+        if(!sb){
+            console.error("Supabase tidak ditemukan.");
+            return;
+        }
+
+        /* =========================
+           AMBIL USER LOGIN
+        ========================= */
+
+        const {
+            data: userData,
+            error: userError
+        } = await sb.auth.getUser();
+
+        if(userError) throw userError;
+
+        const user = userData?.user;
+
+        if(!user){
+            location.href = "index.html";
+            return;
+        }
+
+        console.log("USER LOGIN:", user.id);
+
+
+        /* =========================
+           AMBIL PROFILE MEMBER
+        ========================= */
+
+        const {
+            data: profile,
+            error: profileError
+        } = await sb
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .maybeSingle();
+
+        if(profileError){
+            console.error(
+                "PROFILE ERROR:",
+                profileError
+            );
+        }
+
+
+        /* =========================
+           NAMA MEMBER
+        ========================= */
+
+        const memberName =
+            profile?.full_name ||
+            user.user_metadata?.full_name ||
+            "Member";
+
+
+        const email =
+            profile?.email ||
+            user.email ||
+            "";
+
+
+        /* =========================
+           TAMPILKAN PROFILE
+        ========================= */
+
+        const memberNameEl =
+            document.getElementById("memberName");
+
+        const profileNameEl =
+            document.getElementById("profileName");
+
+        const profileEmailEl =
+            document.getElementById("profileEmail");
+
+        const avatarEl =
+            document.getElementById("avatar");
+
+
+        if(memberNameEl){
+            memberNameEl.textContent =
+                memberName;
+        }
+
+        if(profileNameEl){
+            profileNameEl.textContent =
+                memberName;
+        }
+
+        if(profileEmailEl){
+            profileEmailEl.textContent =
+                email;
+        }
+
+        if(avatarEl){
+            avatarEl.textContent =
+                memberName
+                    .charAt(0)
+                    .toUpperCase();
+        }
+
+
+        /* =========================
+           AMBIL SALDO WALLET
+        ========================= */
+
+        const {
+            data: wallet,
+            error: walletError
+        } = await sb
+            .from("wallets")
+            .select("balance")
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+
+        if(walletError){
+
+            console.error(
+                "WALLET ERROR:",
+                walletError
+            );
+
+        }
+
+
+        const balance =
+            Number(wallet?.balance || 0);
+
+
+        /* =========================
+           TAMPILKAN SALDO
+        ========================= */
+
+        const balanceEl =
+            document.getElementById("balanceValue");
+
+
+        if(balanceEl){
+
+            balanceEl.innerHTML =
+                "<span>Rp</span>" +
+                balance.toLocaleString("id-ID");
+
+        }
+
+
+        /* =========================
+           JUMLAH MISSION
+        ========================= */
+
+        const {
+            count: missionCount,
+            error: missionError
+        } = await sb
+            .from("user_missions")
+            .select("*", {
+                count:"exact",
+                head:true
+            })
+            .eq("user_id", user.id)
+            .eq("status", "completed");
+
+
+        if(!missionError){
+
+            const el =
+                document.getElementById("missionCount");
+
+            if(el){
+                el.textContent =
+                    missionCount || 0;
+            }
+
+        }
+
+
+        /* =========================
+           JUMLAH REFERRAL
+        ========================= */
+
+        const {
+            count: referralCount,
+            error: referralError
+        } = await sb
+            .from("referrals")
+            .select("*", {
+                count:"exact",
+                head:true
+            })
+            .eq("referrer_id", user.id);
+
+
+        if(!referralError){
+
+            const el =
+                document.getElementById("refCount");
+
+            if(el){
+                el.textContent =
+                    referralCount || 0;
+            }
+
+        }
+
+
+        console.log(
+            "Dashboard berhasil dimuat:",
+            {
+                user_id:user.id,
+                nama:memberName,
+                email:email,
+                saldo:balance
+            }
+        );
+
+
+    } catch(error){
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================
+   TOGGLE SALDO
+========================= */
+
+let dashboardBalance = 0;
+
+async function toggleBalance(){
+
+    const el =
+        document.getElementById("balanceValue");
+
+    if(!el) return;
+
+
+    const hidden =
+        el.dataset.hidden === "1";
+
+
+    if(hidden){
+
+        el.dataset.hidden = "0";
+
+        el.innerHTML =
+            "<span>Rp</span>" +
+            dashboardBalance.toLocaleString("id-ID");
+
+    }else{
+
+        el.dataset.hidden = "1";
+
+        el.innerHTML =
+            "Rp ••••••";
+
+    }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout(){
+
+    try{
+
+        await sb.auth.signOut();
+
+    }catch(error){
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+    location.href = "index.html";
+
+}
+
+
+/* =========================
+   LOAD
+========================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
+
+        /*
+         * Ambil saldo dulu untuk toggle
+         */
+        try{
+
+            const {
+                data:userData
+            } = await sb.auth.getUser();
+
+            const user =
+                userData?.user;
+
+            if(user){
+
+                const {
+                    data:wallet
+                } = await sb
+                    .from("wallets")
+                    .select("balance")
+                    .eq("user_id", user.id)
+                    .maybeSingle();
+
+                dashboardBalance =
+                    Number(wallet?.balance || 0);
+
+            }
+
+        }catch(e){
+
+            console.error(e);
+
+        }
+
+
+        await loadDashboardData();
+
+    }
+);
+
+</script>
+</body>
+</html>

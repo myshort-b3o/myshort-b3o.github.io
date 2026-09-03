@@ -1,0 +1,17 @@
+MYSHORT APP - UPDATE REFERRAL AI-MAX
+20 Agustus 2026
+
+Perubahan utama:
+1. Referral TIDAK lagi dianggap valid hanya karena email teman terverifikasi.
+2. Teman referral baru menjadi valid setelah berhasil membeli AI-MAX Rp100.000.
+3. Pembelian AI-MAX dijalankan melalui RPC purchase_ai_max dan otomatis mengubah referral menjadi status qualified.
+4. Hadiah referral Rp30.000 hanya dapat diklaim jika ada minimal 3 referral qualified dan email teman terverifikasi.
+5. Hadiah referral hanya dapat diklaim satu kali.
+6. Teman yang belum membeli AI-MAX tampil sebagai "Belum membeli AI-MAX".
+7. Teman yang sudah membeli tampil sebagai "AI-MAX dibeli — memenuhi syarat".
+8. Hadiah harian Rp8.000 tetap hanya dapat diklaim oleh pemilik AI-MAX aktif, pukul 12.00-24.00 WIB, satu kali per hari.
+9. Nominal dan syarat penting tetap divalidasi di PostgreSQL/Supabase, bukan dari browser.
+
+PENTING:
+Jalankan supabase_schema_secure.sql untuk instalasi gabungan, atau jalankan
+supabase_security_migration.sql setelah schema lama. Backup database terlebih dahulu.

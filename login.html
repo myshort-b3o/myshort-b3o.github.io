@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0d0f13">
+<title>MyShort App - Login</title>
+
+<style>
+:root{
+  --bg:#0b0d10;
+  --panel:#15181d;
+  --panel2:#191c21;
+  --gold:#e9b84c;
+  --gold2:#f7d77b;
+  --gold3:#c9952d;
+  --text:#f5f5f5;
+  --muted:#9a9da5;
+  --line:rgba(233,184,76,.34);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(233,184,76,.08),transparent 34%),
+    radial-gradient(circle at 0% 100%,rgba(233,184,76,.06),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.22;
+  background-image:radial-gradient(rgba(233,184,76,.55) .7px,transparent .7px);
+  background-size:18px 18px;
+  mask-image:linear-gradient(90deg,transparent 0%,black 74%,transparent 100%);
+}
+.decor{
+  position:fixed;
+  width:260px;height:260px;
+  border:1px solid rgba(233,184,76,.18);
+  border-radius:48% 52% 55% 45%;
+  pointer-events:none;
+  opacity:.55;
+}
+.decor.one{right:-150px;top:18%;transform:rotate(25deg)}
+.decor.two{left:-180px;bottom:-120px;transform:rotate(-22deg)}
+.wrap{
+  width:100%;
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  padding:30px 18px 22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+}
+.brand{text-align:center;margin-bottom:22px}
+.logo{
+  width:58px;height:58px;
+  margin:0 auto 10px;
+  border:1px solid rgba(233,184,76,.8);
+  border-radius:15px;
+  padding:9px;
+  background:linear-gradient(145deg,#17130b,#080909);
+  box-shadow:0 0 0 5px rgba(233,184,76,.035),0 12px 35px rgba(0,0,0,.28);
+}
+.logo img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-name{font-size:20px;font-weight:750;letter-spacing:-.4px}
+.brand-name span{color:var(--gold2)}
+.heading{text-align:center;margin-bottom:18px}
+.heading h1{
+  font-size:23px;
+  line-height:1.2;
+  font-weight:700;
+  color:var(--gold2);
+}
+.heading p{
+  margin:7px auto 0;
+  max-width:350px;
+  font-size:12px;
+  line-height:1.55;
+  color:var(--muted);
+}
+.card{
+  width:100%;
+  background:linear-gradient(145deg,rgba(27,30,35,.97),rgba(16,18,22,.97));
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:22px 18px 18px;
+  box-shadow:0 22px 55px rgba(0,0,0,.38);
+}
+.field{margin-bottom:14px}
+.field label{
+  display:block;
+  color:#c8c9cd;
+  font-size:12px;
+  font-weight:600;
+  margin:0 0 7px 2px;
+}
+.input-wrap{position:relative}
+.input-wrap .field-icon{
+  position:absolute;
+  left:13px;top:50%;
+  transform:translateY(-50%);
+  width:17px;height:17px;
+  color:var(--gold2);
+}
+.input-wrap input{
+  width:100%;
+  height:47px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:11px;
+  background:#101216;
+  color:#fff;
+  outline:none;
+  padding:0 42px 0 42px;
+  font-size:13px;
+  transition:.2s ease;
+}
+.input-wrap input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(233,184,76,.08);
+}
+.input-wrap input::placeholder{color:#70737a}
+.toggle{
+  position:absolute;
+  right:12px;top:50%;
+  transform:translateY(-50%);
+  width:27px;height:27px;
+  background:transparent;
+  color:#aaa;
+  display:grid;place-items:center;
+}
+.options{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:2px 1px 16px;
+  font-size:11px;
+}
+.remember{
+  display:flex;align-items:center;gap:7px;color:#999ca3;
+  cursor:pointer;
+}
+.remember input{accent-color:var(--gold);width:14px;height:14px}
+.forgot{color:var(--gold2)}
+.login-btn{
+  width:100%;
+  height:48px;
+  border-radius:11px;
+  border:0;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  color:#17130b;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 9px 22px rgba(233,184,76,.18);
+  transition:.18s ease;
+}
+.login-btn:hover{filter:brightness(1.04)}
+.login-btn:active{transform:scale(.985)}
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin:18px 0;
+  color:#777a80;font-size:11px;
+}
+.divider::before,.divider::after{
+  content:"";height:1px;flex:1;background:rgba(233,184,76,.25);
+}
+.register{
+  width:100%;
+  height:45px;
+  border-radius:11px;
+  border:1px solid rgba(233,184,76,.65);
+  background:transparent;
+  color:#f0f0f0;
+  font-size:12px;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.register:hover{background:rgba(233,184,76,.07)}
+.register strong{color:var(--gold2)}
+.help{text-align:center;margin-top:15px;font-size:10px;color:#73767d}
+.help a{color:var(--gold2)}
+.footer{
+  text-align:center;
+  margin-top:18px;
+  color:#65686e;
+  font-size:9px;
+  line-height:1.6;
+}
+.footer a{color:#b9964a;margin:0 5px}
+.toast{
+  position:fixed;left:50%;bottom:22px;
+  transform:translate(-50%,18px);
+  background:#20242a;color:#fff;
+  border:1px solid rgba(233,184,76,.35);
+  padding:9px 13px;border-radius:9px;
+  font-size:11px;opacity:0;pointer-events:none;
+  transition:.2s;z-index:10;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-height:700px){
+  .wrap{padding-top:18px;justify-content:flex-start}
+  .brand{margin-bottom:13px}
+  .logo{width:50px;height:50px;margin-bottom:7px}
+  .heading h1{font-size:21px}
+  .heading{margin-bottom:13px}
+  .card{padding:18px 16px 15px}
+}
+</style>
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+<div class="decor one"></div>
+<div class="decor two"></div>
+
+<main class="wrap">
+  <section class="brand">
+    <div class="sp-brand"><img class="sp-logo" src="logo.png" alt="MyShort Logo"><div class="sp-brand-text"><strong>MyShort Platform</strong><small>Member Area</small></div></div>
+      </section>
+
+  <section class="heading">
+    <h1>Selamat Datang Kembali</h1>
+    <p>Masuk untuk mengakses dashboard dan seluruh fitur member.</p>
+  </section>
+
+  <section class="card">
+    <form id="loginForm" autocomplete="on">
+      <div class="field">
+        <label for="username">Email atau Username</label>
+        <div class="input-wrap">
+          <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="8" r="3.2"/>
+            <path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/>
+          </svg>
+          <input id="username" name="username" type="text"
+                 placeholder="Masukkan email atau username" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="5" y="10" width="14" height="10" rx="2"/>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+          </svg>
+          <input id="password" name="password" type="password"
+                 placeholder="Masukkan password" required>
+          <button class="toggle" type="button" onclick="togglePassword()" aria-label="Tampilkan password">
+            <svg id="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M2.5 12s3.2-5 9.5-5 9.5 5 9.5 5-3.2 5-9.5 5-9.5-5-9.5-5Z"/>
+              <circle cx="12" cy="12" r="2.3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="options">
+        <label class="remember">
+          <input id="remember" type="checkbox">
+          <span>Ingat saya</span>
+        </label>
+        <a class="forgot" href="forgot-password.html">Lupa password?</a>
+      </div>
+
+      <button class="login-btn" type="submit">Masuk Sekarang</button>
+
+      <div class="divider"><span>atau</span></div>
+
+      <button class="register" type="button" onclick="location.href='register.html'">
+        Belum punya akun? <strong>Daftar</strong>
+      </button>
+    </form>
+
+    <div class="help">Butuh bantuan? <a href="https://play.google.com/d">Hubungi bantuan</a></div>
+  </section>
+
+  <footer class="footer">
+    © 2026 MyShort App. Semua hak dilindungi.<br>
+    <a href="https://play.google.com/d">Kebijakan Privasi</a> •
+    <a href="https://play.google.com/d">Syarat & Ketentuan</a> •
+    <a href="https://play.google.com/d">Bantuan</a>
+  </footer>
+</main>
+
+<div class="toast" id="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="app.js"></script>
+<script src="pages.js"></script>
+<script>
+/* FIX LOGIN: pages.js lama hanya menjalankan loginPage() untuk index.html.
+   Karena sekarang index.html adalah beranda publik, login.html perlu
+   memasang handler login sendiri. Koneksi Supabase tetap memakai
+   supabase-config.js yang sama. */
+(function(){
+  function bootLogin(){
+    const form=document.getElementById("loginForm");
+    const userInput=document.getElementById("username");
+    const passInput=document.getElementById("password");
+    if(!form||!userInput||!passInput) return;
+    if(form.dataset.loginFixed==="1") return;
+    form.dataset.loginFixed="1";
+
+    window.togglePassword=function(){
+      passInput.type=passInput.type==="password"?"text":"password";
+    };
+
+    const toast=document.getElementById("toast");
+    function message(text){
+      if(toast){
+        toast.textContent=text||"Terjadi kesalahan.";
+        toast.classList.add("show");
+        clearTimeout(window.__myshortToastTimer);
+        window.__myshortToastTimer=setTimeout(()=>toast.classList.remove("show"),3500);
+      }else alert(text||"Terjadi kesalahan.");
+    }
+
+    form.addEventListener("submit",async function(e){
+      e.preventDefault();
+      const identifier=userInput.value.trim();
+      const password=passInput.value;
+      if(!identifier||!password){message("Email/username dan password wajib diisi.");return;}
+
+      const sb=window.sb;
+      if(!sb||!sb.auth){
+        message("Koneksi Supabase belum siap. Pastikan supabase-config.js ada di repository.");
+        return;
+      }
+
+      const btn=form.querySelector(".login-btn");
+      if(btn){btn.disabled=true;btn.textContent="Memproses...";}
+      try{
+        let email=identifier;
+        if(!identifier.includes("@")){
+          const result=await sb.rpc("get_login_email",{p_username:identifier});
+          if(result.error) throw result.error;
+          if(!result.data) throw new Error("Username tidak ditemukan.");
+          email=String(result.data).trim();
+        }
+
+        const result=await sb.auth.signInWithPassword({email,password});
+        if(result.error) throw result.error;
+
+        /* Supabase menyimpan session di browser. */
+        message("Login berhasil. Membuka dashboard...");
+        setTimeout(()=>{window.location.replace("dashboard.html");},250);
+      }catch(err){
+        console.error("MyShort login:",err);
+        let text=err&&err.message?err.message:"Login gagal.";
+        if(/invalid login credentials/i.test(text)) text="Email/username atau password salah.";
+        message(text);
+        if(btn){btn.disabled=false;btn.textContent="Masuk Sekarang";}
+      }
+    });
+
+    /* Jika masih ada session, langsung ke dashboard. */
+    sbReadyCheck();
+    async function sbReadyCheck(){
+      try{
+        const sb=window.sb;
+        if(!sb||!sb.auth)return;
+        const {data}=await sb.auth.getSession();
+        if(data&&data.session){
+          window.location.replace("dashboard.html");
+        }
+      }catch(err){console.warn("Session check:",err);}
+    }
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootLogin);
+  else bootLogin();
+})();
+</script>
+</body>
+</html>
