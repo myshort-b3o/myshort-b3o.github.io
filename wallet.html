@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="theme-color" content="#090a0c">
+<title>MyShort - Wallet</title>
+
+<style>
+:root{
+ --bg:#090a0c;
+ --panel:#15171b;
+ --panel2:#1c1e23;
+ --gold:#e6b84f;
+ --gold2:#f7d77a;
+ --text:#f5f5f5;
+ --muted:#9699a2;
+ --green:#45c77a;
+ --red:#ff6262;
+}
+
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0
+}
+
+body{
+ font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+ color:var(--text);
+ background:
+ radial-gradient(circle at 50% -10%,rgba(230,184,79,.16),transparent 30%),
+ radial-gradient(circle at 100% 55%,rgba(230,184,79,.06),transparent 28%),
+ var(--bg);
+ min-height:100vh;
+ padding-bottom:82px;
+}
+
+body:before{
+ content:"";
+ position:fixed;
+ inset:0;
+ pointer-events:none;
+ opacity:.15;
+ background-image:
+ radial-gradient(rgba(230,184,79,.55) .65px,transparent .65px);
+ background-size:18px 18px;
+}
+
+.top{
+ position:relative;
+ overflow:hidden;
+ text-align:center;
+ padding:22px 16px 30px;
+ background:
+ radial-gradient(circle at 50% 0,rgba(230,184,79,.15),transparent 48%),
+ linear-gradient(145deg,#1a1b20,#0b0c0f);
+ border-bottom:1px solid rgba(230,184,79,.25);
+ border-radius:0 0 30px 30px;
+ box-shadow:0 16px 45px rgba(0,0,0,.35);
+}
+
+.top:after,
+.top:before{
+ content:"";
+ position:absolute;
+ border:1px solid rgba(230,184,79,.18);
+ border-radius:50%;
+ pointer-events:none;
+}
+
+.top:after{
+ width:270px;
+ height:270px;
+ right:-155px;
+ bottom:-220px;
+}
+
+.top:before{
+ width:190px;
+ height:190px;
+ left:-125px;
+ bottom:-150px;
+}
+
+.brand{
+ position:relative;
+ z-index:1;
+ display:inline-flex;
+ align-items:center;
+ gap:9px;
+}
+
+.logo{
+ width:38px;
+ height:38px;
+ border-radius:11px;
+ display:grid;
+ place-items:center;
+ font-weight:800;
+ font-size:14px;
+ color:var(--gold2);
+ border:1px solid rgba(230,184,79,.65);
+ background:linear-gradient(145deg,#2a2416,#0c0d10);
+}
+
+.logo .sp-logo{width:100%;height:100%;object-fit:cover;border:0;box-shadow:none;border-radius:inherit}
+
+.brand-name{
+ font-size:14px;
+ font-weight:750;
+ text-align:left;
+}
+
+.brand-name small{
+ display:block;
+ color:#858890;
+ font-size:9px;
+ font-weight:500;
+ margin-top:2px;
+}
+
+.top h1{
+ position:relative;
+ z-index:1;
+ font-size:24px;
+ line-height:1.2;
+ margin-top:20px;
+}
+
+.top p{
+ position:relative;
+ z-index:1;
+ font-size:10px;
+ color:#8e9199;
+ margin-top:6px;
+}
+
+.wrap{
+ max-width:760px;
+ margin:-18px auto 0;
+ padding:0 14px;
+ position:relative;
+ z-index:2;
+}
+
+.balance{
+ background:linear-gradient(145deg,#1b1d22,#111317);
+ border:1px solid rgba(230,184,79,.17);
+ border-radius:20px;
+ padding:19px;
+ box-shadow:0 15px 38px rgba(0,0,0,.34);
+}
+
+.balance-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.label{
+ font-size:11px;
+ color:#a8abb2;
+ font-weight:700;
+ letter-spacing:.3px;
+}
+
+.eye{
+ width:32px;
+ height:32px;
+ border-radius:10px;
+ background:#211d14;
+ color:var(--gold2);
+ border:1px solid rgba(230,184,79,.18);
+ display:grid;
+ place-items:center;
+ cursor:pointer;
+}
+
+.amount{
+ font-size:32px;
+ font-weight:850;
+ margin-top:6px;
+ letter-spacing:-1px;
+}
+
+.amount span{
+ font-size:16px;
+ color:var(--gold2);
+ margin-right:4px;
+}
+
+.balance-foot{
+ display:flex;
+ justify-content:space-between;
+ margin-top:13px;
+ padding-top:12px;
+ border-top:1px solid rgba(255,255,255,.07);
+ font-size:9px;
+ color:#777b84;
+}
+
+.balance-foot b{
+ color:var(--green);
+}
+
+.section{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:22px 2px 10px;
+}
+
+.section h2{
+ font-size:14px;
+ font-weight:750;
+}
+
+.section span{
+ font-size:9px;
+ color:#70747d;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
+.card{
+ min-height:130px;
+ padding:14px 10px;
+ border-radius:18px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ text-decoration:none;
+ color:var(--text);
+ background:linear-gradient(145deg,#191b20,#121418);
+ border:1px solid rgba(255,255,255,.07);
+ box-shadow:0 11px 30px rgba(0,0,0,.25);
+ transition:.18s;
+}
+
+.card:hover{
+ transform:translateY(-2px);
+ border-color:rgba(230,184,79,.35);
+}
+
+.card:active{
+ transform:scale(.97);
+}
+
+.icon{
+ width:48px;
+ height:48px;
+ border-radius:14px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(145deg,#292315,#18150f);
+ color:var(--gold2);
+ border:1px solid rgba(230,184,79,.18);
+ margin-bottom:9px;
+}
+
+.icon svg{
+ width:25px;
+ height:25px;
+}
+
+.card strong{
+ font-size:11px;
+ font-weight:750;
+}
+
+.card small{
+ font-size:8.5px;
+ color:#777b84;
+ margin-top:3px;
+}
+
+.info{
+ margin-top:13px;
+ padding:16px;
+ border-radius:18px;
+ background:linear-gradient(145deg,#181a1f,#121418);
+ border:1px solid rgba(255,255,255,.07);
+ box-shadow:0 11px 30px rgba(0,0,0,.25);
+}
+
+.info h2{
+ font-size:14px;
+ margin-bottom:7px;
+}
+
+.info p{
+ font-size:10px;
+ line-height:1.65;
+ color:#858991;
+}
+
+.info b{
+ color:var(--gold2);
+}
+
+.cta{
+ display:block;
+ text-align:center;
+ margin-top:12px;
+ padding:11px;
+ border-radius:10px;
+ background:linear-gradient(135deg,#f8dc85,#dcae3f);
+ color:#111;
+ font-size:10px;
+ font-weight:800;
+ text-decoration:none;
+}
+
+.notice{
+ margin-top:11px;
+ padding:11px 12px;
+ border-radius:13px;
+ background:rgba(230,184,79,.055);
+ border:1px solid rgba(230,184,79,.12);
+ font-size:9px;
+ color:#858991;
+ line-height:1.5;
+}
+
+.notice b{
+ color:var(--gold2);
+}
+
+.error{
+ display:none;
+ margin-top:12px;
+ padding:11px 12px;
+ border-radius:13px;
+ background:rgba(255,98,98,.08);
+ border:1px solid rgba(255,98,98,.22);
+ color:#ff9b9b;
+ font-size:10px;
+ line-height:1.5;
+}
+
+.loading{
+ font-size:10px;
+ color:#858991;
+ text-align:center;
+ padding:10px;
+}
+
+.bottom{
+ position:fixed;
+ z-index:20;
+ left:0;
+ right:0;
+ bottom:0;
+ background:rgba(14,15,18,.97);
+ backdrop-filter:blur(14px);
+ border-top:1px solid rgba(230,184,79,.15);
+ padding:7px 10px calc(7px + env(safe-area-inset-bottom));
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+}
+
+.nav{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:3px;
+ color:#70747d;
+ font-size:8.5px;
+ font-weight:650;
+ text-decoration:none;
+}
+
+.nav-icon{
+ width:29px;
+ height:29px;
+ display:grid;
+ place-items:center;
+ border-radius:8px;
+}
+
+.nav svg{
+ width:20px;
+ height:20px;
+}
+
+.nav.active{
+ color:var(--gold2);
+}
+
+.nav.active .nav-icon{
+ background:#211d14;
+ border:1px solid rgba(230,184,79,.18);
+}
+
+@media(max-width:360px){
+ .wrap{
+  padding:0 10px
+ }
+
+ .top h1{
+  font-size:22px
+ }
+
+ .card{
+  min-height:122px
+ }
+}
+</style>
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+
+<header class="top">
+
+ <div class="brand">
+  <div class="logo"><img class="sp-logo" src="logo.png" alt="MyShort Logo"></div>
+
+  <div class="brand-name">
+   MyShort App
+   <small>Member Area</small>
+  </div>
+ </div>
+
+ <h1>Wallet Saya</h1>
+
+ <p>
+  Kelola saldo, deposit, withdrawal, dan rekening Anda.
+ </p>
+
+</header>
+
+
+<main class="wrap">
+
+ <div id="error" class="error"></div>
+
+ <section class="balance">
+
+  <div class="balance-head">
+
+   <div class="label">
+    TOTAL SALDO
+   </div>
+
+   <button
+    class="eye"
+    onclick="toggleBalance()"
+    id="eye"
+    type="button">
+    ◉
+   </button>
+
+  </div>
+
+
+  <div class="amount" id="amount">
+   <span>Rp</span>0
+  </div>
+
+
+  <div class="balance-foot">
+
+   <span>
+    Saldo tersedia
+   </span>
+
+   <b>
+    ● Aktif
+   </b>
+
+  </div>
+
+ </section>
+
+
+ <div class="section">
+
+  <h2>
+   Menu Wallet
+  </h2>
+
+  <span>
+   Kelola keuangan
+  </span>
+
+ </div>
+
+
+ <section class="grid">
+
+  <a class="card" href="deposit.html">
+
+   <div class="icon">
+
+    <svg
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8">
+
+     <rect
+      x="3"
+      y="5"
+      width="18"
+      height="14"
+      rx="2"/>
+
+     <path d="M3 9h18M7 14h4"/>
+
+    </svg>
+
+   </div>
+
+   <strong>
+    INVES
+   </strong>
+
+   <small>
+    Tambah saldo
+   </small>
+
+  </a>
+
+
+  <a class="card" href="withdrawal.html">
+
+   <div class="icon">
+
+    <svg
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8">
+
+     <path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 18h18M2 10l10-6 10 6"/>
+
+    </svg>
+
+   </div>
+
+   <strong>
+    Withdrawal
+   </strong>
+
+   <small>
+    Tarik saldo
+   </small>
+
+  </a>
+
+
+  <a class="card" href="history.html">
+
+   <div class="icon">
+
+    <svg
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8">
+
+     <path d="M7 3.5h7l4 4V21H7a2 2 0 0 1-2-2V5.5a2 2 0 0 1 2-2Z"/>
+
+     <path d="M14 3.5V8h4M8.5 12h7M8.5 15h7M8.5 18h4.5"/>
+
+    </svg>
+
+   </div>
+
+   <strong>
+    Riwayat
+   </strong>
+
+   <small>
+    Transaksi
+   </small>
+
+  </a>
+
+
+  <a class="card" href="bank.html">
+
+   <div class="icon">
+
+    <svg
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.8">
+
+     <path d="M3 9h18M5 9v8M9 9v8M15 9v8M19 9v8M3 17h18M2 9l10-6 10 6"/>
+
+    </svg>
+
+   </div>
+
+   <strong>
+    Rekening Bank
+   </strong>
+
+   <small>
+    Kelola rekening
+   </small>
+
+  </a>
+
+ </section>
+
+
+ <section class="info">
+
+  <h2>
+   Deposit melalui DANA
+  </h2>
+
+  <p>
+   Untuk melakukan deposit, gunakan menu
+   <b>INVES</b>.
+   Setelah pengajuan dibuat, ikuti instruksi
+   pembayaran yang ditampilkan pada halaman deposit.
+  </p>
+
+  <a
+   class="cta"
+   href="deposit.html">
+   Deposit Sekarang
+  </a>
+
+ </section>
+
+
+ <div class="notice">
+
+  <b>Catatan:</b>
+  Pastikan nama pemilik rekening sesuai dengan
+  data member sebelum melakukan withdrawal.
+
+ </div>
+
+</main>
+
+
+<nav class="bottom">
+
+ <a class="nav" href="dashboard.html">
+
+  <div class="nav-icon">
+
+   <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.9">
+
+    <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z"/>
+
+   </svg>
+
+  </div>
+
+  Home
+
+ </a>
+
+
+ <a class="nav" href="mission.html">
+
+  <div class="nav-icon">
+
+   <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.9">
+
+    <circle cx="12" cy="12" r="8.5"/>
+
+    <circle cx="12" cy="12" r="4.5"/>
+
+    <circle
+     cx="12"
+     cy="12"
+     r="1.2"
+     fill="currentColor"/>
+
+   </svg>
+
+  </div>
+
+  Mission
+
+ </a>
+
+
+ <a class="nav active" href="wallet.html">
+
+  <div class="nav-icon">
+
+   <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.9">
+
+    <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H19a2 2 0 0 1 2 2v11H5.5A2.5 2.5 0 0 1 3 15.5v-8Z"/>
+
+    <path d="M3 8h18v5h-4a2.5 2.5 0 0 1 0-5"/>
+
+   </svg>
+
+  </div>
+
+  Wallet
+
+ </a>
+
+
+ <a class="nav" href="profile.html">
+
+  <div class="nav-icon">
+
+   <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.9">
+
+    <circle cx="12" cy="8" r="3.2"/>
+
+    <path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/>
+
+   </svg>
+
+  </div>
+
+  Profile
+
+ </a>
+
+</nav>
+
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- CONFIG SUPABASE YANG SAMA DENGAN WEBSITE ANDA -->
+<script src="supabase-config.js"></script>
+
+
+<script>
+"use strict";
+
+/*
+ * ==========================================================
+ * WALLET SUPABASE
+ * ==========================================================
+ *
+ * Saldo TIDAK lagi menggunakan localStorage.
+ *
+ * Sumber saldo:
+ *
+ * Supabase
+ *    ↓
+ * Auth user.id
+ *    ↓
+ * wallets.user_id
+ *    ↓
+ * wallets.balance
+ *    ↓
+ * Tampilan Wallet
+ *
+ * Dengan cara ini domain GitHub Pages dan Cloudflare
+ * menggunakan data member yang sama selama keduanya
+ * menggunakan project Supabase yang sama.
+ * ==========================================================
+ */
+
+const sb = window.sb;
+
+let walletBalance = 0;
+let hidden = false;
+
+
+/* Format Rupiah */
+function money(n){
+
+ const value = Number(n || 0);
+
+ return new Intl.NumberFormat("id-ID").format(value);
+
+}
+
+
+/* Tampilkan pesan error */
+function showError(message){
+
+ const el = document.getElementById("error");
+
+ if(!el) return;
+
+ el.textContent = message || "Terjadi kesalahan.";
+
+ el.style.display = "block";
+
+}
+
+
+/* Hilangkan error */
+function hideError(){
+
+ const el = document.getElementById("error");
+
+ if(el){
+
+  el.style.display = "none";
+
+ }
+
+}
+
+
+/*
+ * Render saldo
+ */
+function renderBalance(){
+
+ const amount = document.getElementById("amount");
+
+ const eye = document.getElementById("eye");
+
+ if(!amount) return;
+
+
+ if(hidden){
+
+  amount.innerHTML =
+   '<span>Rp</span>••••••';
+
+ }else{
+
+  amount.innerHTML =
+   '<span>Rp</span>' +
+   money(walletBalance);
+
+ }
+
+
+ if(eye){
+
+  eye.textContent = hidden ? "○" : "◉";
+
+ }
+
+}
+
+
+/*
+ * Tombol mata / sembunyikan saldo
+ */
+function toggleBalance(){
+
+ hidden = !hidden;
+
+ renderBalance();
+
+}
+
+
+/*
+ * ==========================================================
+ * LOAD WALLET DARI SUPABASE
+ * ==========================================================
+ */
+async function loadWalletFromSupabase(){
+
+ hideError();
+
+
+ /*
+  * Pastikan Supabase config tersedia
+  */
+ if(!sb){
+
+  showError(
+   "Konfigurasi Supabase tidak ditemukan. Pastikan file supabase-config.js tersedia."
+  );
+
+  return;
+
+ }
+
+
+ try{
+
+  /*
+   * Ambil member yang sedang login
+   */
+  const {
+   data:userData,
+   error:userError
+  } = await sb.auth.getUser();
+
+
+  if(userError){
+
+   throw userError;
+
+  }
+
+
+  const user = userData?.user;
+
+
+  /*
+   * Kalau belum login
+   */
+  if(!user){
+
+   location.href = "index.html";
+
+   return;
+
+  }
+
+
+  /*
+   * Ambil saldo berdasarkan user.id
+   *
+   * Ini TIDAK menggunakan localStorage.
+   */
+  const {
+   data,
+   error
+  } = await sb
+   .from("wallets")
+   .select("balance")
+   .eq("user_id", user.id)
+   .maybeSingle();
+
+
+  if(error){
+
+   throw error;
+
+  }
+
+
+  /*
+   * Kalau wallet belum memiliki row,
+   * tampilkan Rp 0.
+   */
+  walletBalance = Number(data?.balance || 0);
+
+
+  renderBalance();
+
+
+ }catch(error){
+
+  console.error(
+   "Gagal mengambil saldo wallet:",
+   error
+  );
+
+
+  showError(
+   error?.message ||
+   "Saldo wallet gagal dimuat dari Supabase."
+  );
+
+
+  /*
+   * Jangan gunakan saldo localStorage sebagai fallback.
+   *
+   * Karena tujuan kita adalah menjadikan Supabase
+   * sebagai sumber saldo utama.
+   */
+  walletBalance = 0;
+
+  renderBalance();
+
+ }
+
+}
+
+
+/*
+ * Jalankan setelah halaman selesai dimuat
+ */
+document.addEventListener(
+ "DOMContentLoaded",
+ async function(){
+
+  renderBalance();
+
+  await loadWalletFromSupabase();
+
+ }
+);
+
+
+/*
+ * Jika member kembali ke tab ini,
+ * ambil saldo terbaru lagi.
+ */
+window.addEventListener(
+ "pageshow",
+ async function(){
+
+  await loadWalletFromSupabase();
+
+ }
+);
+
+
+/*
+ * Jika session Auth berubah,
+ * muat ulang wallet.
+ */
+if(sb && sb.auth){
+
+ sb.auth.onAuthStateChange(
+  async function(event){
+
+   if(
+    event === "SIGNED_IN" ||
+    event === "TOKEN_REFRESHED"
+   ){
+
+    await loadWalletFromSupabase();
+
+   }
+
+   if(event === "SIGNED_OUT"){
+
+    location.href = "index.html";
+
+   }
+
+  }
+ );
+
+}
+</script>
+
+</body>
+</html>
