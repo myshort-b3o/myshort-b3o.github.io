@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<title>MyShort App - Misi & Reward</title>
+<link rel="stylesheet" href="premium-brand.css">
+<style>
+*{box-sizing:border-box}
+:root{--gold:#f3c64f;--gold2:#ffe9a2;--bg:#07090b;--panel:#15171b;--muted:#8a8d94;--line:#4b3818;--green:#4dd5a0;--red:#ff8c82}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#f5f5f5}
+body{padding-bottom:92px;background:radial-gradient(circle at 50% -8%,#322613 0,#15161a 23%,#08090b 66%)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.09;background-image:radial-gradient(#e8bd58 .55px,transparent .55px);background-size:20px 20px}
+button,a{font:inherit}
+.head{padding:18px 18px 24px;background:linear-gradient(145deg,#17191d,#0c0d10);border-bottom:1px solid #3e311a;border-radius:0 0 24px 24px}
+.brand{display:flex;gap:10px;align-items:center}.logo{width:43px;height:43px;border:1px solid #70551e;border-radius:13px;display:grid;place-items:center;background:#0d0e10;overflow:hidden}.sp-logo{width:100%;height:100%;object-fit:cover}.brand b{font-size:15px}.brand small{display:block;color:#777;font-size:9px;margin-top:3px}
+.balance{margin-top:13px;border:1px solid #4e3b18;border-radius:14px;padding:9px 12px;background:#111216;display:inline-block}.balance span{display:block;color:#9b9da3;font-size:9px}.balance b{display:block;color:#ffd65f;font-size:16px;margin-top:4px}
+.head h1{font-size:24px;margin:18px 0 5px}.head p{font-size:10px;color:#888;margin:0}
+.wrap{max-width:760px;margin:auto;padding:10px 14px;position:relative;z-index:2}
+.claim-card{margin:0 0 13px;padding:16px;border:1px solid #553c20;border-radius:18px;background:linear-gradient(145deg,#2a1212,#180d0e);box-shadow:0 10px 28px #0009}
+.claim-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.claim-label{font-size:11px;color:#aaa1a0}.coin{font-size:29px;color:#ffd451;font-weight:900;line-height:1;margin-top:7px}.coin span{font-size:12px;color:#ddd;margin-left:5px}.claim-btn{min-width:120px;height:46px;border-radius:13px;border:1px solid #6d625f;background:#211b1c;color:#a8a3a2;font-weight:800;font-size:13px;cursor:pointer}.claim-btn.ready{background:linear-gradient(135deg,#ffe48b,#d89d25);color:#1b1609;border-color:#f2c65b}.claim-btn:disabled{opacity:.6;cursor:not-allowed}
+.claim-sub{margin-top:11px;color:#8c8583;font-size:8.5px;line-height:1.55}.claim-sub b{color:#ffe3a0}
+.max-card{margin:13px 0;padding:15px;border-radius:18px;background:linear-gradient(145deg,#1b1113,#120b0d);border:1px solid #5c2b2b;box-shadow:0 12px 30px #0009}
+.max-head{display:flex;align-items:center;gap:12px}.max-logo{width:62px;height:62px;border-radius:15px;background:#f5f5f5;display:grid;place-items:center;overflow:hidden;flex:0 0 62px}.max-logo img{width:100%;height:100%;object-fit:cover}.max-title{font-size:16px;font-weight:900}.max-sub{font-size:9px;color:#9a8d8d;margin-top:4px}
+.max-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:13px}.max-stat{background:#130b0d;border-radius:10px;padding:9px}.max-stat small{display:block;color:#786d6d;font-size:7px;text-transform:uppercase}.max-stat b{display:block;font-size:13px;color:#ffe16d;margin-top:5px}
+.max-status{margin-top:11px;padding:10px;border-radius:11px;background:#211113;border:1px solid #4d2528;color:#aaa;font-size:9px}.max-status strong{display:block;color:#fff;font-size:14px;margin-top:3px}
+.buy{width:100%;margin-top:10px;border:0;border-radius:11px;padding:11px;background:linear-gradient(135deg,#ff766d,#ff4f62);color:white;font-weight:900;cursor:pointer}.buy:disabled{opacity:.55;cursor:not-allowed}
+.tabs{display:flex;gap:7px;overflow:auto;margin:15px 0 11px;padding-bottom:2px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{border:1px solid #2b2d32;background:#15171b;color:#888;border-radius:20px;padding:9px 13px;font-size:9px;white-space:nowrap;cursor:pointer}.tab.active{background:linear-gradient(135deg,#f0c552,#c99022);color:#17130a;border-color:#f0c75e;font-weight:800}
+.mission{padding:15px;border-radius:19px;margin-bottom:11px;background:linear-gradient(145deg,#191b20,#111317);border:1px solid #342b1c;box-shadow:0 9px 24px #0007}.toprow{display:flex;align-items:center;gap:11px}.icon{width:46px;height:46px;flex:0 0 46px;border-radius:14px;background:#241d0f;border:1px solid #5c471d;display:grid;place-items:center;color:#ffd65f;font-size:20px}.name{font-size:12px;font-weight:800}.desc{font-size:8.8px;color:#777;line-height:1.45;margin-top:4px}.reward{text-align:right;margin-left:auto}.reward small{display:block;font-size:8px;color:#777}.reward b{font-size:13px;color:#ffd65f}.foot{display:flex;align-items:center;margin-top:12px;gap:8px}.status{flex:1;color:#777;font-size:8px}.actions{display:flex;gap:5px;justify-content:flex-end}.btn{border:0;background:linear-gradient(135deg,#ffe7a0,#d8a63b);color:#17130a;border-radius:9px;padding:9px 13px;font-size:9px;font-weight:800;cursor:pointer}.btn.secondary{background:#211a0d;color:#ffe19a;border:1px solid #665020}.btn:disabled{opacity:.5;cursor:not-allowed}
+.note{margin-top:13px;padding:12px;border:1px solid #25272b;border-radius:14px;color:#7f8289;font-size:8.5px;line-height:1.55}.note b{color:#ffe19a}.error{display:none;margin:12px 0;padding:12px;border:1px solid #6a302a;border-radius:12px;background:#211311;color:#ffb7ae;font-size:9px;line-height:1.5}.empty{padding:24px 15px;border:1px dashed #3a352b;border-radius:16px;text-align:center;color:#777;font-size:10px;background:#111317}
+.nav{position:fixed;bottom:0;left:0;right:0;height:78px;background:#08090b;border-top:1px solid #302719;display:grid;grid-template-columns:repeat(4,1fr);z-index:10}.nav a{text-decoration:none;color:#70747c;text-align:center;font-size:8.5px;padding-top:9px}.nav a.active{color:#ffe19a}.nav i{font-style:normal;font-size:22px;display:block;margin-bottom:4px}
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#181a1e;border:1px solid #665020;color:#ffe39a;padding:10px 14px;border-radius:12px;font-size:10px;display:none;z-index:20;box-shadow:0 10px 30px #0009;max-width:90%;text-align:center}
+@media(max-width:520px){.claim-top{align-items:flex-start}.max-grid{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="brand"><div class="logo"><img class="sp-logo" src="logo.png" alt="MyShort Logo"></div><div><b>MyShort App</b><small>Bonus & Misi Harian</small></div></div>
+  <div class="balance"><span>Saldo Anda</span><b id="balance">Rp 0</b></div>
+  <h1>Misi Harian</h1>
+  <p>Deposit → admin approve → saldo masuk → AKTIFKAN MISI → hadiah Rp3.000/hari.</p>
+</header>
+
+<main class="wrap">
+  <div id="error" class="error"></div>
+
+  <section class="claim-card">
+    <div class="claim-top">
+      <div><div class="claim-label">Menunggu untuk mengklaim hadiah</div><div class="coin">Rp 3.000 <span>Hadiah harian</span></div></div>
+      <button id="dailyClaimBtn" class="claim-btn" disabled>Klaim</button>
+    </div>
+    <div class="claim-sub">Hadiah muncul setiap hari <b>jam 12.00 WIB</b> dan hangus pada <b>24.00 WIB</b>. Jam di layar hanya indikator; validasi sebenarnya dilakukan oleh database.</div>
+  </section>
+
+  <section class="max-card">
+    <div class="max-head">
+      <div class="max-logo"><img src="logo.png" alt="AI-MAX"></div>
+      <div><div class="max-title">AI-MAX</div><div class="max-sub">Harga dan reward ditetapkan di database.</div></div>
+    </div>
+    <div class="max-grid">
+      <div class="max-stat"><small>Harga</small><b>Rp100.000</b></div>
+      <div class="max-stat"><small>Hadiah/hari</small><b>Rp3.000</b></div>
+      <div class="max-stat"><small>Waktu</small><b>12–24 WIB</b></div>
+    </div>
+    <div class="max-status"><span>Status AI-MAX</span><strong id="maxStatus">Memuat...</strong></div>
+    <button class="buy" id="buyMaxBtn">AKTIFKAN MISI</button>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" data-f="all">Semua</button>
+    <button class="tab" data-f="daily">Harian</button>
+    <button class="tab" data-f="deposit">AI-MAX</button>
+    <button class="tab" data-f="referral">Referral</button>
+    <button class="tab" data-f="drama">Drama</button>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="note"><b>Misi Undang Teman:</b> undang 3 teman. Teman baru hanya dihitung setelah emailnya terverifikasi <b>dan AKTIFKAN MISI</b>. Setelah 3 teman valid, hadiah <b>Rp25.000</b> dapat diklaim satu kali.</div>
+  <div class="note"><b>Misi Nonton Drama:</b> reward Rp2.000 maksimal 1x sehari. Tombol <b>Tonton Drama</b> membuka Vidio. Kredit reward perlu divalidasi melalui Supabase/RPC agar aman.<br><br><b>Keamanan:</b> nominal reward, kepemilikan AI-MAX, jam klaim, dan batas satu klaim per hari tidak dipercaya dari JavaScript/browser.</div>
+</main>
+
+<nav class="nav">
+  <a href="dashboard.html"><i>⌂</i>Home</a>
+  <a class="active" href="mission.html"><i>◎</i>Mission</a>
+  <a href="wallet.html"><i>▣</i>Wallet</a>
+  <a href="profile.html"><i>♙</i>Profile</a>
+</nav>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+const sb=window.sb;
+let user=null,wallet=null,activePlan=null,todayClaim=null,refCount=0,dramaClaimed=false,filter="all";
+
+const money=n=>"Rp "+new Intl.NumberFormat("id-ID").format(Number(n||0));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+const toast=msg=>{const e=document.getElementById("toast");e.textContent=msg;e.style.display="block";clearTimeout(window.__t);window.__t=setTimeout(()=>e.style.display="none",2600)};
+const error=msg=>{const e=document.getElementById("error");e.textContent=msg;e.style.display=msg?"block":"none"};
+
+function jakartaNow(){
+  return new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Jakarta"}));
+}
+function updateClock(){
+  const n=jakartaNow(),h=n.getHours(),m=n.getMinutes(),ready=h>=12&&h<24;
+  const b=document.getElementById("dailyClaimBtn");
+  const available=ready&&!!activePlan&&!todayClaim;
+  b.disabled=!available;b.classList.toggle("ready",available);
+  if(todayClaim)b.textContent="Sudah diklaim";
+  else b.textContent=ready?"Klaim":"Klaim";
+}
+setInterval(updateClock,25000);
+
+async function load(){
+  error("");
+  const {data:{user:u},error:ae}=await sb.auth.getUser();
+  if(ae)throw ae;if(!u){location.href="index.html";return}user=u;
+
+  const [w,p,c,r]=await Promise.all([
+    sb.from("wallets").select("balance").eq("user_id",user.id).single(),
+    sb.from("ai_max_purchases").select("id,purchased_at,active").eq("user_id",user.id).eq("active",true).order("purchased_at",{ascending:false}).limit(1),
+    sb.from("ai_max_daily_claims").select("id,claim_date,amount,claimed_at").eq("user_id",user.id).eq("claim_date",`${jakartaNow().getFullYear()}-${String(jakartaNow().getMonth()+1).padStart(2,"0")}-${String(jakartaNow().getDate()).padStart(2,"0")}`).maybeSingle(),
+    sb.from("referrals").select("referred_id,status",{count:"exact",head:true}).eq("referrer_id",user.id).eq("status","qualified")
+  ]);
+  if(w.error)throw w.error;if(p.error)throw p.error;if(c.error)throw c.error;if(r.error)throw r.error;
+  wallet=w.data;activePlan=(p.data||[])[0]||null;todayClaim=c.data||null;refCount=r.count||0;
+  document.getElementById("balance").textContent=money(wallet.balance);
+  document.getElementById("maxStatus").textContent=activePlan?"Aktif — hadiah harian terbuka":"Belum aktif";
+  document.getElementById("buyMaxBtn").disabled=!!activePlan;
+  document.getElementById("buyMaxBtn").textContent=activePlan?"AI-MAX Sudah Aktif":"AKTIFKAN MISI";
+  updateClock();render();
+}
+
+function render(){
+  const cards=[
+    {cat:"daily",icon:"✓",title:"Cek Harian",desc:"Klaim Rp3.000 setiap hari setelah AI-MAX aktif. Tersedia 12.00–24.00 WIB.",reward:3000,status:todayClaim?"Sudah diklaim hari ini":activePlan?"Siap diklaim":"Aktifkan AI-MAX terlebih dahulu",action:todayClaim?'<button class="btn secondary" disabled>Selesai</button>':'<button class="btn" id="inlineDaily">Klaim Rp3.000</button>'},
+    {cat:"referral",icon:"♧",title:"Undang Teman",desc:`Undang 3 teman yang sudah verifikasi email + AKTIFKAN MISI. Progress: ${Math.min(refCount,3)}/3.`,reward:25000,status:refCount>=3?"Hadiah siap diklaim":"Belum memenuhi 3 teman pembeli AI-MAX",action:'<button class="btn" id="refClaim">Klaim Rp25.000</button>'},
+    {cat:"deposit",icon:"◆",title:"Reward AI-MAX",desc:"Gunakan saldo wallet untuk membeli AI-MAX seharga Rp100.000.",reward:3000,status:activePlan?"Sudah aktif":"Belum aktif",action:'<button class="btn" id="buyInline">Reward AI-MAX</button>'},
+    {cat:"drama",icon:"▣",title:"Nonton Drama",desc:"Tonton drama pilihan sampai selesai untuk mendapatkan reward. Tersedia 1x setiap hari.",reward:2000,status:dramaClaimed?"Sudah menonton hari ini":"Belum menonton hari ini",action:dramaClaimed?'<button class="btn secondary" disabled>Selesai</button>':'<button class="btn" id="dramaWatch">▶ Tonton Drama</button>'}
+  ];
+  const visible=cards.filter(x=>filter==="all"||x.cat===filter);
+  document.getElementById("list").innerHTML=visible.map(x=>`<article class="mission"><div class="toprow"><div class="icon">${x.icon}</div><div style="flex:1"><div class="name">${esc(x.title)}</div><div class="desc">${esc(x.desc)}</div></div><div class="reward"><small>Reward</small><b>${money(x.reward)}</b></div></div><div class="foot"><span class="status">${esc(x.status)}</span><span class="actions">${x.action}</span></div></article>`).join("");
+  const d=document.getElementById("inlineDaily");if(d)d.onclick=claimDaily;
+  const r=document.getElementById("refClaim");if(r)r.onclick=claimReferral;if(r&&refCount<3)r.disabled=true;
+  const bi=document.getElementById("buyInline");if(bi)bi.onclick=purchase;
+  const dw=document.getElementById("dramaWatch");if(dw)dw.onclick=watchDrama;
+}
+
+async function purchase(){
+  if(activePlan){toast("AI-MAX sudah aktif.");return}
+  try{const {error:e}=await sb.rpc("purchase_ai_max");if(e)throw e;toast("AI-MAX berhasil dibeli.");await load();}
+  catch(e){toast(e.message||"Pembelian gagal.");}
+}
+async function claimDaily(){
+  try{const {data,error:e}=await sb.rpc("claim_ai_max_daily_reward");if(e)throw e;toast("Hadiah Rp3.000 berhasil masuk.");await load();}
+  catch(e){toast(e.message||"Klaim gagal.");}
+}
+async function claimReferral(){
+  try{const {data,error:e}=await sb.rpc("claim_referral_reward");if(e)throw e;toast("Hadiah referral Rp30.000 berhasil masuk.");await load();}
+  catch(e){toast(e.message||"Klaim gagal.");}
+}
+async function watchDrama(){
+  if(dramaClaimed){toast("Misi nonton drama hari ini sudah selesai.");return;}
+  window.open("https://m.vidio.com/watch/9569346-episode-43?fullscreen=true","_blank","noopener,noreferrer");
+  toast("Drama dibuka di Vidio.");
+}
+
+document.getElementById("buyMaxBtn").onclick=purchase;
+document.getElementById("dailyClaimBtn").onclick=claimDaily;
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.f;render()});
+load().catch(e=>{console.error(e);error("Gagal memuat data: "+(e.message||"periksa login dan migrasi Supabase."))});
+</script>
+</body>
+</html>
