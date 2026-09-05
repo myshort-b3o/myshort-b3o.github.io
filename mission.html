@@ -1,0 +1,1677 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+
+<title>MyShort - Mining</title>
+
+<link rel="stylesheet" href="premium-brand.css">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+:root{
+    --gold:#f3c64f;
+    --gold2:#ffe9a2;
+    --bg:#07090b;
+    --panel:#15171b;
+    --panel2:#111317;
+    --muted:#888b92;
+    --line:#4b3818;
+    --green:#4dd5a0;
+    --red:#ff7770;
+}
+
+html,
+body{
+    margin:0;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:#f5f5f5;
+}
+
+body{
+    padding-bottom:92px;
+
+    background:
+        radial-gradient(
+            circle at 50% -8%,
+            #322613 0,
+            #15161a 23%,
+            #08090b 66%
+        );
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.09;
+
+    background-image:
+        radial-gradient(
+            #e8bd58 .55px,
+            transparent .55px
+        );
+
+    background-size:20px 20px;
+}
+
+/* HEADER */
+
+.head{
+    padding:18px 18px 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #17191d,
+            #0c0d10
+        );
+
+    border-bottom:1px solid #3e311a;
+    border-radius:0 0 24px 24px;
+}
+
+.brand{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.logo{
+    width:43px;
+    height:43px;
+
+    border:1px solid #70551e;
+    border-radius:13px;
+
+    display:grid;
+    place-items:center;
+
+    background:#0d0e10;
+    overflow:hidden;
+}
+
+.sp-logo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.brand b{
+    font-size:15px;
+}
+
+.brand small{
+    display:block;
+    color:#777;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.balance{
+    margin-top:13px;
+
+    border:1px solid #4e3b18;
+    border-radius:14px;
+
+    padding:10px 13px;
+
+    background:#111216;
+    display:inline-block;
+}
+
+.balance span{
+    display:block;
+    color:#9b9da3;
+    font-size:9px;
+}
+
+.balance b{
+    display:block;
+    color:#ffd65f;
+    font-size:18px;
+    margin-top:4px;
+}
+
+.head h1{
+    font-size:25px;
+    margin:18px 0 5px;
+}
+
+.head p{
+    font-size:10px;
+    color:#888;
+    margin:0;
+}
+
+
+/* CONTENT */
+
+.wrap{
+    max-width:760px;
+    margin:auto;
+
+    padding:12px 14px;
+
+    position:relative;
+    z-index:2;
+}
+
+
+/* STATUS */
+
+.error{
+    display:none;
+
+    margin:0 0 13px;
+
+    padding:13px;
+
+    border:1px solid #6a302a;
+    border-radius:14px;
+
+    background:#211311;
+
+    color:#ffb7ae;
+
+    font-size:10px;
+    line-height:1.5;
+}
+
+.success{
+    color:var(--green);
+}
+
+
+/* MINING CARD */
+
+.mining-card{
+    padding:17px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #191b20,
+            #111317
+        );
+
+    border:1px solid #5a451d;
+
+    box-shadow:
+        0 10px 28px #0009;
+}
+
+.mining-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.mining-icon{
+    width:58px;
+    height:58px;
+
+    flex:0 0 58px;
+
+    border-radius:16px;
+
+    background:#0d0e10;
+
+    border:1px solid #70551e;
+
+    display:grid;
+    place-items:center;
+
+    overflow:hidden;
+}
+
+.mining-icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.mining-title{
+    font-size:18px;
+    font-weight:900;
+}
+
+.mining-sub{
+    color:#92949a;
+    font-size:9px;
+    margin-top:4px;
+    line-height:1.4;
+}
+
+
+/* STATS */
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:7px;
+
+    margin-top:15px;
+}
+
+.stat{
+    background:#100f10;
+
+    border-radius:11px;
+
+    padding:10px;
+}
+
+.stat small{
+    display:block;
+
+    color:#777;
+
+    font-size:7px;
+
+    text-transform:uppercase;
+}
+
+.stat b{
+    display:block;
+
+    color:#ffe16d;
+
+    font-size:13px;
+
+    margin-top:5px;
+}
+
+
+/* STATUS BOX */
+
+.mining-status{
+    margin-top:12px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:#111216;
+
+    border:1px solid #332a1b;
+}
+
+.mining-status span{
+    color:#777;
+
+    font-size:8px;
+}
+
+.mining-status strong{
+    display:block;
+
+    color:#fff;
+
+    font-size:14px;
+
+    margin-top:4px;
+}
+
+
+/* PROGRESS */
+
+.progress-wrap{
+    margin-top:13px;
+}
+
+.progress-label{
+    display:flex;
+    justify-content:space-between;
+
+    color:#888;
+
+    font-size:8px;
+
+    margin-bottom:6px;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+
+    background:#24262a;
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c99022,
+            #ffe16d
+        );
+
+    border-radius:10px;
+
+    transition:width .3s;
+}
+
+
+/* BUTTONS */
+
+.btn{
+    width:100%;
+
+    margin-top:11px;
+
+    border:0;
+
+    border-radius:11px;
+
+    padding:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe7a0,
+            #d8a63b
+        );
+
+    color:#17130a;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+.btn.secondary{
+    background:#211a0d;
+
+    color:#ffe19a;
+
+    border:1px solid #665020;
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+
+/* DEMO */
+
+.demo{
+    margin-top:13px;
+
+    padding:12px;
+
+    border-radius:13px;
+
+    background:#211d0c;
+
+    border:1px solid #5b4a16;
+
+    color:#ddd;
+
+    font-size:9px;
+
+    line-height:1.5;
+}
+
+
+/* TRANSACTION */
+
+.history{
+    margin-top:14px;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    background:#111317;
+
+    border:1px solid #30291d;
+}
+
+.history h3{
+    margin:0 0 10px;
+
+    font-size:13px;
+}
+
+.history-item{
+    padding:10px 0;
+
+    border-bottom:1px solid #25272b;
+
+    font-size:9px;
+}
+
+.history-item:last-child{
+    border-bottom:0;
+}
+
+.history-item b{
+    color:#ffe16d;
+}
+
+.history-item span{
+    display:block;
+    color:#777;
+    margin-top:3px;
+}
+
+
+/* NOTICE */
+
+.note{
+    margin-top:13px;
+
+    padding:12px;
+
+    border:1px solid #25272b;
+
+    border-radius:14px;
+
+    color:#7f8289;
+
+    font-size:8.5px;
+
+    line-height:1.55;
+}
+
+.note b{
+    color:#ffe19a;
+}
+
+
+/* NAV */
+
+.nav{
+    position:fixed;
+
+    bottom:0;
+    left:0;
+    right:0;
+
+    height:78px;
+
+    background:#08090b;
+
+    border-top:1px solid #302719;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    z-index:10;
+}
+
+.nav a{
+    text-decoration:none;
+
+    color:#70747c;
+
+    text-align:center;
+
+    font-size:8.5px;
+
+    padding-top:9px;
+}
+
+.nav a.active{
+    color:#ffe19a;
+}
+
+.nav i{
+    font-style:normal;
+
+    font-size:22px;
+
+    display:block;
+
+    margin-bottom:4px;
+}
+
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+
+    left:50%;
+    bottom:92px;
+
+    transform:translateX(-50%);
+
+    background:#181a1e;
+
+    border:1px solid #665020;
+
+    color:#ffe39a;
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+    font-size:10px;
+
+    display:none;
+
+    z-index:20;
+
+    box-shadow:0 10px 30px #0009;
+
+    max-width:90%;
+
+    text-align:center;
+}
+
+
+@media(max-width:520px){
+
+    .stats{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+.member-card{margin:0 0 14px;padding:15px;border-radius:18px;background:linear-gradient(145deg,#191b20,#111317);border:1px solid #5a451d;box-shadow:0 10px 28px #0009}
+.member-top{display:flex;align-items:center;gap:12px}
+.avatar{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#0d0e10;border:1px solid #70551e;color:#ffe16d;font-weight:900;font-size:18px}
+.member-info b{display:block;font-size:14px}.member-info span,.member-info small{display:block;color:#888;font-size:9px;margin-top:3px}.member-info small{color:#c7a94e}
+.main-balance{margin-top:13px;padding:12px;border-radius:13px;background:#111216;border:1px solid #332a1b}.main-balance span{display:block;color:#777;font-size:8px}.main-balance b{display:block;color:#ffe16d;font-size:18px;margin-top:5px}.main-balance small{display:block;color:#777;font-size:8px;line-height:1.4;margin-top:5px}.main-balance code{color:#bda25b}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header class="head">
+
+    <div class="brand">
+
+        <div class="logo">
+            <img
+                class="sp-logo"
+                src="logo.png"
+                alt="MyShort Logo"
+            >
+        </div>
+
+        <div>
+            <b>MyShort App</b>
+
+            <small>
+                Mining Virtual
+            </small>
+        </div>
+
+    </div>
+
+
+    <div class="balance">
+
+        <span>
+            Saldo MYC Virtual
+        </span>
+
+        <b id="balance">
+            0 MYC
+        </b>
+
+    </div>
+
+
+    <h1>
+        Mining
+    </h1>
+
+    <p>
+        Mining virtual terhubung dengan Supabase.
+    </p>
+
+</header>
+
+
+
+<main class="wrap">
+    <!-- IDENTITAS MEMBER + SALDO UTAMA -->
+    <section class="member-card">
+        <div class="member-top">
+            <div class="avatar" id="memberAvatar">M</div>
+            <div class="member-info">
+                <b id="memberName">Member</b>
+                <span id="memberEmail">Memuat email...</span>
+                <small id="memberReferral">Referral: -</small>
+            </div>
+        </div>
+        <div class="main-balance">
+            <span>Saldo Utama MyShort</span>
+            <b id="mainBalance">Rp 0</b>
+            <small>Saldo ini tetap menggunakan tabel <code>wallets</code> dan terpisah dari MYC Virtual.</small>
+        </div>
+    </section>
+
+
+
+    <div
+        id="error"
+        class="error">
+    </div>
+
+
+    <!-- MINING -->
+
+    <section class="mining-card">
+
+
+        <div class="mining-head">
+
+
+            <div class="mining-icon">
+
+                <img
+                    src="logo.png"
+                    alt="Mining"
+                >
+
+            </div>
+
+
+            <div>
+
+                <div class="mining-title">
+                    Mining Virtual
+                </div>
+
+                <div class="mining-sub">
+                    Paket MYC untuk pengujian sistem Mining MyShort.
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="stats">
+
+
+            <div class="stat">
+
+                <small>
+                    Harga
+                </small>
+
+                <b>
+                    1.000 MYC
+                </b>
+
+            </div>
+
+
+            <div class="stat">
+
+                <small>
+                    Reward / Hari
+                </small>
+
+                <b>
+                    30 MYC
+                </b>
+
+            </div>
+
+
+            <div class="stat">
+
+                <small>
+                    Durasi
+                </small>
+
+                <b>
+                    30 Hari
+                </b>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="mining-status">
+
+            <span>
+                STATUS MINING
+            </span>
+
+            <strong id="miningStatus">
+                Memuat...
+            </strong>
+
+        </div>
+
+
+
+        <div class="progress-wrap">
+
+            <div class="progress-label">
+
+                <span>
+                    Progress Mining
+                </span>
+
+                <span id="progressText">
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div
+                    id="progressBar"
+                    class="progress-bar">
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <button
+            id="demoBtn"
+            class="btn secondary">
+
+            🎁 Isi 1.000 MYC Demo
+
+        </button>
+
+
+
+        <button
+            id="activateBtn"
+            class="btn">
+
+            ⚡ AKTIFKAN MINING 30 HARI
+
+        </button>
+
+
+
+        <button
+            id="claimBtn"
+            class="btn secondary">
+
+            💰 KLAIM REWARD
+
+        </button>
+
+
+    </section>
+
+
+
+    <!-- DEMO -->
+
+    <div class="demo">
+
+        <b>Mode pengujian:</b>
+
+        Tombol Demo memberikan saldo virtual
+        1.000 MYC untuk menguji koneksi website
+        dengan Supabase.
+
+        Saldo ini bukan uang dan tidak dapat dicairkan.
+
+    </div>
+
+
+
+    <!-- HISTORY -->
+
+    <section class="history">
+
+        <h3>
+            Riwayat Mining
+        </h3>
+
+        <div id="historyList">
+
+            Memuat riwayat...
+
+        </div>
+
+    </section>
+
+
+
+    <!-- NOTE -->
+
+    <div class="note">
+
+        <b>Catatan:</b>
+
+        Sistem ini adalah Mining Virtual/Sandbox.
+        Reward 30 MYC per hari dan maksimal 30 hari
+        diproses oleh Supabase RPC.
+
+        Sistem ini bukan mining cryptocurrency nyata
+        dan tidak menjanjikan hasil uang.
+
+    </div>
+
+
+</main>
+
+
+
+<!-- NAVIGATION -->
+
+<nav class="nav">
+
+    <a href="dashboard.html">
+
+        <i>⌂</i>
+
+        Home
+
+    </a>
+
+
+    <a
+        class="active"
+        href="mission.html">
+
+        <i>◎</i>
+
+        Mission
+
+    </a>
+
+
+    <a href="wallet.html">
+
+        <i>▣</i>
+
+        Wallet
+
+    </a>
+
+
+    <a href="profile.html">
+
+        <i>♙</i>
+
+        Profile
+
+    </a>
+
+</nav>
+
+
+
+<div
+    id="toast"
+    class="toast">
+</div>
+
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+
+<!-- CONFIG -->
+
+<script src="supabase-config.js">
+</script>
+
+
+
+<script>
+
+/* =====================================
+   MYSHORT MINING VIRTUAL
+   ===================================== */
+
+
+/*
+   File ini menggunakan supabase-config.js
+   milik website MyShort.
+
+   Config harus membuat:
+
+   window.sb
+
+   atau
+
+   window.supabaseClient
+*/
+
+
+const sb =
+    window.sb ||
+    window.supabaseClient;
+
+
+let user = null;
+let profile = null;
+let mainWallet = null;
+
+let wallet = null;
+
+let activeContract = null;
+
+
+
+/* FORMAT MYC */
+
+function formatMYC(value){
+
+    return Number(value || 0)
+        .toLocaleString("id-ID") +
+        " MYC";
+
+}
+
+
+
+/* ELEMENT */
+
+function $(id){
+
+    return document.getElementById(id);
+
+}
+
+
+
+/* ERROR */
+
+function showError(message){
+
+    const box = $("error");
+
+    box.textContent =
+        "Gagal memuat data: " +
+        message;
+
+    box.style.display =
+        "block";
+
+}
+
+
+
+/* TOAST */
+
+function toast(message){
+
+    const box =
+        $("toast");
+
+    box.textContent =
+        message;
+
+    box.style.display =
+        "block";
+
+    clearTimeout(
+        window.__toastTimer
+    );
+
+    window.__toastTimer =
+        setTimeout(
+            function(){
+
+                box.style.display =
+                    "none";
+
+            },
+            3000
+        );
+
+}
+
+
+
+/* LOAD USER */
+
+async function loadUser(){
+
+    if(!sb){
+
+        throw new Error(
+            "Supabase client tidak ditemukan. Periksa supabase-config.js."
+        );
+
+    }
+
+
+    const result =
+        await sb.auth.getUser();
+
+
+    if(result.error){
+
+        throw result.error;
+
+    }
+
+
+    user =
+        result.data.user;
+
+
+    if(!user){
+
+        throw new Error(
+            "Anda belum login."
+        );
+
+    }
+
+}
+
+
+
+/* LOAD WALLET */
+
+async function loadWallet(){
+
+    const rpc =
+        await sb.rpc(
+            "ms_ensure_wallet"
+        );
+
+
+    if(rpc.error){
+
+        throw rpc.error;
+
+    }
+
+
+    const result =
+        await sb
+            .from("ms_virtual_wallets")
+            .select(
+                "balance_myc"
+            )
+            .eq(
+                "user_id",
+                user.id
+            )
+            .maybeSingle();
+
+
+    if(result.error){
+
+        throw result.error;
+
+    }
+
+
+    wallet =
+        result.data;
+
+
+    $("balance").textContent =
+        formatMYC(
+            wallet?.balance_myc
+        );
+
+}
+
+
+
+/* LOAD CONTRACT */
+
+async function loadContract(){
+
+    const result =
+        await sb
+            .from("ms_mining_contracts")
+            .select("*")
+            .eq(
+                "user_id",
+                user.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(1)
+            .maybeSingle();
+
+
+    if(result.error){
+
+        throw result.error;
+
+    }
+
+
+    activeContract =
+        result.data || null;
+
+
+    updateMiningDisplay();
+
+}
+
+
+
+/* DISPLAY */
+
+function updateMiningDisplay(){
+
+    if(!activeContract){
+
+        $("miningStatus").textContent =
+            "Belum aktif";
+
+        $("progressText").textContent =
+            "0%";
+
+        $("progressBar").style.width =
+            "0%";
+
+        $("activateBtn").disabled =
+            false;
+
+        $("claimBtn").disabled =
+            true;
+
+        return;
+
+    }
+
+
+    const start =
+        new Date(
+            activeContract.started_at ||
+            activeContract.created_at
+        );
+
+
+    const now =
+        new Date();
+
+
+    const duration =
+        30 * 24 * 60 * 60 * 1000;
+
+
+    let elapsed =
+        now.getTime() -
+        start.getTime();
+
+
+    if(elapsed < 0){
+
+        elapsed = 0;
+
+    }
+
+
+    let percent =
+        (elapsed / duration) * 100;
+
+
+    if(percent > 100){
+
+        percent = 100;
+
+    }
+
+
+    const day =
+        Math.min(
+            30,
+            Math.floor(
+                elapsed /
+                (24 * 60 * 60 * 1000)
+            )
+        );
+
+
+    if(percent >= 100){
+
+        $("miningStatus").textContent =
+            "Selesai — 30 hari";
+
+    }
+    else{
+
+        $("miningStatus").textContent =
+            "Aktif — Hari " +
+            Math.max(1,day + 1) +
+            " dari 30";
+
+    }
+
+
+    $("progressText").textContent =
+        Math.floor(percent) +
+        "%";
+
+
+    $("progressBar").style.width =
+        percent +
+        "%";
+
+
+    $("activateBtn").disabled =
+        true;
+
+
+    $("activateBtn").textContent =
+        "MINING SUDAH AKTIF";
+
+
+    $("claimBtn").disabled =
+        false;
+
+}
+
+
+
+/* LOAD HISTORY */
+
+async function loadHistory(){
+
+    const result =
+        await sb
+            .from("ms_virtual_transactions")
+            .select("*")
+            .eq(
+                "user_id",
+                user.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(10);
+
+
+    if(result.error){
+
+        /*
+           Riwayat tidak boleh membuat
+           halaman utama gagal.
+        */
+
+        $("historyList").textContent =
+            "Riwayat belum tersedia.";
+
+        return;
+
+    }
+
+
+    const rows =
+        result.data || [];
+
+
+    if(rows.length === 0){
+
+        $("historyList").textContent =
+            "Belum ada transaksi Mining.";
+
+        return;
+
+    }
+
+
+    $("historyList").innerHTML =
+        rows.map(
+            function(row){
+
+                const amount =
+                    Number(
+                        row.amount_myc || 0
+                    );
+
+
+                const date =
+                    row.created_at
+                    ? new Date(
+                        row.created_at
+                    ).toLocaleString(
+                        "id-ID"
+                    )
+                    : "";
+
+
+                return `
+                    <div class="history-item">
+
+                        <b>
+                            ${amount >= 0 ? "+" : ""}
+                            ${formatMYC(amount)}
+                        </b>
+
+                        <span>
+                            ${row.type || "Mining"}
+                            • ${date}
+                        </span>
+
+                    </div>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+
+/* LOAD EVERYTHING */
+
+async function load(){
+
+    try{
+
+        $("error").style.display =
+            "none";
+
+
+        await loadUser();
+
+
+        await loadWallet();
+
+
+        await loadContract();
+
+
+        await loadHistory();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "MyShort Mining:",
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Periksa login dan konfigurasi Supabase."
+        );
+
+    }
+
+}
+
+
+
+/* DEMO CREDIT */
+
+$("demoBtn").onclick =
+async function(){
+
+    try{
+
+        $("demoBtn").disabled =
+            true;
+
+        $("demoBtn").textContent =
+            "Memproses...";
+
+
+        const result =
+            await sb.rpc(
+                "ms_demo_credit"
+            );
+
+
+        if(result.error){
+
+            throw result.error;
+
+        }
+
+
+        toast(
+            "1.000 MYC virtual berhasil ditambahkan."
+        );
+
+
+        await load();
+
+
+    }
+    catch(error){
+
+        toast(
+            error.message ||
+            "Demo gagal."
+        );
+
+    }
+    finally{
+
+        $("demoBtn").disabled =
+            false;
+
+        $("demoBtn").textContent =
+            "🎁 Isi 1.000 MYC Demo";
+
+    }
+
+};
+
+
+
+/* ACTIVATE */
+
+$("activateBtn").onclick =
+async function(){
+
+    try{
+
+        $("activateBtn").disabled =
+            true;
+
+        $("activateBtn").textContent =
+            "Mengaktifkan...";
+
+
+        /*
+           Ambil paket MS1000
+        */
+
+        const packageResult =
+            await sb
+                .from("ms_virtual_packages")
+                .select("id")
+                .eq(
+                    "code",
+                    "MS1000"
+                )
+                .eq(
+                    "active",
+                    true
+                )
+                .single();
+
+
+        if(packageResult.error){
+
+            throw packageResult.error;
+
+        }
+
+
+        /*
+           Aktifkan melalui RPC
+        */
+
+        const result =
+            await sb.rpc(
+                "ms_activate_package",
+                {
+                    p_package_id:
+                        packageResult.data.id
+                }
+            );
+
+
+        if(result.error){
+
+            throw result.error;
+
+        }
+
+
+        toast(
+            "Mining virtual berhasil diaktifkan."
+        );
+
+
+        await load();
+
+
+    }
+    catch(error){
+
+        toast(
+            error.message ||
+            "Gagal mengaktifkan Mining."
+        );
+
+
+        $("activateBtn").disabled =
+            false;
+
+        $("activateBtn").textContent =
+            "⚡ AKTIFKAN MINING 30 HARI";
+
+    }
+
+};
+
+
+
+/* CLAIM */
+
+$("claimBtn").onclick =
+async function(){
+
+    try{
+
+        if(!activeContract){
+
+            toast(
+                "Belum ada Mining aktif."
+            );
+
+            return;
+
+        }
+
+
+        $("claimBtn").disabled =
+            true;
+
+        $("claimBtn").textContent =
+            "Memproses...";
+
+
+        const result =
+            await sb.rpc(
+                "ms_claim_mining",
+                {
+                    p_contract_id:
+                        activeContract.id
+                }
+            );
+
+
+        if(result.error){
+
+            throw result.error;
+
+        }
+
+
+        const reward =
+            result.data?.reward_myc ||
+            0;
+
+
+        toast(
+            "Reward: " +
+            formatMYC(reward)
+        );
+
+
+        await load();
+
+
+    }
+    catch(error){
+
+        toast(
+            error.message ||
+            "Klaim reward gagal."
+        );
+
+        $("claimBtn").disabled =
+            false;
+
+        $("claimBtn").textContent =
+            "💰 KLAIM REWARD";
+
+    }
+
+};
+
+
+
+/* START */
+
+load();
+
+</script>
+
+</body>
+</html>
