@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<title>MyShort — Mission Mining</title>
+<link rel="stylesheet" href="premium-brand.css">
+<style>
+*{box-sizing:border-box} :root{--gold:#f3c64f;--gold2:#ffe9a2;--bg:#07090b;--panel:#121418;--line:#44371e;--muted:#8d8f96;--green:#4dd5a0;--red:#ff8d82}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#f5f5f5}body{padding-bottom:92px;background:radial-gradient(circle at 50% -8%,#392b12 0,#17181b 24%,#08090b 67%)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;background-image:radial-gradient(#e8bd58 .55px,transparent .55px);background-size:20px 20px}
+button,a{font:inherit}.wrap{max-width:900px;margin:auto;padding:0 14px;position:relative;z-index:2}.head{padding:15px 16px 20px;background:linear-gradient(145deg,#17191d,#0b0c0e);border-bottom:1px solid #493719;border-radius:0 0 24px 24px}.brand{display:flex;gap:10px;align-items:center}.logo{width:48px;height:48px;border:1px solid #73571d;border-radius:14px;background:#0c0d0f;display:grid;place-items:center;overflow:hidden;box-shadow:0 0 22px #c88d2522}.sp-logo{width:100%;height:100%;object-fit:cover}.brand b{font-size:16px}.brand small{display:block;color:#8c8c8c;font-size:9px;margin-top:3px}.headrow{display:flex;justify-content:space-between;gap:12px;align-items:center}.balance{border:1px solid #4e3b18;border-radius:14px;padding:8px 12px;background:#111216;min-width:150px}.balance span{display:block;color:#9b9da3;font-size:9px}.balance b{display:block;color:#ffd65f;font-size:17px;margin-top:4px}.title{font-size:25px;font-weight:900;margin:18px 0 5px}.sub{font-size:10px;color:#888}.security{margin-top:12px;display:flex;align-items:center;gap:8px;color:#aaa;font-size:9px}.shield{width:28px;height:28px;border:1px solid #6b541e;border-radius:9px;display:grid;place-items:center;color:#ffd65f;background:#17130b}
+.main{padding-top:13px}.card{background:linear-gradient(145deg,#191b20,#101216);border:1px solid #342b1c;border-radius:19px;padding:15px;margin-bottom:12px;box-shadow:0 9px 24px #0007}.hero{background:linear-gradient(145deg,#251c0c,#111216);border-color:#634b1b}.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #3c3c3c;border-radius:17px;overflow:hidden;margin-bottom:13px}.step{padding:13px;display:flex;gap:9px;align-items:center;background:#111317}.step+ .step{border-left:1px solid #343434}.num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#343638;color:#eee;font-weight:900;flex:0 0 30px}.step.active .num{background:linear-gradient(135deg,#ffe17c,#c88d21);color:#18140a}.step strong{font-size:10px}.step small{display:block;color:#777;font-size:8px;margin-top:3px}.section-title{color:#ffd65f;font-size:14px;font-weight:900;margin:16px 7px 10px}.packages{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.pkg{position:relative;background:linear-gradient(145deg,#17191d,#101216);border:1px solid #3a3a3a;border-radius:17px;padding:14px 11px;min-height:350px;display:flex;flex-direction:column}.pkg.popular{border:1px solid #f0c34c;box-shadow:0 0 24px #d69c2d22}.ribbon{position:absolute;left:-2px;top:11px;background:#e3a92d;color:#18120a;font-size:8px;font-weight:900;padding:5px 8px;transform:rotate(-18deg);border-radius:0 6px 6px 0}.best{position:absolute;right:9px;top:9px;background:#39294e;color:#d7b7ff;padding:4px 6px;border-radius:6px;font-size:7px;font-weight:900}.pkg h3{text-align:center;margin:18px 0 0;color:#ffd65f;font-size:42px;line-height:1}.pkg .myc{text-align:center;font-size:14px;font-weight:800}.coins{height:65px;display:grid;place-items:center;font-size:34px;margin:7px 0;color:#e8ad35;text-shadow:0 5px 15px #b5791f55}.price{border:1px solid #6b521b;background:#20190d;color:#f4c542;border-radius:12px;padding:11px;text-align:center;font-weight:900;margin-bottom:11px}.stats{border-top:1px solid #2e2f32;padding-top:9px}.st{display:flex;justify-content:space-between;gap:5px;font-size:9px;margin:8px 0;color:#b7b7b9}.st b{color:#eee}.st b.green{color:var(--green)}.choose{margin-top:auto;width:100%;border:1px solid #444;background:#181a1e;color:#eee;border-radius:11px;padding:11px;font-weight:900;cursor:pointer}.pkg.popular .choose{background:linear-gradient(135deg,#ffe48b,#d89d25);border:0;color:#19140a}.choose:disabled{opacity:.55;cursor:not-allowed}.info{border:1px solid #634b1b;background:#17150f;color:#c9c1ad;padding:12px;border-radius:14px;font-size:9px;line-height:1.55;margin:13px 0}.info b{color:#ffe19a}.contract{background:linear-gradient(145deg,#191b20,#101216);border:1px solid #3b3120;border-radius:18px;padding:14px;margin-bottom:10px}.contract-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.ctitle{font-size:13px;font-weight:900}.badge{font-size:8px;border-radius:20px;padding:5px 8px;background:#183629;color:#72e2b6;border:1px solid #2f6f55}.badge.done{background:#28292c;color:#9b9da3;border-color:#45474a}.contract-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:11px}.cstat{background:#101216;border:1px solid #2c2d30;border-radius:10px;padding:9px}.cstat small{display:block;color:#777;font-size:7px}.cstat b{display:block;color:#ffe16d;font-size:12px;margin-top:5px}.progress{height:7px;background:#292a2e;border-radius:20px;overflow:hidden;margin-top:11px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#d89d25,#ffe48b);width:0}.contract-foot{display:flex;justify-content:space-between;gap:8px;margin-top:9px;color:#888;font-size:8px}.empty{padding:25px;text-align:center;border:1px dashed #3d3a34;border-radius:16px;color:#777;font-size:10px}.ref{display:grid;grid-template-columns:1fr 1fr;gap:10px}.refbox{background:#111317;border:1px solid #302d27;border-radius:14px;padding:13px}.refbox small{display:block;color:#777;font-size:8px}.refbox b{display:block;color:#ffe16d;font-size:20px;margin-top:5px}.notice{padding:12px;border:1px solid #5b4920;background:#17150e;border-radius:12px;color:#c8c2a7;font-size:9px;line-height:1.5;margin-bottom:12px}.nav{position:fixed;bottom:0;left:0;right:0;height:78px;background:#08090b;border-top:1px solid #302719;display:grid;grid-template-columns:repeat(4,1fr);z-index:10}.nav a{text-decoration:none;color:#70747c;text-align:center;font-size:8.5px;padding-top:9px}.nav a.active{color:#ffe19a}.nav i{font-style:normal;font-size:22px;display:block;margin-bottom:4px}.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#181a1e;border:1px solid #665020;color:#ffe39a;padding:10px 14px;border-radius:12px;font-size:10px;display:none;z-index:30;box-shadow:0 10px 30px #0009;max-width:90%;text-align:center}
+@media(max-width:760px){.packages{grid-template-columns:1fr 1fr}.pkg{min-height:330px}.contract-grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.step+ .step{border-left:0;border-top:1px solid #343434}.step{padding:10px}.headrow{align-items:flex-start}.balance{min-width:125px}}
+@media(max-width:430px){.packages{grid-template-columns:1fr}.pkg{min-height:0}.headrow{flex-direction:column}.balance{width:100%}.ref{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="wrap">
+    <div class="headrow">
+      <div class="brand"><div class="logo"><img class="sp-logo" src="logo.png" alt="MyShort"></div><div><b>MyShort Mining</b><small>MINING MISSION</small></div></div>
+      <div class="balance"><span>Saldo MYC Baru</span><b id="balance">0 MYC</b></div>
+    </div>
+    <div class="title">Mission Mining</div>
+    <div class="sub">Pilih paket virtual → kontrak 30 hari → reward dihitung berdasarkan waktu.</div>
+    <div class="security"><span class="shield">🛡</span><span>Sistem Mission Baru aktif. <b style="color:#4dd5a0">Saldo Mission lama tidak dibaca.</b></span></div>
+  </div>
+</header>
+
+<main class="wrap main">
+  <section class="steps">
+    <div class="step active"><span class="num">1</span><div><strong>Pilih Paket</strong><small>Pilih jumlah MYC</small></div></div>
+    <div class="step"><span class="num">2</span><div><strong>Aktifkan Kontrak</strong><small>Kontrak 30 hari</small></div></div>
+    <div class="step"><span class="num">3</span><div><strong>Mining Berjalan</strong><small>Reward terakumulasi</small></div></div>
+  </section>
+
+  <section class="card hero">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><div style="font-size:9px;color:#aaa">KOIN MISSION BARU</div><div style="font-size:30px;font-weight:900;color:#ffd65f;margin-top:6px"><span id="totalReward">0.0000</span> <span style="font-size:13px;color:#ddd">MYC</span></div></div><div style="text-align:right"><small style="display:block;color:#777;font-size:8px">Kontrak aktif</small><b id="activeCount" style="font-size:22px;color:#fff">0</b></div></div>
+    <div class="progress"><i id="overallBar"></i></div>
+    <div style="display:flex;justify-content:space-between;color:#858585;font-size:8px;margin-top:6px"><span>Reward berjalan</span><span id="runningText">Belum ada kontrak</span></div>
+  </section>
+
+  <div class="section-title">PILIH PAKET MYC</div>
+  <section class="packages" id="packages"></section>
+
+  <div class="info"><b>Perhitungan virtual:</b> 1 MYC = Rp100 simulasi. Semua paket memiliki kontrak <b>30 hari</b>. Reward harian setara <b>3% dari nilai paket</b>. Contoh 200K = Rp6.000/hari = 60 MYC/hari. Halaman ini <b>tidak memproses pembayaran uang nyata</b>.</div>
+
+  <div class="section-title">KONTRAK MINING AKTIF</div>
+  <section id="contracts"></section>
+
+  <div class="section-title">MISI UNDANG TEMAN</div>
+  <section class="card ref">
+    <div class="refbox"><small>Teman valid</small><b id="refCount">0 / 3</b></div>
+    <div class="refbox"><small>Bonus virtual</small><b>250 MYC</b></div>
+  </section>
+  <div class="notice"><b>Catatan:</b> bonus referral pada halaman ini hanya simulasi virtual. Sistem baru tidak membaca komisi/top-up dari Mission lama.</div>
+</main>
+
+<nav class="nav">
+  <a href="dashboard.html"><i>⌂</i>Home</a>
+  <a class="active" href="mission.html"><i>⛏</i>Mission</a>
+  <a href="wallet.html"><i>▣</i>Wallet</a>
+  <a href="profile.html"><i>♙</i>Profile</a>
+</nav>
+<div id="toast" class="toast"></div>
+
+<script>
+/* Mission v2: sengaja menggunakan namespace penyimpanan baru sehingga saldo lokal Mission lama tidak ikut terbaca. */
+const KEY='myshort_mission_v2';
+const packages=[
+ {id:'MS100',amount:100000,myc:1000,daily:30,total:900,power:125,label:'POPULAR'},
+ {id:'MS200',amount:200000,myc:2000,daily:60,total:1800,power:260,label:'BEST VALUE'},
+ {id:'MS300',amount:300000,myc:3000,daily:90,total:2700,power:400,label:''},
+ {id:'MS400',amount:400000,myc:4000,daily:120,total:3600,power:560,label:''}
+];
+let state={balance:0,contracts:[],refCount:0};
+const $=id=>document.getElementById(id);
+const money=n=>'Rp '+new Intl.NumberFormat('id-ID').format(Number(n||0));
+const fmt=n=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:4}).format(Number(n||0));
+function toast(msg){const e=$('toast');e.textContent=msg;e.style.display='block';clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.style.display='none',2600)}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function loadState(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object'){state={balance:Number(x.balance)||0,contracts:Array.isArray(x.contracts)?x.contracts:[],refCount:Number(x.refCount)||0}}}catch(e){state={balance:0,contracts:[],refCount:0}}}
+function elapsedReward(c){const now=Date.now();const start=Number(c.startAt);const end=Number(c.endAt);const elapsed=Math.max(0,Math.min(now,end)-start);const day=86400000;return Math.min(c.total,c.daily*(elapsed/day))}
+function renderPackages(){
+ $('packages').innerHTML=packages.map((p,i)=>`<article class="pkg ${i===0?'popular':''}">${p.label==='POPULAR'?'<span class="ribbon">POPULAR</span>':''}${p.label==='BEST VALUE'?'<span class="best">BEST VALUE</span>':''}<h3>${p.myc.toLocaleString('id-ID')}</h3><div class="myc">MYC</div><div class="coins">🪙🪙</div><div class="price">${money(p.amount)}</div><div class="stats"><div class="st"><span>⚡ Mining Power</span><b>${p.power}</b></div><div class="st"><span>🗓 Kontrak</span><b>30 Hari</b></div><div class="st"><span>📈 Reward / hari</span><b class="green">${p.daily} MYC</b></div><div class="st"><span>🏁 Maks. 30 hari</span><b class="green">${p.total} MYC</b></div></div><button class="choose" onclick="activate('${p.id}')">Pilih Paket</button></article>`).join('');
+}
+function activate(id){
+ const p=packages.find(x=>x.id===id);if(!p)return;
+ const now=Date.now();
+ state.contracts.push({id:crypto.randomUUID?crypto.randomUUID():String(now)+Math.random(),packageId:p.id,amount:p.amount,myc:p.myc,daily:p.daily,total:p.total,power:p.power,startAt:now,endAt:now+30*86400000,lastShown:0});
+ save();render();toast(p.myc.toLocaleString('id-ID')+' MYC: kontrak virtual 30 hari dibuat.');
+}
+function renderContracts(){
+ const box=$('contracts');
+ if(!state.contracts.length){box.innerHTML='<div class="empty">Belum ada kontrak. Pilih salah satu paket di atas untuk membuat kontrak Mission baru.</div>';return}
+ box.innerHTML=state.contracts.map(c=>{const p=packages.find(x=>x.id===c.packageId)||c;const now=Date.now();const reward=elapsedReward(c);const totalDays=30;const elapsed=Math.max(0,Math.min(now,c.endAt)-c.startAt);const pct=Math.min(100,elapsed/(totalDays*86400000)*100);const remaining=Math.max(0,Math.ceil((c.endAt-now)/86400000));const done=now>=c.endAt;return `<article class="contract"><div class="contract-head"><div><div class="ctitle">${p.myc.toLocaleString('id-ID')} MYC • ${money(p.amount)}</div><div style="color:#777;font-size:8px;margin-top:4px">Mulai: ${new Date(c.startAt).toLocaleString('id-ID')}</div></div><span class="badge ${done?'done':''}">${done?'Selesai':'Aktif'}</span></div><div class="contract-grid"><div class="cstat"><small>Reward/hari</small><b>${fmt(c.daily)} MYC</b></div><div class="cstat"><small>Terkumpul</small><b>${fmt(reward)} MYC</b></div><div class="cstat"><small>Sisa</small><b>${done?'0':remaining+' hari'}</b></div><div class="cstat"><small>Power</small><b>${c.power}</b></div></div><div class="progress"><i style="width:${pct}%"></i></div><div class="contract-foot"><span>${done?'Kontrak selesai':'Mining berjalan otomatis berdasarkan waktu'}</span><span>${pct.toFixed(1)}%</span></div></article>`}).join('');
+}
+function render(){
+ $('balance').textContent=fmt(state.balance)+' MYC';
+ const active=state.contracts.filter(c=>Date.now()<c.endAt);
+ const reward=state.contracts.reduce((s,c)=>s+elapsedReward(c),0);
+ $('totalReward').textContent=fmt(reward);
+ $('activeCount').textContent=active.length;
+ $('refCount').textContent=Math.min(state.refCount,3)+' / 3';
+ if(active.length){const avg=active.reduce((s,c)=>s+Math.min(100,Math.max(0,(Date.now()-c.startAt)/(c.endAt-c.startAt)*100)),0)/active.length;$('overallBar').style.width=avg+'%';$('runningText').textContent='Mining aktif • '+active.length+' kontrak'}else{$('overallBar').style.width='0%';$('runningText').textContent='Belum ada kontrak aktif'}
+ renderPackages();renderContracts();
+}
+loadState();render();setInterval(render,1000);
+</script>
+</body>
+</html>
