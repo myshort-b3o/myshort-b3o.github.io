@@ -1,0 +1,2542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+
+<title>MyShort Mining</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+        radial-gradient(circle at top,#292929 0%,#101010 35%,#050505 100%);
+    color:#fff;
+    min-height:100vh;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:20px 14px 50px;
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#ffd76a,#9a6900);
+    color:#111;
+    font-size:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,.35);
+}
+
+.brand-title{
+    font-size:21px;
+    font-weight:800;
+}
+
+.brand-sub{
+    font-size:11px;
+    color:#aaa;
+    margin-top:3px;
+}
+
+.top-btn{
+    border:1px solid #555;
+    background:#151515;
+    color:#ddd;
+    padding:9px 12px;
+    border-radius:10px;
+    text-decoration:none;
+    font-size:12px;
+}
+
+.member-card,
+.mining-card,
+.swap-card{
+    background:rgba(20,20,20,.95);
+    border:1px solid #303030;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.member-title{
+    color:#aaa;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.member-name{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:4px;
+}
+
+.member-email{
+    color:#999;
+    font-size:12px;
+    word-break:break-all;
+}
+
+.referral{
+    margin-top:12px;
+    padding:10px;
+    border-radius:10px;
+    background:#0d0d0d;
+    border:1px solid #292929;
+    font-size:12px;
+}
+
+.referral span{
+    color:#aaa;
+}
+
+.balance-card{
+    margin-top:12px;
+    padding:14px;
+    border-radius:13px;
+    background:linear-gradient(
+        135deg,
+        rgba(255,215,106,.14),
+        rgba(255,255,255,.03)
+    );
+    border:1px solid rgba(255,215,106,.25);
+}
+
+.balance-label{
+    color:#aaa;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.balance-value{
+    font-size:25px;
+    font-weight:900;
+    color:#ffd76a;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.card{
+    background:#151515;
+    border:1px solid #2c2c2c;
+    border-radius:15px;
+    padding:16px;
+}
+
+.card-label{
+    color:#999;
+    font-size:11px;
+    margin-bottom:8px;
+}
+
+.card-value{
+    font-size:18px;
+    font-weight:800;
+    word-break:break-word;
+}
+
+.mining-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.mining-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:#252525;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.mining-title{
+    font-size:19px;
+    font-weight:800;
+}
+
+.mining-sub{
+    color:#999;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.package{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.package-item{
+    background:#0e0e0e;
+    border:1px solid #292929;
+    border-radius:12px;
+    padding:12px;
+}
+
+.package-label{
+    color:#888;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.package-value{
+    font-size:13px;
+    font-weight:700;
+    word-break:break-word;
+}
+
+.gold{
+    color:#ffd76a;
+}
+
+.mining-banner{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,193,7,.12),
+            rgba(255,255,255,.025)
+        );
+    border:1px solid rgba(255,193,7,.28);
+    border-radius:14px;
+    padding:15px;
+    color:#ddd;
+    font-size:12px;
+    line-height:1.6;
+    margin-bottom:14px;
+}
+
+.mining-rate{
+    margin-top:8px;
+    color:#ffd76a;
+    font-size:14px;
+}
+
+.mining-live{
+    margin-top:14px;
+    background:#090909;
+    border:1px solid #333;
+    border-radius:14px;
+    padding:15px;
+}
+
+.live-title{
+    font-size:11px;
+    color:#999;
+    margin-bottom:7px;
+}
+
+.live-value{
+    font-size:25px;
+    font-weight:900;
+    color:#ffd76a;
+    letter-spacing:.3px;
+}
+
+.live-time{
+    margin-top:7px;
+    color:#777;
+    font-size:10px;
+}
+
+.progress{
+    height:7px;
+    margin-top:12px;
+    border-radius:20px;
+    background:#242424;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#9a6900,#ffe18a);
+    transition:.5s;
+}
+
+.btn-gold,
+.btn-dark{
+    border:none;
+    border-radius:11px;
+    padding:12px 15px;
+    font-size:13px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.btn-gold{
+    background:linear-gradient(135deg,#ffe18a,#c89418);
+    color:#111;
+}
+
+.btn-dark{
+    background:#292929;
+    color:#eee;
+    border:1px solid #444;
+}
+
+.btn-gold:disabled,
+.btn-dark:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.main-balance-box{
+    margin-top:14px;
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:13px;
+    padding:14px;
+}
+
+.main-balance-box .label{
+    color:#888;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.main-balance-box .value{
+    color:#ffd76a;
+    font-size:22px;
+    font-weight:900;
+}
+
+.swap-card h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.swap-card p{
+    color:#999;
+    font-size:12px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.input-group{
+    margin-bottom:12px;
+}
+
+.input-group label{
+    display:block;
+    color:#aaa;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.input-row{
+    display:flex;
+    gap:8px;
+}
+
+input{
+    width:100%;
+    background:#0c0c0c;
+    color:#fff;
+    border:1px solid #383838;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+    font-size:13px;
+}
+
+input:focus{
+    border-color:#d7aa3c;
+}
+
+.max-btn{
+    min-width:65px;
+    background:#252525;
+    color:#ddd;
+    border:1px solid #414141;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.swap-info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:13px;
+}
+
+.info-box{
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:11px;
+    padding:11px;
+}
+
+.info-label{
+    color:#777;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.info-value{
+    color:#eee;
+    font-size:13px;
+    font-weight:700;
+}
+
+.history-title{
+    font-size:17px;
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+.history-item{
+    background:#0d0d0d;
+    border:1px solid #292929;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:8px;
+}
+
+.history-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.history-type{
+    font-size:12px;
+    font-weight:700;
+}
+
+.history-amount{
+    color:#ffd76a;
+    font-size:12px;
+    font-weight:800;
+    text-align:right;
+}
+
+.history-date{
+    color:#777;
+    font-size:10px;
+    margin-top:6px;
+    line-height:1.5;
+}
+
+.status-pending{
+    color:#ffd76a;
+}
+
+.status-approved{
+    color:#8ee28e;
+}
+
+.status-rejected{
+    color:#ff8585;
+}
+
+.empty{
+    color:#777;
+    font-size:12px;
+    padding:12px 0;
+    text-align:center;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    z-index:1000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:420px;
+    background:#171717;
+    border:1px solid #444;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+
+.modal-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:12px;
+}
+
+.modal-text{
+    color:#bbb;
+    font-size:12px;
+    line-height:1.7;
+    margin-bottom:18px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:8px;
+}
+
+.modal-actions button{
+    flex:1;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%) translateY(20px);
+    background:#222;
+    border:1px solid #555;
+    color:#fff;
+    padding:11px 15px;
+    border-radius:10px;
+    font-size:12px;
+    opacity:0;
+    pointer-events:none;
+    transition:.25s;
+    z-index:2000;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.footer-note{
+    text-align:center;
+    color:#666;
+    font-size:10px;
+    line-height:1.6;
+    padding:10px 20px;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:14px 10px 40px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .package{
+        grid-template-columns:1fr;
+    }
+
+    .balance-value{
+        font-size:22px;
+    }
+
+    .live-value{
+        font-size:21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            ⛏️
+        </div>
+
+        <div>
+            <div class="brand-title">
+                MyShort Mining
+            </div>
+
+            <div class="brand-sub">
+                Mining &amp; Swap
+            </div>
+        </div>
+
+    </div>
+
+    <a href="dashboard.html" class="top-btn">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<!-- MEMBER -->
+
+<section class="member-card">
+
+    <div class="member-title">
+        MEMBER
+    </div>
+
+    <div class="member-name" id="memberName">
+        Memuat...
+    </div>
+
+    <div class="member-email" id="memberEmail">
+        -
+    </div>
+
+    <div class="referral">
+
+        <span>
+            Referral:
+        </span>
+
+        <b id="referralCode">
+            -
+        </b>
+
+    </div>
+
+
+    <div class="balance-card">
+
+        <div class="balance-label">
+            SALDO UTAMA MYSHORT
+        </div>
+
+        <div class="balance-value" id="mainBalance">
+            Rp 0
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- XMR STATS -->
+
+<section class="stats">
+
+    <div class="card">
+
+        <div class="card-label">
+            XMR Tersedia
+        </div>
+
+        <div class="card-value" id="availableXMR">
+            0 XMR
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-label">
+            Total Mining
+        </div>
+
+        <div class="card-value" id="totalMined">
+            0 XMR
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-label">
+            Dikunci untuk Swap
+        </div>
+
+        <div class="card-value" id="lockedXMR">
+            0 XMR
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-label">
+            Total Sudah Swap
+        </div>
+
+        <div class="card-value" id="totalSwapped">
+            0 XMR
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MINING -->
+
+<section class="mining-card">
+
+    <div class="mining-head">
+
+        <div class="mining-icon">
+            ⛏️
+        </div>
+
+        <div>
+
+            <div class="mining-title">
+                Mining XMR
+            </div>
+
+            <div class="mining-sub">
+                Aktifkan mining dari halaman member.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="package">
+
+        <div class="package-item">
+
+            <div class="package-label">
+                ASSET
+            </div>
+
+            <div class="package-value gold">
+                XMR
+            </div>
+
+        </div>
+
+
+        <div class="package-item">
+
+            <div class="package-label">
+                STATUS
+            </div>
+
+            <div class="package-value" id="miningStatus">
+                TIDAK AKTIF
+            </div>
+
+        </div>
+
+
+        <div class="package-item">
+
+            <div class="package-label">
+                SUMBER
+            </div>
+
+            <div class="package-value">
+                Mining Server
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="mining-banner">
+
+        <strong>
+            ⛏️ AKTIVITAS MINING
+        </strong>
+
+        <br>
+
+        Aktifkan mining untuk melihat proses mining berjalan pada halaman ini.
+
+        <div class="mining-rate">
+
+            Kecepatan tampilan:
+            <b>
+                0.00001 XMR/jam
+            </b>
+
+        </div>
+
+        <div style="
+            margin-top:8px;
+            color:#999;
+            font-size:10px;
+        ">
+
+            Saldo XMR yang benar-benar dapat di-swap tetap mengikuti
+            saldo mining yang tercatat di server MyShort.
+
+        </div>
+
+    </div>
+
+
+    <!-- LIVE MINING -->
+
+    <div class="mining-live">
+
+        <div class="live-title">
+            HASIL MINING BERJALAN
+        </div>
+
+        <div
+            class="live-value"
+            id="liveMiningAmount"
+        >
+            0.000000000000 XMR
+        </div>
+
+        <div
+            class="live-time"
+            id="miningTimer"
+        >
+            00:00:00
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="miningProgress"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="btn-gold"
+        id="toggleMiningBtn"
+        style="margin-top:12px;width:100%;"
+    >
+        ⛏️ AKTIFKAN MINING
+    </button>
+
+
+    <div class="main-balance-box">
+
+        <div class="label">
+            SALDO RUPIAH UTAMA
+        </div>
+
+        <div
+            class="value"
+            id="miningRupiah"
+        >
+            Rp 0
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="btn-dark"
+        id="refreshBtn"
+        style="margin-top:12px;width:100%;"
+    >
+        🔄 REFRESH ULANG
+    </button>
+
+</section>
+
+
+<!-- SWAP -->
+
+<section class="swap-card">
+
+    <h2>
+        💱 Swap XMR → Rupiah
+    </h2>
+
+    <p>
+
+        Tukarkan XMR yang tersedia di server.
+
+        <br><br>
+
+        Saat swap diajukan, XMR akan dikunci terlebih dahulu.
+
+        <br><br>
+
+        <b style="color:#ffd76a;">
+            Rupiah masuk ke saldo utama setelah swap disetujui.
+        </b>
+
+    </p>
+
+
+    <div class="input-group">
+
+        <label>
+            JUMLAH XMR
+        </label>
+
+        <div class="input-row">
+
+            <input
+                type="number"
+                id="swapAmount"
+                placeholder="0.000000000000"
+                step="0.000000000001"
+                min="0"
+            >
+
+            <button
+                type="button"
+                class="max-btn"
+                id="maxBtn"
+            >
+                MAX
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="swap-info">
+
+        <div class="info-box">
+
+            <div class="info-label">
+                XMR Tersedia
+            </div>
+
+            <div
+                class="info-value"
+                id="availableForSwap"
+            >
+                0 XMR
+            </div>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-label">
+                Status
+            </div>
+
+            <div class="info-value">
+                Pending Settlement
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="btn-gold"
+        id="swapBtn"
+        style="width:100%;"
+    >
+        💱 AJUKAN SWAP XMR
+    </button>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section class="swap-card">
+
+    <div class="history-title">
+        📜 Riwayat Mining &amp; Swap
+    </div>
+
+    <div id="historyList">
+
+        <div class="empty">
+            Memuat riwayat...
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="footer-note">
+
+    Saldo Rupiah utama:
+    <b>wallets.balance</b>
+
+    <br>
+
+    Saldo XMR:
+    <b>mining_wallets</b>
+
+    <br><br>
+
+    Withdrawal tersedia di menu
+    <b>Withdrawal</b>.
+
+</div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="confirmModal">
+
+    <div class="modal-box">
+
+        <div class="modal-title">
+            Konfirmasi Swap
+        </div>
+
+        <div
+            class="modal-text"
+            id="confirmText"
+        >
+            -
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                class="btn-dark"
+                id="cancelConfirm"
+            >
+                BATAL
+            </button>
+
+            <button
+                type="button"
+                class="btn-gold"
+                id="confirmSwap"
+            >
+                AJUKAN
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast">
+    -
+</div>
+
+
+<script>
+"use strict";
+
+
+const sb = window.sb;
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let user = null;
+let profile = null;
+
+let mainWallet = {
+    balance:0,
+    total_in:0,
+    total_out:0
+};
+
+let miningWallet = {
+    available_amount:0,
+    locked_amount:0,
+    total_mined:0,
+    total_swapped:0
+};
+
+
+/*
+ * Ini hanya untuk tampilan status mining.
+ *
+ * BUKAN sumber saldo XMR yang dapat ditarik/swap.
+ */
+
+let visualMining = {
+    active:false,
+    startedAt:null
+};
+
+let pendingSwapAmount = 0;
+
+
+/* =====================================================
+   HELPER
+===================================================== */
+
+function $(id){
+    return document.getElementById(id);
+}
+
+
+function formatIDR(value){
+
+    return "Rp " +
+        Number(value || 0)
+        .toLocaleString(
+            "id-ID",
+            {
+                maximumFractionDigits:0
+            }
+        );
+
+}
+
+
+function formatXMR(value){
+
+    return Number(value || 0)
+        .toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits:0,
+                maximumFractionDigits:12
+            }
+        ) + " XMR";
+
+}
+
+
+function formatLiveXMR(value){
+
+    return Number(value || 0)
+        .toFixed(12) + " XMR";
+
+}
+
+
+function formatDate(value){
+
+    if(!value) return "-";
+
+    try{
+
+        return new Date(value)
+            .toLocaleString(
+                "id-ID",
+                {
+                    dateStyle:"medium",
+                    timeStyle:"medium"
+                }
+            );
+
+    }catch(e){
+
+        return "-";
+
+    }
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(
+            /[&<>"']/g,
+            c => ({
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+            }[c])
+        );
+
+}
+
+
+function toast(message){
+
+    const el = $("toast");
+
+    if(!el){
+
+        alert(message);
+        return;
+
+    }
+
+    el.textContent =
+        message;
+
+    el.classList.add("show");
+
+    clearTimeout(
+        window.__myshortToast
+    );
+
+    window.__myshortToast =
+        setTimeout(
+            () =>
+                el.classList.remove("show"),
+            3200
+        );
+
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+async function loadUser(){
+
+    if(!sb){
+
+        throw new Error(
+            "Supabase belum siap. Periksa supabase-config.js."
+        );
+
+    }
+
+
+    if(typeof window.requireAuth === "function"){
+
+        const session =
+            await window.requireAuth();
+
+        if(!session)
+            return false;
+
+        user =
+            session.user || null;
+
+    }else{
+
+        const {
+            data,
+            error
+        } =
+            await sb.auth.getSession();
+
+        if(error)
+            throw error;
+
+        user =
+            data?.session?.user || null;
+
+    }
+
+
+    if(!user){
+
+        toast(
+            "Silakan login terlebih dahulu."
+        );
+
+        setTimeout(
+            () =>
+                location.href =
+                    "index.html",
+            700
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   MEMBER
+===================================================== */
+
+async function loadMember(){
+
+    try{
+
+        if(
+            typeof window.currentProfile ===
+            "function"
+        ){
+
+            profile =
+                await window.currentProfile();
+
+        }else{
+
+            const {
+                data,
+                error
+            } =
+                await sb
+                    .from("profiles")
+                    .select(
+                        "id,uid,username,full_name,email,phone,referral_code,status,level,xp,role"
+                    )
+                    .eq(
+                        "id",
+                        user.id
+                    )
+                    .maybeSingle();
+
+            if(error)
+                throw error;
+
+            profile =
+                data || null;
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+        profile = null;
+
+    }
+
+
+    const memberName =
+        profile?.full_name ||
+        profile?.username ||
+        user.user_metadata?.full_name ||
+        user.user_metadata?.name ||
+        user.email?.split("@")[0] ||
+        "Member";
+
+
+    $("memberName").textContent =
+        memberName;
+
+
+    $("memberEmail").textContent =
+        profile?.email ||
+        user.email ||
+        "-";
+
+
+    $("referralCode").textContent =
+        profile?.referral_code ||
+        "-";
+
+}
+
+
+/* =====================================================
+   MAIN WALLET
+===================================================== */
+
+async function loadMainWallet(){
+
+    if(
+        typeof window.loadWallet ===
+        "function"
+    ){
+
+        mainWallet =
+            await window.loadWallet() ||
+            {
+                balance:0,
+                total_in:0,
+                total_out:0
+            };
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await sb
+            .from("wallets")
+            .select(
+                "balance,total_in,total_out,updated_at"
+            )
+            .eq(
+                "user_id",
+                user.id
+            )
+            .maybeSingle();
+
+
+    if(error)
+        throw error;
+
+
+    mainWallet =
+        data ||
+        {
+            balance:0,
+            total_in:0,
+            total_out:0
+        };
+
+}
+
+
+/* =====================================================
+   MINING WALLET
+===================================================== */
+
+function normalizeMiningWallet(data){
+
+    if(Array.isArray(data))
+        return data[0] || null;
+
+    return data || null;
+
+}
+
+
+async function loadMiningWallet(){
+
+    let result =
+        await sb.rpc(
+            "get_my_mining_wallet"
+        );
+
+
+    if(result.error){
+
+        console.warn(
+            "get_my_mining_wallet:",
+            result.error
+        );
+
+
+        result =
+            await sb.rpc(
+                "ensure_mining_wallet"
+            );
+
+    }
+
+
+    if(result.error)
+        throw result.error;
+
+
+    const row =
+        normalizeMiningWallet(
+            result.data
+        );
+
+
+    miningWallet =
+        row ||
+        {
+            available_amount:0,
+            locked_amount:0,
+            total_mined:0,
+            total_swapped:0
+        };
+
+
+    miningWallet.available_amount =
+        Number(
+            miningWallet.available_amount ||
+            0
+        );
+
+
+    miningWallet.locked_amount =
+        Number(
+            miningWallet.locked_amount ||
+            0
+        );
+
+
+    miningWallet.total_mined =
+        Number(
+            miningWallet.total_mined ||
+            0
+        );
+
+
+    miningWallet.total_swapped =
+        Number(
+            miningWallet.total_swapped ||
+            0
+        );
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderWallet(){
+
+    const balance =
+        Number(
+            mainWallet?.balance || 0
+        );
+
+
+    $("mainBalance").textContent =
+        formatIDR(balance);
+
+
+    /*
+     * Saldo utama yang sama.
+     *
+     * Bukan saldo mining kedua.
+     */
+
+    $("miningRupiah").textContent =
+        formatIDR(balance);
+
+}
+
+
+function renderMining(){
+
+    const available =
+        Number(
+            miningWallet.available_amount ||
+            0
+        );
+
+
+    const locked =
+        Number(
+            miningWallet.locked_amount ||
+            0
+        );
+
+
+    const total =
+        Number(
+            miningWallet.total_mined ||
+            0
+        );
+
+
+    const swapped =
+        Number(
+            miningWallet.total_swapped ||
+            0
+        );
+
+
+    $("availableXMR").textContent =
+        formatXMR(available);
+
+
+    $("availableForSwap").textContent =
+        formatXMR(available);
+
+
+    $("totalMined").textContent =
+        formatXMR(total);
+
+
+    $("lockedXMR").textContent =
+        formatXMR(locked);
+
+
+    $("totalSwapped").textContent =
+        formatXMR(swapped);
+
+
+    if(
+        visualMining.active
+    ){
+
+        $("miningStatus").textContent =
+            "🟢 MINING AKTIF";
+
+    }else if(
+        total > 0 ||
+        available > 0
+    ){
+
+        $("miningStatus").textContent =
+            "🟡 ADA HASIL MINING";
+
+    }else{
+
+        $("miningStatus").textContent =
+            "⚪ BELUM AKTIF";
+
+    }
+
+
+    renderWallet();
+
+}
+
+
+/* =====================================================
+   VISUAL MINING
+===================================================== */
+
+const VISUAL_RATE =
+    0.00001 / 3600;
+
+
+/*
+ * 0.00001 XMR per jam
+ * hanya digunakan untuk animasi tampilan.
+ *
+ * Saldo server TIDAK diubah oleh kode ini.
+ */
+
+function getVisualMiningAmount(){
+
+    if(
+        !visualMining.active ||
+        !visualMining.startedAt
+    ){
+
+        return 0;
+
+    }
+
+
+    const seconds =
+        Math.max(
+            0,
+            (
+                Date.now() -
+                visualMining.startedAt
+            ) / 1000
+        );
+
+
+    return seconds *
+        VISUAL_RATE;
+
+}
+
+
+function updateMiningDisplay(){
+
+    const amount =
+        getVisualMiningAmount();
+
+
+    const seconds =
+        visualMining.active &&
+        visualMining.startedAt
+            ?
+            Math.floor(
+                (
+                    Date.now() -
+                    visualMining.startedAt
+                ) / 1000
+            )
+            :
+            0;
+
+
+    const h =
+        String(
+            Math.floor(
+                seconds / 3600
+            )
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const m =
+        String(
+            Math.floor(
+                (seconds % 3600) / 60
+            )
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const s =
+        String(
+            seconds % 60
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    $("liveMiningAmount")
+        .textContent =
+        formatLiveXMR(amount);
+
+
+    $("miningTimer")
+        .textContent =
+        `${h}:${m}:${s}`;
+
+
+    /*
+     * Progress visual setiap jam.
+     */
+
+    const progress =
+        (
+            seconds % 3600
+        ) / 3600 * 100;
+
+
+    $("miningProgress")
+        .style.width =
+        progress + "%";
+
+
+    const btn =
+        $("toggleMiningBtn");
+
+
+    if(
+        visualMining.active
+    ){
+
+        btn.textContent =
+            "⏹️ HENTIKAN MINING";
+
+        btn.className =
+            "btn-dark";
+
+    }else{
+
+        btn.textContent =
+            "⛏️ AKTIFKAN MINING";
+
+        btn.className =
+            "btn-gold";
+
+    }
+
+}
+
+
+function toggleMining(){
+
+    if(
+        visualMining.active
+    ){
+
+        visualMining.active =
+            false;
+
+        visualMining.startedAt =
+            null;
+
+        toast(
+            "Mining dihentikan."
+        );
+
+    }else{
+
+        visualMining.active =
+            true;
+
+        visualMining.startedAt =
+            Date.now();
+
+        toast(
+            "⛏️ Mining aktif."
+        );
+
+    }
+
+
+    renderMining();
+
+    updateMiningDisplay();
+
+}
+
+
+/* =====================================================
+   SWAP
+===================================================== */
+
+function openSwapConfirm(){
+
+    const amount =
+        Number(
+            $("swapAmount").value
+        );
+
+
+    const available =
+        Number(
+            miningWallet.available_amount ||
+            0
+        );
+
+
+    if(
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ){
+
+        toast(
+            "Masukkan jumlah XMR yang valid."
+        );
+
+        return;
+
+    }
+
+
+    if(amount > available){
+
+        toast(
+            "Saldo XMR server tidak mencukupi."
+        );
+
+        return;
+
+    }
+
+
+    pendingSwapAmount =
+        amount;
+
+
+    $("confirmText").innerHTML = `
+
+        Kamu akan mengajukan swap:
+
+        <br><br>
+
+        <b style="color:#ffd76a;">
+            ${escapeHTML(
+                formatXMR(amount)
+            )}
+        </b>
+
+        <br><br>
+
+        XMR akan dikunci terlebih dahulu.
+
+        <br><br>
+
+        <b style="color:#ffcc66;">
+            Saldo Rupiah utama tidak berubah
+            sampai swap disetujui.
+        </b>
+
+    `;
+
+
+    $("confirmModal")
+        .classList
+        .add("show");
+
+}
+
+
+function closeSwapConfirm(){
+
+    pendingSwapAmount =
+        0;
+
+    $("confirmModal")
+        .classList
+        .remove("show");
+
+}
+
+
+async function confirmSwap(){
+
+    const amount =
+        Number(
+            pendingSwapAmount
+        );
+
+
+    if(
+        !Number.isFinite(amount) ||
+        amount <= 0
+    ){
+
+        closeSwapConfirm();
+
+        toast(
+            "Jumlah XMR tidak valid."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        $("confirmSwap").disabled =
+            true;
+
+        $("confirmSwap").textContent =
+            "⏳ MEMPROSES...";
+
+
+        const {
+            data,
+            error
+        } =
+            await sb.rpc(
+                "request_mining_swap",
+                {
+                    p_coin_amount:
+                        amount
+                }
+            );
+
+
+        if(error)
+            throw error;
+
+
+        console.log(
+            "Swap request:",
+            data
+        );
+
+
+        $("swapAmount").value =
+            "";
+
+
+        closeSwapConfirm();
+
+
+        await loadAllData();
+
+
+        toast(
+            "Swap diajukan. XMR dikunci dan menunggu settlement."
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "SWAP ERROR:",
+            error
+        );
+
+
+        toast(
+            "Swap gagal: " +
+            (
+                error?.message ||
+                "Terjadi kesalahan."
+            )
+        );
+
+    }finally{
+
+        $("confirmSwap").disabled =
+            false;
+
+        $("confirmSwap").textContent =
+            "AJUKAN";
+
+    }
+
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+async function loadSwapHistory(){
+
+    const {
+        data,
+        error
+    } =
+        await sb
+            .from(
+                "mining_swap_requests"
+            )
+            .select(
+                "id,user_id,asset_code,coin_amount,idr_rate,idr_amount,status,external_ref,admin_note,created_at,processed_at"
+            )
+            .eq(
+                "user_id",
+                user.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(30);
+
+
+    if(error){
+
+        console.warn(
+            "Swap history:",
+            error
+        );
+
+        return [];
+
+    }
+
+
+    return data || [];
+
+}
+
+
+async function loadMiningHistory(){
+
+    const {
+        data,
+        error
+    } =
+        await sb
+            .from(
+                "mining_payouts"
+            )
+            .select(
+                "id,user_id,asset_code,amount,external_ref,source,status,note,created_at,verified_at"
+            )
+            .eq(
+                "user_id",
+                user.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            )
+            .limit(30);
+
+
+    if(error){
+
+        console.warn(
+            "Mining history:",
+            error
+        );
+
+        return [];
+
+    }
+
+
+    return data || [];
+
+}
+
+
+async function renderHistory(){
+
+    const list =
+        $("historyList");
+
+
+    list.innerHTML =
+        '<div class="empty">Memuat riwayat...</div>';
+
+
+    const [
+        swaps,
+        payouts
+    ] =
+        await Promise.all([
+            loadSwapHistory(),
+            loadMiningHistory()
+        ]);
+
+
+    const items = [];
+
+
+    swaps.forEach(item => {
+
+        items.push({
+
+            type:"💱 Swap XMR",
+
+            amount:
+                Number(
+                    item.coin_amount ||
+                    0
+                ),
+
+            rupiah:
+                Number(
+                    item.idr_amount ||
+                    0
+                ),
+
+            status:
+                item.status ||
+                "pending",
+
+            note:
+                item.admin_note ||
+                "",
+
+            date:
+                item.created_at,
+
+            sortDate:
+                new Date(
+                    item.created_at
+                ).getTime()
+
+        });
+
+    });
+
+
+    payouts.forEach(item => {
+
+        items.push({
+
+            type:"⛏️ Mining Payout",
+
+            amount:
+                Number(
+                    item.amount ||
+                    0
+                ),
+
+            rupiah:0,
+
+            status:
+                item.status ||
+                "verified",
+
+            note:
+                item.note ||
+                "",
+
+            date:
+                item.created_at,
+
+            sortDate:
+                new Date(
+                    item.created_at
+                ).getTime()
+
+        });
+
+    });
+
+
+    items.sort(
+        (a,b) =>
+            b.sortDate -
+            a.sortDate
+    );
+
+
+    if(!items.length){
+
+        list.innerHTML =
+            '<div class="empty">Belum ada riwayat mining atau swap.</div>';
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        items
+            .slice(0,50)
+            .map(item => {
+
+                const status =
+                    String(
+                        item.status ||
+                        ""
+                    ).toLowerCase();
+
+
+                let statusClass =
+                    "status-pending";
+
+
+                if(
+                    status === "approved" ||
+                    status === "verified" ||
+                    status === "completed"
+                ){
+
+                    statusClass =
+                        "status-approved";
+
+                }
+
+
+                if(
+                    status === "rejected" ||
+                    status === "failed" ||
+                    status === "cancelled"
+                ){
+
+                    statusClass =
+                        "status-rejected";
+
+                }
+
+
+                const rupiah =
+                    Number(
+                        item.rupiah ||
+                        0
+                    ) > 0
+                    ?
+                    `
+                    <br>
+                    Nilai Rupiah:
+                    <b>
+                        ${escapeHTML(
+                            formatIDR(
+                                item.rupiah
+                            )
+                        )}
+                    </b>
+                    `
+                    :
+                    "";
+
+
+                const note =
+                    item.note
+                    ?
+                    `
+                    <br>
+                    Catatan:
+                    ${escapeHTML(
+                        item.note
+                    )}
+                    `
+                    :
+                    "";
+
+
+                return `
+
+                    <div class="history-item">
+
+                        <div class="history-top">
+
+                            <div class="history-type">
+                                ${escapeHTML(
+                                    item.type
+                                )}
+                            </div>
+
+                            <div class="history-amount">
+                                ${escapeHTML(
+                                    formatXMR(
+                                        item.amount
+                                    )
+                                )}
+                            </div>
+
+                        </div>
+
+                        <div class="history-date">
+
+                            Status:
+
+                            <b class="${statusClass}">
+                                ${escapeHTML(
+                                    String(
+                                        item.status ||
+                                        "PENDING"
+                                    ).toUpperCase()
+                                )}
+                            </b>
+
+                            ${rupiah}
+
+                            ${note}
+
+                            <br>
+
+                            ${escapeHTML(
+                                formatDate(
+                                    item.date
+                                )
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+async function loadAllData(){
+
+    try{
+
+        $("refreshBtn").disabled =
+            true;
+
+        $("refreshBtn").textContent =
+            "⏳ MEMUAT...";
+
+
+        if(!(await loadUser()))
+            return;
+
+
+        await Promise.all([
+
+            loadMember(),
+
+            loadMainWallet(),
+
+            loadMiningWallet()
+
+        ]);
+
+
+        renderWallet();
+
+        renderMining();
+
+        await renderHistory();
+
+
+        $("refreshBtn").textContent =
+            "🔄 REFRESH ULANG";
+
+        $("refreshBtn").disabled =
+            false;
+
+
+    }catch(error){
+
+        console.error(
+            "MYSHORT MINING:",
+            error
+        );
+
+
+        $("refreshBtn").textContent =
+            "🔄 REFRESH ULANG";
+
+        $("refreshBtn").disabled =
+            false;
+
+
+        toast(
+            "Gagal memuat data: " +
+            (
+                error?.message ||
+                "Unknown error"
+            )
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+$("toggleMiningBtn")
+    .addEventListener(
+        "click",
+        toggleMining
+    );
+
+
+$("refreshBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+            await loadAllData();
+
+            toast(
+                "Data Supabase diperbarui."
+            );
+
+        }
+    );
+
+
+$("maxBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            const amount =
+                Number(
+                    miningWallet.available_amount ||
+                    0
+                );
+
+
+            if(amount <= 0){
+
+                toast(
+                    "Saldo XMR server belum tersedia."
+                );
+
+                return;
+
+            }
+
+
+            $("swapAmount").value =
+                amount.toFixed(12);
+
+        }
+    );
+
+
+$("swapBtn")
+    .addEventListener(
+        "click",
+        openSwapConfirm
+    );
+
+
+$("cancelConfirm")
+    .addEventListener(
+        "click",
+        closeSwapConfirm
+    );
+
+
+$("confirmSwap")
+    .addEventListener(
+        "click",
+        confirmSwap
+    );
+
+
+$("confirmModal")
+    .addEventListener(
+        "click",
+        event => {
+
+            if(
+                event.target ===
+                $("confirmModal")
+            ){
+
+                closeSwapConfirm();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   VISUAL TIMER
+===================================================== */
+
+window.__myshortMiningTimer =
+    setInterval(
+        () => {
+
+            updateMiningDisplay();
+
+        },
+        1000
+    );
+
+
+/* =====================================================
+   START
+===================================================== */
+
+(async function(){
+
+    await loadAllData();
+
+    updateMiningDisplay();
+
+})();
+
+</script>
+
+</body>
+</html>
