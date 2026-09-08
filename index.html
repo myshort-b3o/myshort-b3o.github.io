@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06183f">
+<meta name="mobile-web-app-capable" content="yes">
+<title>MyShort — XMR Mining Center</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  min-height:100vh;
+  min-height:100dvh;
+  overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#f5f8ff;
+  background:#071a43;
+}
+
+.screen{
+  width:100%;
+  min-height:100vh;
+  min-height:100dvh;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  overflow:hidden;
+  background:#071a43;
+}
+
+.content{
+  width:min(100%,520px);
+  min-height:100vh;
+  min-height:100dvh;
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:clamp(42px,8vh,86px) 22px 28px;
+}
+
+/* logo */
+.logo-frame{
+  width:clamp(142px,35vw,178px);
+  height:clamp(142px,35vw,178px);
+  border:4px solid #fff;
+  border-radius:32px;
+  padding:8px;
+  background:#050b1b;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.32),
+    0 0 22px rgba(91,183,255,.40);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-frame img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:22px;
+  display:block;
+}
+
+.brand{
+  margin-top:18px;
+  font-size:clamp(52px,13vw,72px);
+  line-height:.95;
+  letter-spacing:-3px;
+  font-weight:300;
+  color:#f8faff;
+  text-align:center;
+}
+
+.brand span{
+  color:#3ca9ed;
+}
+
+.tagline{
+  margin-top:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  width:100%;
+  color:#a9bddf;
+  font-size:clamp(13px,3.5vw,17px);
+  letter-spacing:6px;
+  white-space:nowrap;
+}
+
+.tagline::before,
+.tagline::after{
+  content:"";
+  width:72px;
+  height:2px;
+  flex:0 0 72px;
+  background:#2871c9;
+}
+
+/* login button: deliberately compact */
+.login-btn{
+  width:min(66%,330px);
+  height:52px;
+  margin-top:32px;
+  border:2px solid #25a9ff;
+  border-radius:40px;
+  background:linear-gradient(135deg,#1d4a91,#123a7e);
+  color:#fff;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  box-shadow:
+    0 0 14px rgba(37,169,255,.34),
+    inset 0 0 18px rgba(255,255,255,.05);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.login-btn:active{
+  transform:scale(.975);
+  box-shadow:0 0 8px rgba(37,169,255,.28);
+}
+
+.login-icon{
+  width:27px;
+  height:27px;
+  border:3px solid #fff;
+  border-radius:7px;
+  position:relative;
+  flex:0 0 27px;
+}
+
+.login-icon::before{
+  content:"";
+  position:absolute;
+  left:4px;
+  top:10px;
+  width:11px;
+  height:2px;
+  background:#fff;
+  border-radius:2px;
+}
+
+.login-icon::after{
+  content:"";
+  position:absolute;
+  right:3px;
+  top:8px;
+  width:6px;
+  height:6px;
+  border-top:3px solid #fff;
+  border-right:3px solid #fff;
+  transform:rotate(45deg);
+}
+
+.login-divider{
+  width:1px;
+  height:23px;
+  background:rgba(255,255,255,.42);
+}
+
+.login-text{
+  font-size:clamp(15px,4vw,19px);
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+.chevron{
+  font-size:25px;
+  line-height:1;
+  font-weight:300;
+  margin-left:4px;
+}
+
+/* social */
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  margin-top:32px;
+}
+
+.social{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:2px solid #2d79d8;
+  background:#102f6b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  box-shadow:0 0 12px rgba(35,121,220,.20);
+  font-weight:700;
+}
+
+.social:active{transform:scale(.95)}
+
+.fb{font-size:31px;font-family:Arial,sans-serif}
+.tg{font-size:27px}
+.xx{font-size:29px;font-weight:400}
+.gg{font-size:28px}
+
+.footer{
+  margin-top:42px;
+  display:flex;
+  align-items:center;
+  gap:26px;
+  color:#6e8cbd;
+  font-size:15px;
+  letter-spacing:6px;
+}
+
+.footer::before,
+.footer::after{
+  content:"";
+  width:66px;
+  height:2px;
+  background:#2868b9;
+}
+
+/* Extra-safe sizing for smaller phones */
+@media(max-width:380px){
+  .content{padding-top:34px}
+  .logo-frame{
+    width:132px;
+    height:132px;
+    border-radius:29px;
+  }
+  .brand{font-size:50px}
+  .tagline{font-size:11px;letter-spacing:4px;gap:10px}
+  .tagline::before,.tagline::after{width:48px;flex-basis:48px}
+  .login-btn{
+    width:78%;
+    height:49px;
+    margin-top:34px;
+    gap:8px;
+  }
+  .login-text{font-size:16px}
+  .socials{gap:14px;margin-top:26px}
+  .social{width:50px;height:50px}
+  .footer{margin-top:31px;font-size:12px;gap:14px}
+  .footer::before,.footer::after{width:45px}
+}
+
+@media(min-height:800px){
+  .content{padding-top:clamp(55px,9vh,105px)}
+}
+</style>
+</head>
+
+<body>
+<div class="screen">
+  <main class="content">
+
+    <div class="logo-frame">
+      <img src="logo.png" alt="MyShort">
+    </div>
+
+    <div class="brand">my<span>short</span></div>
+
+    <div class="tagline">
+      XMR MINING CENTER
+    </div>
+
+    <a class="login-btn" href="login.html" aria-label="Login atau Masuk">
+      <span class="login-icon" aria-hidden="true"></span>
+      <span class="login-divider" aria-hidden="true"></span>
+      <span class="login-text">LOGIN / MASUK</span>
+      <span class="chevron" aria-hidden="true">›</span>
+    </a>
+
+    <div class="socials">
+      <a class="social fb" href="#" aria-label="Facebook">f</a>
+      <a class="social tg" href="#" aria-label="Telegram">➤</a>
+      <a class="social xx" href="#" aria-label="X">𝕏</a>
+      <a class="social gg" href="#" aria-label="Google">G</a>
+    </div>
+
+    <div class="footer">MYSHORT</div>
+
+  </main>
+</div>
+</body>
+</html>
