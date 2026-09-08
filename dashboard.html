@@ -1,0 +1,2884 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MyShort Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(255,215,100,.18),
+          transparent 35%
+        ),
+        linear-gradient(
+          180deg,
+          #17120a 0%,
+          #090909 55%,
+          #050505 100%
+        );
+      color:#fff;
+      min-height:100vh;
+    }
+
+    button,
+    input{
+      font-family:inherit;
+    }
+
+    .page{
+      width:100%;
+      max-width:520px;
+      margin:auto;
+      padding-bottom:45px;
+    }
+
+    /* HEADER */
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:20;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:16px 18px;
+
+      background:rgba(10,10,10,.90);
+      backdrop-filter:blur(15px);
+
+      border-bottom:1px solid rgba(255,215,100,.12);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .brand-logo{
+      width:44px;
+      height:44px;
+      border-radius:13px;
+      object-fit:cover;
+
+      background:linear-gradient(
+        135deg,
+        #ffe28a,
+        #b8860b
+      );
+
+      box-shadow:
+        0 0 20px rgba(255,200,60,.25);
+    }
+
+    .brand-title{
+      font-size:18px;
+      font-weight:900;
+      color:#f7d675;
+    }
+
+    .brand-sub{
+      font-size:11px;
+      color:#999;
+      margin-top:2px;
+    }
+
+    .status-pill{
+      padding:9px 12px;
+      border-radius:30px;
+
+      font-size:10px;
+      font-weight:800;
+      white-space:nowrap;
+
+      background:rgba(255,255,255,.06);
+      color:#aaa;
+
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .status-pill.active{
+      color:#e8ffb0;
+      border-color:rgba(180,255,100,.35);
+      background:rgba(130,190,40,.10);
+    }
+
+    .status-pill.stopped{
+      color:#ffb0a8;
+      border-color:rgba(255,100,80,.25);
+      background:rgba(255,80,60,.08);
+    }
+
+    /* CONTENT */
+
+    .content{
+      padding:20px 16px;
+    }
+
+    .hero{
+      text-align:center;
+      padding:20px 10px 8px;
+    }
+
+    .hero h1{
+      font-size:29px;
+      font-weight:900;
+      color:#f6d477;
+
+      text-shadow:
+        0 0 25px rgba(255,210,80,.18);
+    }
+
+    .hero p{
+      margin-top:8px;
+      color:#999;
+      font-size:13px;
+    }
+
+    /* MINING CORE */
+
+    .mining-core{
+      position:relative;
+
+      width:230px;
+      height:230px;
+
+      margin:15px auto 25px;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .ring{
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(246,212,119,.22);
+    }
+
+    .ring.one{
+      width:230px;
+      height:230px;
+      animation:spin 14s linear infinite;
+    }
+
+    .ring.two{
+      width:195px;
+      height:195px;
+      border-style:dashed;
+      animation:spinReverse 10s linear infinite;
+    }
+
+    .ring.three{
+      width:160px;
+      height:160px;
+      border-color:rgba(255,255,255,.08);
+    }
+
+    .core{
+      position:relative;
+
+      width:125px;
+      height:125px;
+
+      border-radius:50%;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #ffeaa5,
+          #c49325 45%,
+          #513b0e 100%
+        );
+
+      box-shadow:
+        0 0 25px rgba(255,210,70,.35),
+        inset 0 0 25px rgba(255,255,255,.15);
+    }
+
+    .core-icon{
+      font-size:37px;
+      margin-bottom:3px;
+    }
+
+    .core-text{
+      font-size:11px;
+      font-weight:800;
+      color:#2d2208;
+      letter-spacing:1px;
+    }
+
+    .core.active{
+      animation:miningPulse 2.2s ease-in-out infinite;
+    }
+
+    .core.stopped{
+      filter:grayscale(.6);
+      opacity:.75;
+    }
+
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    @keyframes spinReverse{
+      to{
+        transform:rotate(-360deg);
+      }
+    }
+
+    @keyframes miningPulse{
+      0%,100%{
+        transform:scale(1);
+        box-shadow:
+          0 0 25px rgba(255,210,70,.35),
+          inset 0 0 25px rgba(255,255,255,.15);
+      }
+
+      50%{
+        transform:scale(1.045);
+        box-shadow:
+          0 0 50px rgba(255,210,70,.55),
+          inset 0 0 30px rgba(255,255,255,.18);
+      }
+    }
+
+    /* BALANCE */
+
+    .balance-card{
+      position:relative;
+      overflow:hidden;
+
+      padding:22px;
+
+      border-radius:22px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.025)
+        );
+
+      border:1px solid rgba(246,212,119,.17);
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.35);
+    }
+
+    .balance-card::before{
+      content:"";
+
+      position:absolute;
+
+      width:150px;
+      height:150px;
+
+      top:-80px;
+      right:-60px;
+
+      border-radius:50%;
+
+      background:rgba(246,212,119,.08);
+      filter:blur(5px);
+    }
+
+    .balance-label{
+      color:#999;
+      font-size:12px;
+    }
+
+    .balance-row{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+
+      gap:15px;
+      margin-top:7px;
+    }
+
+    .balance{
+      font-size:28px;
+      font-weight:900;
+      color:#f6d477;
+      word-break:break-all;
+    }
+
+    .asset{
+      font-size:13px;
+      font-weight:800;
+      color:#aaa;
+      padding-bottom:4px;
+    }
+
+    .idr-balance{
+      margin-top:14px;
+      padding-top:14px;
+
+      border-top:1px solid rgba(255,255,255,.07);
+
+      display:flex;
+      justify-content:space-between;
+
+      font-size:13px;
+    }
+
+    .idr-balance span:first-child{
+      color:#888;
+    }
+
+    .idr-balance span:last-child{
+      color:#eee;
+      font-weight:700;
+    }
+
+    /* GRID */
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .info-card{
+      padding:16px;
+
+      border-radius:17px;
+
+      background:rgba(255,255,255,.045);
+
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    .info-title{
+      color:#888;
+      font-size:11px;
+    }
+
+    .info-value{
+      margin-top:7px;
+
+      font-size:15px;
+      font-weight:800;
+
+      color:#eee;
+
+      word-break:break-word;
+    }
+
+    .info-value.gold{
+      color:#f6d477;
+    }
+
+    /* ACTIVATE */
+
+    .activate-btn{
+      width:100%;
+
+      margin-top:16px;
+
+      padding:17px;
+
+      border:0;
+      border-radius:17px;
+
+      font-size:15px;
+      font-weight:900;
+
+      cursor:pointer;
+
+      color:#231b08;
+
+      background:
+        linear-gradient(
+          135deg,
+          #fff0ad,
+          #e1b84e,
+          #a8790e
+        );
+
+      box-shadow:
+        0 10px 30px rgba(205,160,45,.22);
+    }
+
+    .activate-btn:active{
+      transform:scale(.985);
+    }
+
+    .activate-btn:disabled{
+      cursor:not-allowed;
+      opacity:.55;
+    }
+
+    .activate-btn.active{
+      background:rgba(255,255,255,.06);
+      color:#aaa;
+      border:1px solid rgba(255,255,255,.1);
+      box-shadow:none;
+    }
+
+    .sync{
+      margin-top:9px;
+      text-align:center;
+      color:#666;
+      font-size:10px;
+    }
+
+    /* SECTION */
+
+    .section{
+      margin-top:24px;
+    }
+
+    .section-title{
+      font-size:20px;
+      font-weight:900;
+      color:#eee;
+      margin-bottom:11px;
+    }
+
+    .panel{
+      padding:18px;
+
+      border-radius:20px;
+
+      background:rgba(255,255,255,.04);
+
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    /* SWAP */
+
+    .input-label{
+      display:block;
+      margin-bottom:7px;
+      color:#999;
+      font-size:11px;
+    }
+
+    .input{
+      width:100%;
+
+      padding:15px;
+
+      border-radius:13px;
+
+      border:1px solid rgba(255,255,255,.09);
+
+      outline:none;
+
+      background:rgba(0,0,0,.35);
+
+      color:#fff;
+
+      font-size:16px;
+    }
+
+    .input:focus{
+      border-color:rgba(246,212,119,.5);
+
+      box-shadow:
+        0 0 0 2px rgba(246,212,119,.06);
+    }
+
+    .rate-box{
+      margin-top:10px;
+
+      padding:11px 12px;
+
+      border-radius:12px;
+
+      background:rgba(255,255,255,.035);
+
+      border:1px solid rgba(255,255,255,.05);
+
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      gap:10px;
+    }
+
+    .rate-label{
+      color:#777;
+      font-size:11px;
+    }
+
+    .rate-value{
+      color:#f6d477;
+      font-size:12px;
+      font-weight:800;
+      text-align:right;
+    }
+
+    .swap-preview{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      margin-top:10px;
+
+      padding:14px;
+
+      border-radius:13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(246,212,119,.08),
+          rgba(246,212,119,.025)
+        );
+
+      border:1px solid rgba(246,212,119,.08);
+
+      color:#aaa;
+
+      font-size:12px;
+    }
+
+    .swap-preview strong{
+      color:#f6d477;
+      font-size:17px;
+    }
+
+    .swap-btn{
+      width:100%;
+
+      margin-top:12px;
+
+      padding:15px;
+
+      border:1px solid rgba(246,212,119,.25);
+
+      border-radius:13px;
+
+      background:rgba(246,212,119,.08);
+
+      color:#f6d477;
+
+      font-weight:800;
+
+      cursor:pointer;
+    }
+
+    .swap-btn:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    .swap-note{
+      margin-top:9px;
+
+      color:#666;
+
+      font-size:10px;
+      line-height:1.5;
+
+      text-align:center;
+    }
+
+    /* HISTORY */
+
+    .history-item{
+      padding:15px;
+
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .history-item:last-child{
+      border-bottom:0;
+    }
+
+    .history-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .history-type{
+      font-size:13px;
+      font-weight:800;
+      color:#eee;
+    }
+
+    .history-status{
+      font-size:10px;
+      font-weight:800;
+      text-transform:uppercase;
+      color:#f6d477;
+    }
+
+    .history-amount{
+      margin-top:6px;
+      font-size:13px;
+      color:#bbb;
+    }
+
+    .history-idr{
+      margin-top:4px;
+      font-size:12px;
+      color:#f6d477;
+    }
+
+    .history-date{
+      margin-top:5px;
+      font-size:10px;
+      color:#666;
+    }
+
+    .empty{
+      padding:20px;
+      text-align:center;
+      color:#666;
+      font-size:12px;
+    }
+
+    /* TOAST */
+
+    #toast{
+      position:fixed;
+
+      left:50%;
+      bottom:22px;
+
+      transform:translate(-50%,20px);
+
+      z-index:100;
+
+      width:calc(100% - 30px);
+      max-width:450px;
+
+      padding:13px 16px;
+
+      border-radius:14px;
+
+      background:rgba(25,25,25,.96);
+
+      border:1px solid rgba(246,212,119,.2);
+
+      color:#eee;
+
+      font-size:13px;
+      text-align:center;
+
+      opacity:0;
+      pointer-events:none;
+
+      transition:.25s ease;
+    }
+
+    #toast.show{
+      opacity:1;
+      transform:translate(-50%,0);
+    }
+
+    @media(max-width:360px){
+
+      .balance{
+        font-size:23px;
+      }
+
+      .mining-core{
+        transform:scale(.88);
+        margin-top:0;
+        margin-bottom:5px;
+      }
+
+      .header{
+        padding-left:12px;
+        padding-right:12px;
+      }
+
+      .status-pill{
+        font-size:9px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+
+  <header class="header">
+
+    <div class="brand">
+
+      <img
+        class="brand-logo"
+        src="logo.png"
+        alt="MyShort"
+        onerror="this.style.display='none'"
+      >
+
+      <div>
+        <div class="brand-title">
+          MYSHORT
+        </div>
+
+        <div class="brand-sub">
+          XMR Mining Center
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      id="statusPill"
+      class="status-pill"
+    >
+      MEMUAT...
+    </div>
+
+  </header>
+
+
+  <main class="content">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <h1>
+        MINING
+      </h1>
+
+      <p>
+        Server-backed XMR mining
+      </p>
+
+    </section>
+
+
+    <!-- MINING CORE -->
+
+    <div class="mining-core">
+
+      <div class="ring one"></div>
+      <div class="ring two"></div>
+      <div class="ring three"></div>
+
+      <div
+        id="miningCore"
+        class="core stopped"
+      >
+
+        <div class="core-icon">
+          ⛏
+        </div>
+
+        <div
+          id="coreText"
+          class="core-text"
+        >
+          READY
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BALANCE -->
+
+    <section class="balance-card">
+
+      <div class="balance-label">
+        XMR TERSEDIA
+      </div>
+
+      <div class="balance-row">
+
+        <div
+          id="xmrBalance"
+          class="balance"
+        >
+          0.000000000000
+        </div>
+
+        <div class="asset">
+          XMR
+        </div>
+
+      </div>
+
+
+      <div class="idr-balance">
+
+        <span>
+          Saldo Rupiah Utama
+        </span>
+
+        <span id="idrBalance">
+          Rp 0
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- INFO -->
+
+    <div class="grid">
+
+      <div class="info-card">
+
+        <div class="info-title">
+          STATUS MINING
+        </div>
+
+        <div
+          id="miningStatus"
+          class="info-value"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="info-title">
+          RATE MINING
+        </div>
+
+        <div
+          id="miningRate"
+          class="info-value gold"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="info-title">
+          HASIL SESI
+        </div>
+
+        <div
+          id="sessionMined"
+          class="info-value"
+        >
+          0 XMR
+        </div>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="info-title">
+          AKTIF SEJAK
+        </div>
+
+        <div
+          id="startedAt"
+          class="info-value"
+        >
+          -
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIVATE -->
+
+    <button
+      id="activateBtn"
+      class="activate-btn"
+      type="button"
+      onclick="activateMining()"
+    >
+      AKTIFKAN MINING
+    </button>
+
+
+    <div
+      id="syncText"
+      class="sync"
+    >
+      Menunggu sinkronisasi server...
+    </div>
+
+
+    <!-- SWAP -->
+
+    <section class="section">
+
+      <div class="section-title">
+        Tukar XMR ke Rupiah
+      </div>
+
+      <div class="panel">
+
+        <label
+          class="input-label"
+          for="swapAmount"
+        >
+          Jumlah XMR
+        </label>
+
+        <input
+          id="swapAmount"
+          class="input"
+          type="number"
+          min="0"
+          step="0.000000000001"
+          inputmode="decimal"
+          placeholder="Masukkan jumlah XMR"
+          oninput="calculateSwap()"
+        >
+
+
+        <!-- KURS -->
+
+        <div class="rate-box">
+
+          <div class="rate-label">
+            Kurs XMR → Rupiah
+          </div>
+
+          <div
+            id="swapRateView"
+            class="rate-value"
+          >
+            Mengambil harga...
+          </div>
+
+        </div>
+
+
+        <!-- ESTIMASI -->
+
+        <div class="swap-preview">
+
+          <span>
+            Estimasi Rupiah
+          </span>
+
+          <strong id="swapIDR">
+            Rp 0,00
+          </strong>
+
+        </div>
+
+
+        <button
+          id="swapBtn"
+          class="swap-btn"
+          type="button"
+          onclick="requestSwap()"
+        >
+          AJUKAN PENUKARAN
+        </button>
+
+
+        <div class="swap-note">
+          Estimasi menggunakan kurs XMR/IDR saat ini.
+          Nilai final penukaran ditentukan saat admin menyetujui pengajuan.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HISTORY -->
+
+    <section class="section">
+
+      <div class="section-title">
+        Riwayat Mining
+      </div>
+
+      <div
+        id="historyPanel"
+        class="panel"
+      >
+
+        <div class="empty">
+          Memuat riwayat...
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+  /*
+   * ==========================================
+   * MYSHORT DASHBOARD / MINING V3
+   * ==========================================
+   *
+   * SERVER AUTHORITATIVE
+   *
+   * Browser TIDAK menambahkan XMR sendiri.
+   * Semua hasil mining berasal dari Supabase.
+   *
+   * Estimasi swap:
+   * 1. mining_config.xmr_idr_rate
+   * 2. jika tidak tersedia → CoinGecko XMR/IDR
+   *
+   * Kurs estimasi TIDAK menentukan pembayaran final.
+   * Admin tetap menentukan kurs saat Approve.
+   */
+
+
+  let currentUser = null;
+
+  let miningSession = null;
+
+  let miningConfig = null;
+
+  let miningWallet = null;
+
+  let heartbeatTimer = null;
+
+  let statusTimer = null;
+
+  let priceTimer = null;
+
+  let isBusy = false;
+
+  let xmrIdrRate = 0;
+
+  let rateSource = "";
+
+
+  /*
+   * ------------------------------------------
+   * TOAST
+   * ------------------------------------------
+   */
+
+  function toast(message){
+
+    const el =
+      document.getElementById("toast");
+
+    el.textContent =
+      message;
+
+    el.classList.add("show");
+
+    setTimeout(
+      () => {
+        el.classList.remove("show");
+      },
+      2800
+    );
+  }
+
+
+  /*
+   * ------------------------------------------
+   * FORMAT XMR
+   * ------------------------------------------
+   */
+
+  function formatXMR(value){
+
+    const n =
+      Number(value || 0);
+
+    if(!Number.isFinite(n)){
+      return "0.000000000000";
+    }
+
+    return n.toFixed(12);
+  }
+
+
+  /*
+   * ------------------------------------------
+   * FORMAT RUPIAH
+   * ------------------------------------------
+   *
+   * Pakai 2 angka desimal supaya:
+   * Rp 0,50 tidak berubah menjadi Rp 0.
+   */
+
+  function formatIDR(value){
+
+    const n =
+      Number(value || 0);
+
+    if(!Number.isFinite(n)){
+      return "Rp 0,00";
+    }
+
+    return "Rp " +
+      new Intl.NumberFormat(
+        "id-ID",
+        {
+          minimumFractionDigits:2,
+          maximumFractionDigits:2
+        }
+      ).format(n);
+  }
+
+
+  function formatIDRWhole(value){
+
+    const n =
+      Number(value || 0);
+
+    if(!Number.isFinite(n)){
+      return "Rp 0";
+    }
+
+    return "Rp " +
+      new Intl.NumberFormat(
+        "id-ID"
+      ).format(n);
+  }
+
+
+  /*
+   * ------------------------------------------
+   * DATE
+   * ------------------------------------------
+   */
+
+  function formatDate(value){
+
+    if(!value){
+      return "-";
+    }
+
+    try{
+
+      return new Date(value)
+        .toLocaleString(
+          "id-ID",
+          {
+            dateStyle:"short",
+            timeStyle:"short"
+          }
+        );
+
+    }catch{
+
+      return "-";
+
+    }
+  }
+
+
+  /*
+   * ------------------------------------------
+   * RPC NORMALIZER
+   * ------------------------------------------
+   */
+
+  function normalizeRPC(data){
+
+    if(Array.isArray(data)){
+      return data[0] || null;
+    }
+
+    return data || null;
+  }
+
+
+  /*
+   * ------------------------------------------
+   * ESCAPE HTML
+   * ------------------------------------------
+   */
+
+  function escapeHTML(value){
+
+    return String(
+      value ?? ""
+    ).replace(
+      /[&<>"']/g,
+      char => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[char])
+    );
+  }
+
+
+  /*
+   * ------------------------------------------
+   * USER
+   * ------------------------------------------
+   */
+
+  async function loadUser(){
+
+    const session =
+      await window.requireAuth();
+
+    if(!session){
+      return false;
+    }
+
+    currentUser =
+      session.user;
+
+    return true;
+  }
+
+
+  /*
+   * ------------------------------------------
+   * CONFIG
+   * ------------------------------------------
+   */
+
+  async function loadConfig(){
+
+    const {
+      data,
+      error
+    } =
+      await window.sb
+        .from("mining_config")
+        .select("*")
+        .eq("asset_code","XMR")
+        .maybeSingle();
+
+
+    if(error){
+
+      console.error(
+        "mining_config:",
+        error
+      );
+
+      throw error;
+    }
+
+
+    miningConfig =
+      data;
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * XMR PRICE
+   * ------------------------------------------
+   *
+   * Prioritas:
+   *
+   * 1. xmr_idr_rate di mining_config
+   * 2. harga XMR/IDR CoinGecko
+   *
+   * Ini hanya untuk ESTIMASI user.
+   */
+
+  async function loadXMRPrice(){
+
+    /*
+     * Jika admin sudah menyimpan kurs
+     * di mining_config, gunakan itu.
+     */
+
+    const configRate =
+      Number(
+        miningConfig?.xmr_idr_rate || 0
+      );
+
+
+    if(
+      Number.isFinite(configRate) &&
+      configRate > 0
+    ){
+
+      xmrIdrRate =
+        configRate;
+
+      rateSource =
+        "Kurs MyShort";
+
+      updateSwapRateUI();
+
+      calculateSwap();
+
+      return;
+
+    }
+
+
+    /*
+     * Ambil harga pasar XMR/IDR.
+     */
+
+    try{
+
+      const response =
+        await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=monero&vs_currencies=idr",
+          {
+            method:"GET",
+            cache:"no-store"
+          }
+        );
+
+
+      if(!response.ok){
+        throw new Error(
+          "Harga XMR tidak dapat diambil."
+        );
+      }
+
+
+      const json =
+        await response.json();
+
+
+      const rate =
+        Number(
+          json?.monero?.idr || 0
+        );
+
+
+      if(
+        !Number.isFinite(rate) ||
+        rate <= 0
+      ){
+
+        throw new Error(
+          "Kurs XMR tidak valid."
+        );
+
+      }
+
+
+      xmrIdrRate =
+        rate;
+
+      rateSource =
+        "Harga pasar";
+
+
+      updateSwapRateUI();
+
+      calculateSwap();
+
+
+    }catch(error){
+
+      console.warn(
+        "XMR price error:",
+        error
+      );
+
+
+      xmrIdrRate =
+        0;
+
+      rateSource =
+        "Tidak tersedia";
+
+
+      updateSwapRateUI();
+
+      calculateSwap();
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * PRICE UI
+   * ------------------------------------------
+   */
+
+  function updateSwapRateUI(){
+
+    const el =
+      document.getElementById(
+        "swapRateView"
+      );
+
+
+    if(
+      !xmrIdrRate ||
+      xmrIdrRate <= 0
+    ){
+
+      el.textContent =
+        "Kurs belum tersedia";
+
+      return;
+
+    }
+
+
+    el.innerHTML =
+      formatIDRWhole(
+        xmrIdrRate
+      ) +
+      " / XMR" +
+      " · " +
+      escapeHTML(
+        rateSource
+      );
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * MINING WALLET
+   * ------------------------------------------
+   */
+
+  async function loadMiningWallet(){
+
+    const {
+      data,
+      error
+    } =
+      await window.sb
+        .rpc(
+          "get_my_mining_wallet"
+        );
+
+
+    if(error){
+
+      console.error(
+        "get_my_mining_wallet:",
+        error
+      );
+
+      throw error;
+    }
+
+
+    miningWallet =
+      normalizeRPC(data);
+
+
+    updateWalletUI();
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * IDR WALLET
+   * ------------------------------------------
+   */
+
+  async function loadIDRWallet(){
+
+    const {
+      data,
+      error
+    } =
+      await window.sb
+        .from("wallets")
+        .select("balance")
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+      console.error(
+        "IDR wallet:",
+        error
+      );
+
+      return;
+    }
+
+
+    document.getElementById(
+      "idrBalance"
+    ).textContent =
+      formatIDRWhole(
+        data?.balance || 0
+      );
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * MINING STATUS
+   * ------------------------------------------
+   */
+
+  async function loadMiningStatus(){
+
+    const {
+      data,
+      error
+    } =
+      await window.sb
+        .rpc(
+          "ms_mining_status"
+        );
+
+
+    if(error){
+
+      console.error(
+        "ms_mining_status:",
+        error
+      );
+
+      throw error;
+    }
+
+
+    miningSession =
+      normalizeRPC(data);
+
+
+    updateMiningUI();
+
+
+    /*
+     * Status RPC dapat menghasilkan reward.
+     * Setelah itu baca wallet kembali.
+     */
+
+    await loadMiningWallet();
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * WALLET UI
+   * ------------------------------------------
+   */
+
+  function updateWalletUI(){
+
+    const amount =
+      Number(
+        miningWallet?.available_amount || 0
+      );
+
+
+    document.getElementById(
+      "xmrBalance"
+    ).textContent =
+      formatXMR(amount);
+
+
+    /*
+     * Batasi maksimal input sesuai saldo.
+     */
+
+    const input =
+      document.getElementById(
+        "swapAmount"
+      );
+
+
+    if(input){
+
+      input.max =
+        amount > 0
+          ? amount
+          : "";
+
+    }
+
+
+    calculateSwap();
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * MINING UI
+   * ------------------------------------------
+   */
+
+  function updateMiningUI(){
+
+    const active =
+      miningSession?.status === "active";
+
+
+    const pill =
+      document.getElementById(
+        "statusPill"
+      );
+
+    const status =
+      document.getElementById(
+        "miningStatus"
+      );
+
+    const core =
+      document.getElementById(
+        "miningCore"
+      );
+
+    const coreText =
+      document.getElementById(
+        "coreText"
+      );
+
+    const button =
+      document.getElementById(
+        "activateBtn"
+      );
+
+
+    if(active){
+
+      pill.textContent =
+        "● MINING AKTIF";
+
+      pill.className =
+        "status-pill active";
+
+
+      status.textContent =
+        "AKTIF";
+
+
+      core.className =
+        "core active";
+
+
+      coreText.textContent =
+        "MINING";
+
+
+      button.textContent =
+        "MINING SEDANG AKTIF";
+
+
+      button.classList.add(
+        "active"
+      );
+
+      button.disabled =
+        true;
+
+    }else{
+
+      pill.textContent =
+        "● STOPPED";
+
+      pill.className =
+        "status-pill stopped";
+
+
+      status.textContent =
+        "BERHENTI";
+
+
+      core.className =
+        "core stopped";
+
+
+      coreText.textContent =
+        "READY";
+
+
+      button.textContent =
+        "AKTIFKAN MINING";
+
+
+      button.classList.remove(
+        "active"
+      );
+
+      button.disabled =
+        false;
+
+    }
+
+
+    document.getElementById(
+      "sessionMined"
+    ).textContent =
+      formatXMR(
+        miningSession?.total_session_mined || 0
+      ) +
+      " XMR";
+
+
+    document.getElementById(
+      "startedAt"
+    ).textContent =
+      formatDate(
+        miningSession?.started_at
+      );
+
+
+    /*
+     * Rate mining.
+     */
+
+    if(
+      miningSession?.rate_xmr_per_second
+    ){
+
+      const rate =
+        Number(
+          miningSession.rate_xmr_per_second
+        );
+
+
+      document.getElementById(
+        "miningRate"
+      ).textContent =
+        formatXMR(
+          rate * 60
+        ) +
+        " XMR/menit";
+
+    }else if(
+      miningConfig?.rate_xmr_per_second
+    ){
+
+      const rate =
+        Number(
+          miningConfig.rate_xmr_per_second
+        );
+
+
+      document.getElementById(
+        "miningRate"
+      ).textContent =
+        formatXMR(
+          rate * 60
+        ) +
+        " XMR/menit";
+
+    }else{
+
+      document.getElementById(
+        "miningRate"
+      ).textContent =
+        "-";
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * ACTIVATE MINING
+   * ------------------------------------------
+   */
+
+  async function activateMining(){
+
+    if(isBusy){
+      return;
+    }
+
+
+    isBusy =
+      true;
+
+
+    const button =
+      document.getElementById(
+        "activateBtn"
+      );
+
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "MENGAKTIFKAN...";
+
+
+    try{
+
+      const {
+        data,
+        error
+      } =
+        await window.sb.rpc(
+          "ms_mining_activate"
+        );
+
+
+      if(error){
+
+        console.error(error);
+
+        throw error;
+
+      }
+
+
+      miningSession =
+        normalizeRPC(data);
+
+
+      toast(
+        "Mining berhasil diaktifkan."
+      );
+
+
+      updateMiningUI();
+
+      await loadMiningWallet();
+
+      await loadIDRWallet();
+
+      startHeartbeat();
+
+
+    }catch(error){
+
+      console.error(
+        "Aktivasi mining:",
+        error
+      );
+
+
+      toast(
+        error?.message ||
+        "Gagal mengaktifkan mining."
+      );
+
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "AKTIFKAN MINING";
+
+    }finally{
+
+      isBusy =
+        false;
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * HEARTBEAT
+   * ------------------------------------------
+   *
+   * Server yang menghitung reward.
+   * Browser hanya meminta server sinkron.
+   */
+
+  async function sendHeartbeat(){
+
+    if(
+      !currentUser ||
+      miningSession?.status !== "active"
+    ){
+      return;
+    }
+
+
+    try{
+
+      const {
+        data,
+        error
+      } =
+        await window.sb.rpc(
+          "ms_mining_heartbeat"
+        );
+
+
+      if(error){
+
+        console.warn(
+          "Heartbeat error:",
+          error
+        );
+
+        return;
+
+      }
+
+
+      miningSession =
+        normalizeRPC(data);
+
+
+      updateMiningUI();
+
+
+      await loadMiningWallet();
+
+
+      document.getElementById(
+        "syncText"
+      ).textContent =
+        "Server tersinkron: " +
+        new Date().toLocaleTimeString(
+          "id-ID"
+        );
+
+
+      /*
+       * Kalau server sudah menghentikan mining,
+       * hentikan heartbeat browser.
+       */
+
+      if(
+        miningSession?.status !== "active"
+      ){
+
+        stopHeartbeat();
+
+        toast(
+          "Mining berhenti. Silakan aktifkan kembali."
+        );
+
+      }
+
+    }catch(error){
+
+      console.warn(
+        "Heartbeat gagal:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * START HEARTBEAT
+   * ------------------------------------------
+   */
+
+  function startHeartbeat(){
+
+    stopHeartbeat();
+
+
+    sendHeartbeat();
+
+
+    heartbeatTimer =
+      setInterval(
+        sendHeartbeat,
+        60000
+      );
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * STOP HEARTBEAT
+   * ------------------------------------------
+   */
+
+  function stopHeartbeat(){
+
+    if(heartbeatTimer){
+
+      clearInterval(
+        heartbeatTimer
+      );
+
+      heartbeatTimer =
+        null;
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * STATUS CHECK
+   * ------------------------------------------
+   */
+
+  function startStatusCheck(){
+
+    if(statusTimer){
+
+      clearInterval(
+        statusTimer
+      );
+
+    }
+
+
+    statusTimer =
+      setInterval(
+        async () => {
+
+          if(
+            document.visibilityState ===
+            "visible"
+          ){
+
+            try{
+
+              await loadMiningStatus();
+
+            }catch(error){
+
+              console.warn(
+                error
+              );
+
+            }
+
+          }
+
+        },
+        5 * 60 * 1000
+      );
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * PRICE REFRESH
+   * ------------------------------------------
+   *
+   * Update harga estimasi setiap 5 menit.
+   */
+
+  function startPriceRefresh(){
+
+    if(priceTimer){
+
+      clearInterval(
+        priceTimer
+      );
+
+    }
+
+
+    priceTimer =
+      setInterval(
+        async () => {
+
+          try{
+
+            await loadXMRPrice();
+
+          }catch(error){
+
+            console.warn(
+              error
+            );
+
+          }
+
+        },
+        5 * 60 * 1000
+      );
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * VISIBILITY
+   * ------------------------------------------
+   */
+
+  document.addEventListener(
+    "visibilitychange",
+    async () => {
+
+      if(
+        document.visibilityState !==
+        "visible"
+      ){
+
+        return;
+
+      }
+
+
+      try{
+
+        await loadMiningStatus();
+
+        await loadIDRWallet();
+
+        await loadXMRPrice();
+
+
+        if(
+          miningSession?.status ===
+          "active"
+        ){
+
+          startHeartbeat();
+
+        }else{
+
+          stopHeartbeat();
+
+        }
+
+      }catch(error){
+
+        console.warn(
+          "Visibility sync:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+
+  /*
+   * ------------------------------------------
+   * SWAP CALCULATION
+   * ------------------------------------------
+   *
+   * INI BAGIAN YANG MEMPERBAIKI
+   * MASALAH Rp 0.
+   */
+
+  function calculateSwap(){
+
+    const input =
+      document.getElementById(
+        "swapAmount"
+      );
+
+
+    const output =
+      document.getElementById(
+        "swapIDR"
+      );
+
+
+    if(!input || !output){
+      return;
+    }
+
+
+    const amount =
+      Number(
+        input.value || 0
+      );
+
+
+    const rate =
+      Number(
+        xmrIdrRate || 0
+      );
+
+
+    if(
+      !Number.isFinite(amount) ||
+      amount <= 0 ||
+      !Number.isFinite(rate) ||
+      rate <= 0
+    ){
+
+      output.textContent =
+        "Rp 0,00";
+
+      return;
+
+    }
+
+
+    const estimate =
+      amount * rate;
+
+
+    output.textContent =
+      formatIDR(
+        estimate
+      );
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * REQUEST SWAP
+   * ------------------------------------------
+   */
+
+  async function requestSwap(){
+
+    if(isBusy){
+      return;
+    }
+
+
+    const input =
+      document.getElementById(
+        "swapAmount"
+      );
+
+
+    const amount =
+      Number(
+        input.value || 0
+      );
+
+
+    if(
+      !Number.isFinite(amount) ||
+      amount <= 0
+    ){
+
+      toast(
+        "Masukkan jumlah XMR terlebih dahulu."
+      );
+
+      return;
+
+    }
+
+
+    const available =
+      Number(
+        miningWallet?.available_amount || 0
+      );
+
+
+    if(amount > available){
+
+      toast(
+        "Saldo XMR tidak mencukupi."
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Jangan menganggap kurs client
+     * sebagai kurs final.
+     *
+     * RPC hanya mengunci XMR.
+     * Admin menentukan kurs saat approve.
+     */
+
+    const estimate =
+      xmrIdrRate > 0
+        ? amount * xmrIdrRate
+        : 0;
+
+
+    const confirmText =
+      "Ajukan penukaran " +
+      formatXMR(amount) +
+      " XMR?" +
+      "\n\n" +
+      (
+        estimate > 0
+          ? "Estimasi: " +
+            formatIDR(estimate)
+          : "Kurs estimasi belum tersedia."
+      );
+
+
+    if(
+      !confirm(
+        confirmText
+      )
+    ){
+
+      return;
+
+    }
+
+
+    isBusy =
+      true;
+
+
+    const button =
+      document.getElementById(
+        "swapBtn"
+      );
+
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "MEMPROSES...";
+
+
+    try{
+
+      const {
+        data,
+        error
+      } =
+        await window.sb.rpc(
+          "request_mining_swap",
+          {
+            p_coin_amount:
+              amount
+          }
+        );
+
+
+      if(error){
+
+        console.error(
+          "request_mining_swap:",
+          error
+        );
+
+        throw error;
+
+      }
+
+
+      toast(
+        "Permintaan penukaran berhasil dibuat."
+      );
+
+
+      input.value =
+        "";
+
+
+      calculateSwap();
+
+
+      await loadMiningWallet();
+
+      await loadIDRWallet();
+
+      await loadHistory();
+
+
+    }catch(error){
+
+      console.error(
+        "request_mining_swap:",
+        error
+      );
+
+
+      toast(
+        error?.message ||
+        "Gagal mengajukan penukaran."
+      );
+
+    }finally{
+
+      isBusy =
+        false;
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "AJUKAN PENUKARAN";
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * HISTORY
+   * ------------------------------------------
+   */
+
+  async function loadHistory(){
+
+    const panel =
+      document.getElementById(
+        "historyPanel"
+      );
+
+
+    const [
+      payoutResult,
+      swapResult
+    ] =
+      await Promise.all([
+
+        window.sb
+          .from("mining_payouts")
+          .select(
+            "id,asset_code,amount,external_ref,status,note,created_at"
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          )
+          .limit(20),
+
+
+        window.sb
+          .from("mining_swap_requests")
+          .select(
+            "id,asset_code,coin_amount,idr_rate,idr_amount,status,external_ref,admin_note,created_at,processed_at"
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          )
+          .limit(20)
+
+      ]);
+
+
+    if(payoutResult.error){
+
+      console.warn(
+        "Payout history:",
+        payoutResult.error
+      );
+
+    }
+
+
+    if(swapResult.error){
+
+      console.warn(
+        "Swap history:",
+        swapResult.error
+      );
+
+    }
+
+
+    const payouts =
+      (payoutResult.data || [])
+        .map(
+          item => ({
+
+            type:
+              "Payout XMR",
+
+            amount:
+              "+" +
+              formatXMR(
+                item.amount
+              ) +
+              " XMR",
+
+            idr:
+              "",
+
+            status:
+              item.status,
+
+            date:
+              item.created_at
+
+          })
+        );
+
+
+    const swaps =
+      (swapResult.data || [])
+        .map(
+          item => {
+
+            let idrText =
+              "";
+
+
+            /*
+             * Jika sudah ada idr_amount
+             * dari approval, tampilkan nilai final.
+             */
+
+            if(
+              Number(item.idr_amount || 0) > 0
+            ){
+
+              idrText =
+                formatIDR(
+                  item.idr_amount
+                );
+
+            }else if(
+              Number(item.coin_amount || 0) > 0 &&
+              xmrIdrRate > 0
+            ){
+
+              /*
+               * Untuk pending:
+               * tampilkan estimasi pasar.
+               */
+
+              idrText =
+                "Estimasi " +
+                formatIDR(
+                  Number(item.coin_amount) *
+                  xmrIdrRate
+                );
+
+            }
+
+
+            return {
+
+              type:
+                "Swap XMR → IDR",
+
+              amount:
+                "-" +
+                formatXMR(
+                  item.coin_amount
+                ) +
+                " XMR",
+
+              idr:
+                idrText,
+
+              status:
+                item.status,
+
+              date:
+                item.created_at
+
+            };
+
+          }
+        );
+
+
+    const history =
+      [
+        ...payouts,
+        ...swaps
+      ]
+      .sort(
+        (a,b) =>
+          new Date(b.date) -
+          new Date(a.date)
+      )
+      .slice(0,30);
+
+
+    if(!history.length){
+
+      panel.innerHTML =
+        `
+        <div class="empty">
+          Belum ada riwayat mining.
+        </div>
+        `;
+
+      return;
+
+    }
+
+
+    panel.innerHTML =
+      history
+        .map(
+          item => `
+
+            <div class="history-item">
+
+              <div class="history-top">
+
+                <div class="history-type">
+                  ${escapeHTML(
+                    item.type
+                  )}
+                </div>
+
+                <div class="history-status">
+                  ${escapeHTML(
+                    item.status || "-"
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="history-amount">
+                ${escapeHTML(
+                  item.amount
+                )}
+              </div>
+
+
+              ${
+                item.idr
+                  ? `
+                    <div class="history-idr">
+                      ${escapeHTML(
+                        item.idr
+                      )}
+                    </div>
+                  `
+                  : ""
+              }
+
+
+              <div class="history-date">
+                ${escapeHTML(
+                  formatDate(
+                    item.date
+                  )
+                )}
+              </div>
+
+            </div>
+
+          `
+        )
+        .join("");
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * INIT
+   * ------------------------------------------
+   */
+
+  async function initDashboard(){
+
+    try{
+
+      const logged =
+        await loadUser();
+
+
+      if(!logged){
+        return;
+      }
+
+
+      document.getElementById(
+        "syncText"
+      ).textContent =
+        "Menghubungkan ke server...";
+
+
+      /*
+       * Load konfigurasi.
+       */
+
+      await loadConfig();
+
+
+      /*
+       * Load status mining.
+       */
+
+      await loadMiningStatus();
+
+
+      /*
+       * Load wallet XMR.
+       */
+
+      await loadMiningWallet();
+
+
+      /*
+       * Load wallet Rupiah.
+       */
+
+      await loadIDRWallet();
+
+
+      /*
+       * Load kurs XMR.
+       */
+
+      await loadXMRPrice();
+
+
+      /*
+       * Load history.
+       */
+
+      await loadHistory();
+
+
+      /*
+       * Heartbeat.
+       */
+
+      if(
+        miningSession?.status ===
+        "active"
+      ){
+
+        startHeartbeat();
+
+      }else{
+
+        stopHeartbeat();
+
+      }
+
+
+      /*
+       * Periodic server status.
+       */
+
+      startStatusCheck();
+
+
+      /*
+       * Periodic harga.
+       */
+
+      startPriceRefresh();
+
+
+      document.getElementById(
+        "syncText"
+      ).textContent =
+        "Server tersinkron: " +
+        new Date().toLocaleTimeString(
+          "id-ID"
+        );
+
+
+    }catch(error){
+
+      console.error(
+        "INIT DASHBOARD ERROR:",
+        error
+      );
+
+
+      toast(
+        error?.message ||
+        "Gagal memuat dashboard."
+      );
+
+    }
+
+  }
+
+
+  /*
+   * ------------------------------------------
+   * CLEANUP
+   * ------------------------------------------
+   */
+
+  window.addEventListener(
+    "beforeunload",
+    () => {
+
+      stopHeartbeat();
+
+
+      if(statusTimer){
+
+        clearInterval(
+          statusTimer
+        );
+
+      }
+
+
+      if(priceTimer){
+
+        clearInterval(
+          priceTimer
+        );
+
+      }
+
+    }
+  );
+
+
+  /*
+   * START
+   */
+
+  initDashboard();
+
+</script>
+
+</body>
+</html>
