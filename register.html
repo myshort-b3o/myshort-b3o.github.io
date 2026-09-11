@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Daftar Akun - MyShort App</title>
+
+<style>
+:root{
+  --bg:#07090b;
+  --panel:#15171b;
+  --panel2:#0b0d10;
+  --gold:#f3c95f;
+  --gold2:#ffe7a0;
+  --muted:#92959e;
+  --text:#f7f7f7;
+  --green:#62d48b;
+  --red:#ff8175;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+html{
+  background:var(--bg);
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px 14px;
+  color:var(--text);
+
+  background:
+    radial-gradient(
+      circle at 15% 5%,
+      rgba(243,201,95,.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 90%,
+      rgba(243,201,95,.08),
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #07090b,
+      #15171b 52%,
+      #07090b
+    );
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+
+  background-image:
+    radial-gradient(
+      rgba(243,201,95,.72) 1px,
+      transparent 1px
+    );
+
+  background-size:27px 27px;
+}
+
+.container{
+  position:relative;
+  z-index:1;
+
+  width:100%;
+  max-width:430px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25,27,30,.98),
+      rgba(10,12,15,.99)
+    );
+
+  padding:25px 20px 21px;
+
+  border:1px solid rgba(243,201,95,.28);
+  border-radius:25px;
+
+  box-shadow:
+    0 24px 65px rgba(0,0,0,.48);
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.brand{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:11px;
+}
+
+.brand img{
+  width:60px;
+  height:60px;
+  object-fit:contain;
+
+  border-radius:17px;
+
+  border:1px solid rgba(243,201,95,.7);
+
+  background:#090b0d;
+
+  padding:4px;
+
+  box-shadow:
+    0 0 20px rgba(243,201,95,.10);
+}
+
+.brand-text{
+  text-align:left;
+}
+
+.brand-text strong{
+  display:block;
+
+  color:var(--gold2);
+
+  font-size:21px;
+  line-height:1.15;
+
+  font-weight:800;
+}
+
+.brand-text small{
+  display:block;
+
+  color:#92959e;
+
+  font-size:12px;
+
+  margin-top:4px;
+}
+
+.logo h2{
+  margin-top:18px;
+
+  color:var(--gold2);
+
+  font-size:31px;
+
+  font-weight:850;
+
+  letter-spacing:-.5px;
+}
+
+.input-group{
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+
+  margin-bottom:8px;
+
+  font-weight:700;
+
+  color:#d2d3d7;
+
+  font-size:14px;
+}
+
+input{
+  width:100%;
+
+  height:52px;
+
+  padding:0 15px;
+
+  border:
+    1px solid
+    rgba(243,201,95,.20);
+
+  border-radius:14px;
+
+  background:var(--panel2);
+
+  color:#fff;
+
+  outline:none;
+
+  font-size:15px;
+
+  transition:.2s ease;
+}
+
+input:focus{
+  border-color:
+    rgba(243,201,95,.75);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(243,201,95,.07);
+}
+
+input::placeholder{
+  color:#656872;
+}
+
+input[readonly]{
+  color:var(--gold2);
+
+  border-color:
+    rgba(243,201,95,.45);
+
+  background:
+    rgba(243,201,95,.045);
+}
+
+.referral-info{
+  margin-top:6px;
+
+  color:#777b84;
+
+  font-size:10px;
+
+  line-height:1.45;
+}
+
+button{
+  width:100%;
+
+  height:53px;
+
+  padding:0 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffe8a6,
+      #d8a83a
+    );
+
+  color:#18140b;
+
+  border:
+    1px solid
+    rgba(255,231,160,.72);
+
+  border-radius:14px;
+
+  font-size:15px;
+
+  font-weight:850;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 9px 25px
+    rgba(243,201,95,.14);
+
+  transition:.2s ease;
+}
+
+button:hover{
+  transform:translateY(-1px);
+}
+
+button:active{
+  transform:translateY(0);
+}
+
+button:disabled{
+  cursor:wait;
+
+  opacity:.65;
+
+  transform:none;
+
+  filter:saturate(.65);
+}
+
+.success,
+.error{
+  margin-top:14px;
+
+  padding:12px 13px;
+
+  border-radius:12px;
+
+  text-align:center;
+
+  font-size:11px;
+
+  line-height:1.55;
+}
+
+.success{
+  display:none;
+
+  color:#9df0bc;
+
+  background:
+    rgba(66,199,122,.08);
+
+  border:
+    1px solid
+    rgba(66,199,122,.25);
+}
+
+.error{
+  display:none;
+
+  color:#ffb7ae;
+
+  background:
+    rgba(210,70,60,.08);
+
+  border:
+    1px solid
+    rgba(210,70,60,.25);
+}
+
+.bottom{
+  margin-top:18px;
+
+  text-align:center;
+
+  color:#777b84;
+
+  font-size:12px;
+}
+
+.bottom a{
+  color:var(--gold2);
+
+  text-decoration:none;
+
+  font-weight:750;
+}
+
+.hint{
+  margin-top:12px;
+
+  color:#70747d;
+
+  text-align:center;
+
+  font-size:10px;
+
+  line-height:1.5;
+}
+
+@media(max-width:380px){
+
+  body{
+    padding:12px;
+  }
+
+  .container{
+    padding:
+      21px 16px
+      18px;
+  }
+
+  .logo h2{
+    font-size:27px;
+  }
+
+  .brand img{
+    width:54px;
+    height:54px;
+  }
+
+  .brand-text strong{
+    font-size:19px;
+  }
+
+  input{
+    height:49px;
+  }
+
+  button{
+    height:51px;
+  }
+}
+</style>
+
+<!--
+  Jika file premium-brand.css memang digunakan di project kamu,
+  boleh tetap dipanggil. Tidak wajib untuk fungsi register.
+-->
+<link rel="stylesheet" href="premium-brand.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- BRAND -->
+  <div class="logo">
+
+    <div class="brand">
+
+      <img
+        src="logo.png"
+        alt="MyShort Logo"
+        onerror="this.style.display='none'"
+      >
+
+      <div class="brand-text">
+
+        <strong>
+          MyShort Platform
+        </strong>
+
+        <small>
+          Member Area
+        </small>
+
+      </div>
+
+    </div>
+
+    <h2>
+      Daftar Member
+    </h2>
+
+  </div>
+
+
+  <!-- NAMA -->
+  <div class="input-group">
+
+    <label for="nama">
+      Nama Lengkap
+    </label>
+
+    <input
+      type="text"
+      id="nama"
+      autocomplete="name"
+      placeholder="Masukkan Nama"
+    >
+
+  </div>
+
+
+  <!-- EMAIL -->
+  <div class="input-group">
+
+    <label for="email">
+      Email
+    </label>
+
+    <input
+      type="email"
+      id="email"
+      autocomplete="email"
+      placeholder="Masukkan Email"
+    >
+
+  </div>
+
+
+  <!-- HP -->
+  <div class="input-group">
+
+    <label for="hp">
+      Nomor HP
+    </label>
+
+    <input
+      type="tel"
+      id="hp"
+      autocomplete="tel"
+      placeholder="08xxxxxxxxxx"
+    >
+
+  </div>
+
+
+  <!-- PASSWORD -->
+  <div class="input-group">
+
+    <label for="password">
+      Password
+    </label>
+
+    <input
+      type="password"
+      id="password"
+      autocomplete="new-password"
+      placeholder="Minimal 6 karakter"
+    >
+
+  </div>
+
+
+  <!-- REFERRAL -->
+  <div class="input-group">
+
+    <label for="referral">
+      Kode Referral (Opsional)
+    </label>
+
+    <input
+      type="text"
+      id="referral"
+      autocomplete="off"
+      placeholder="Masukkan kode referral"
+      maxlength="32"
+    >
+
+    <div
+      class="referral-info"
+      id="referralInfo"
+    ></div>
+
+  </div>
+
+
+  <!-- REGISTER BUTTON -->
+  <button
+    type="button"
+    id="registerButton"
+    onclick="register()"
+  >
+    DAFTAR SEKARANG
+  </button>
+
+
+  <!-- SUCCESS -->
+  <p
+    class="success"
+    id="success"
+  >
+    Pendaftaran berhasil.
+  </p>
+
+
+  <!-- ERROR -->
+  <p
+    class="error"
+    id="error"
+  >
+    Semua data wajib diisi.
+  </p>
+
+
+  <!-- HINT -->
+  <p class="hint">
+    Jika verifikasi email aktif, setelah daftar
+    silakan cek email dan klik link verifikasi.
+  </p>
+
+
+  <!-- LOGIN -->
+  <div class="bottom">
+
+    Sudah punya akun?
+
+    <a href="index.html">
+      Login
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+/*
+=========================================================
+ MYSHORT REGISTER
+=========================================================
+
+Domain yang digunakan akan mengikuti domain saat ini.
+
+Contoh:
+
+https://myshort-b3o.servernet6666.workers.dev/register.html
+
+maka email verification redirect menjadi:
+
+https://myshort-b3o.servernet6666.workers.dev/dashboard.html
+
+Bukan kembali ke github.io.
+=========================================================
+*/
+
+
+const sb =
+  window.sb ||
+  window.supabaseClient;
+
+
+/* ------------------------------------------------------
+   HELPER
+------------------------------------------------------ */
+
+function $(id){
+
+  return document.getElementById(id);
+
+}
+
+
+/* ------------------------------------------------------
+   ERROR
+------------------------------------------------------ */
+
+function showError(message){
+
+  const error =
+    $("error");
+
+  const success =
+    $("success");
+
+  if(success){
+
+    success.style.display =
+      "none";
+
+  }
+
+  if(error){
+
+    error.textContent =
+      message;
+
+    error.style.display =
+      "block";
+
+  }
+
+}
+
+
+/* ------------------------------------------------------
+   SUCCESS
+------------------------------------------------------ */
+
+function showSuccess(message){
+
+  const error =
+    $("error");
+
+  const success =
+    $("success");
+
+  if(error){
+
+    error.style.display =
+      "none";
+
+  }
+
+  if(success){
+
+    success.textContent =
+      message;
+
+    success.style.display =
+      "block";
+
+  }
+
+}
+
+
+/* ------------------------------------------------------
+   CLEAN REFERRAL
+------------------------------------------------------ */
+
+function cleanReferral(value){
+
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g,"")
+    .toUpperCase();
+
+}
+
+
+/* ------------------------------------------------------
+   AMBIL REFERRAL DARI URL
+------------------------------------------------------ */
+
+function getReferralFromURL(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  return cleanReferral(
+    params.get("ref")
+  );
+
+}
+
+
+/* ------------------------------------------------------
+   ISI REFERRAL OTOMATIS
+------------------------------------------------------ */
+
+function initReferral(){
+
+  const input =
+    $("referral");
+
+  const info =
+    $("referralInfo");
+
+  const referral =
+    getReferralFromURL();
+
+
+  if(
+    input &&
+    referral
+  ){
+
+    input.value =
+      referral;
+
+    /*
+      Referral dari link undangan
+      tidak boleh berubah oleh member.
+    */
+
+    input.readOnly =
+      true;
+
+
+    if(info){
+
+      info.textContent =
+        "Kode referral otomatis dari link undangan: "
+        + referral;
+
+    }
+
+  }
+
+}
+
+
+/* ------------------------------------------------------
+   REGISTER
+------------------------------------------------------ */
+
+async function register(){
+
+  /* Pastikan Supabase tersedia */
+
+  if(
+    !sb ||
+    !sb.auth
+  ){
+
+    showError(
+      "Supabase belum terhubung. Periksa file supabase-config.js."
+    );
+
+    return;
+
+  }
+
+
+  /* Ambil input */
+
+  const nama =
+    $("nama")?.value.trim() ||
+    "";
+
+  const email =
+    $("email")?.value.trim().toLowerCase() ||
+    "";
+
+  const hp =
+    $("hp")?.value.trim() ||
+    "";
+
+  const password =
+    $("password")?.value ||
+    "";
+
+
+  /*
+    Referral dari URL diprioritaskan.
+
+    Contoh:
+
+    ?ref=ARDA102218
+
+    hasil:
+
+    ARDA102218
+
+    BUKAN UUID user.
+  */
+
+  const referralFromURL =
+    getReferralFromURL();
+
+  const referral =
+    referralFromURL ||
+    cleanReferral(
+      $("referral")?.value
+    );
+
+
+  /* Validasi */
+
+  if(
+    !nama ||
+    !email ||
+    !hp ||
+    !password
+  ){
+
+    showError(
+      "Nama lengkap, email, nomor HP, dan password wajib diisi."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    password.length < 6
+  ){
+
+    showError(
+      "Password minimal 6 karakter."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ){
+
+    showError(
+      "Format email tidak valid."
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Referral hanya menerima kode,
+    bukan UUID.
+  */
+
+  if(
+    referral &&
+    !/^[A-Z0-9_-]{4,32}$/.test(referral)
+  ){
+
+    showError(
+      "Kode referral tidak valid."
+    );
+
+    return;
+
+  }
+
+
+  /* Tombol loading */
+
+  const button =
+    $("registerButton");
+
+  if(button){
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "MEMPROSES...";
+
+  }
+
+
+  try{
+
+    /*
+    =====================================================
+     SUPABASE SIGN UP
+    =====================================================
+    */
+
+    const {
+      data,
+      error
+    } = await sb.auth.signUp({
+
+      email:
+        email,
+
+      password:
+        password,
+
+      options:{
+
+        /*
+          Sangat penting:
+
+          gunakan domain yang sedang dibuka.
+
+          workers.dev -> workers.dev
+          github.io   -> github.io
+        */
+
+        emailRedirectTo:
+          window.location.origin +
+          "/dashboard.html",
+
+
+        data:{
+
+          /*
+            Data ini akan tersedia di
+            auth.users.raw_user_meta_data
+          */
+
+          full_name:
+            nama,
+
+          phone:
+            hp,
+
+          referred_by_code:
+            referral || null
+
+        }
+
+      }
+
+    });
+
+
+    if(error){
+
+      throw error;
+
+    }
+
+
+    /*
+    =====================================================
+     HASIL PENDAFTARAN
+    =====================================================
+    */
+
+    if(
+      data &&
+      data.session
+    ){
+
+      showSuccess(
+        "Pendaftaran berhasil. Mengalihkan ke dashboard..."
+      );
+
+
+      setTimeout(
+        function(){
+
+          window.location.href =
+            "dashboard.html";
+
+        },
+        1000
+      );
+
+
+    }else{
+
+      /*
+        Jika email confirmation aktif,
+        session memang bisa null.
+      */
+
+      showSuccess(
+        "Pendaftaran berhasil. Silakan cek email " +
+        email +
+        " dan klik link verifikasi, lalu login."
+      );
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "[MyShort Register]",
+      error
+    );
+
+
+    let message =
+      error?.message ||
+      "Pendaftaran gagal.";
+
+
+    /*
+      Pesan lebih mudah dipahami.
+    */
+
+    if(
+      /already registered|user already registered/i
+        .test(message)
+    ){
+
+      message =
+        "Email tersebut sudah terdaftar. Silakan gunakan email lain atau login.";
+
+    }
+
+    else if(
+      /password/i.test(message) &&
+      /6|weak|short/i.test(message)
+    ){
+
+      message =
+        "Password minimal 6 karakter.";
+
+    }
+
+    else if(
+      /invalid.*email|email.*invalid/i
+        .test(message)
+    ){
+
+      message =
+        "Format email tidak valid.";
+
+    }
+
+
+    showError(
+      message
+    );
+
+
+  }finally{
+
+    if(button){
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "DAFTAR SEKARANG";
+
+    }
+
+  }
+
+}
+
+
+/* ------------------------------------------------------
+   ENTER KEY
+------------------------------------------------------ */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Enter"
+    ){
+
+      /*
+        Jangan submit ketika sedang
+        mengetik pada field referral.
+      */
+
+      if(
+        document.activeElement &&
+        document.activeElement.tagName === "INPUT"
+      ){
+
+        register();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* ------------------------------------------------------
+   INIT
+------------------------------------------------------ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    initReferral();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
