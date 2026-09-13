@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090b">
+<title>Withdrawal - MyShort App</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+
+:root{
+  --bg:#07090b;
+  --panel:#121416;
+  --gold:#f3c85b;
+  --gold2:#ffe7a0;
+  --muted:#92959d;
+  --text:#f6f6f7;
+  --line:rgba(243,200,91,.28);
+  --red:#ffaaa0;
+  --green:#9ce5b2;
+}
+
+html,body{width:100%;min-height:100%}
+
+body{
+  min-height:100vh;
+  padding-bottom:108px;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 12% 4%,rgba(243,200,91,.15),transparent 25%),
+    radial-gradient(circle at 92% 40%,rgba(243,200,91,.07),transparent 28%),
+    linear-gradient(145deg,#07090b,#111316 52%,#07090b);
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.16;
+  background-image:radial-gradient(rgba(243,200,91,.7) 1px,transparent 1px);
+  background-size:27px 27px;
+}
+
+header{
+  position:relative;
+  z-index:1;
+  padding:20px 18px 18px;
+  text-align:center;
+  background:linear-gradient(180deg,rgba(18,20,22,.96),rgba(18,20,22,.65));
+  border-bottom:1px solid rgba(243,200,91,.18);
+}
+
+.brand{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.logo{
+  width:42px;
+  height:42px;
+  border:1px solid var(--gold);
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:var(--gold2);
+  font-weight:900;
+  background:#0d0f12;
+}
+
+.logo .sp-logo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border:0;
+  box-shadow:none;
+  border-radius:inherit;
+}
+
+.brand b{display:block;font-size:14px}
+.brand small{display:block;color:#777;font-size:9px;margin-top:3px}
+header h2{font-size:22px;color:var(--gold2)}
+
+.container{
+  position:relative;
+  z-index:1;
+  max-width:760px;
+  margin:auto;
+  padding:16px;
+}
+
+.card{
+  background:linear-gradient(145deg,rgba(27,28,27,.98),rgba(12,14,17,.99));
+  border:1px solid var(--line);
+  padding:20px;
+  border-radius:24px;
+  box-shadow:0 18px 55px rgba(0,0,0,.38);
+}
+
+.balance{
+  text-align:center;
+  background:linear-gradient(145deg,rgba(243,200,91,.12),rgba(243,200,91,.035));
+  border:1px solid rgba(243,200,91,.22);
+  padding:19px 16px;
+  border-radius:19px;
+  margin-bottom:18px;
+}
+
+.balance-title{color:#aaaeb6;font-size:12px}
+.balance-value{color:var(--gold2);font-size:30px;font-weight:800;margin-top:7px}
+h3{font-size:19px;margin-bottom:14px}
+
+.info{
+  background:linear-gradient(145deg,rgba(243,200,91,.09),rgba(243,200,91,.035));
+  border:1px solid rgba(243,200,91,.18);
+  padding:13px;
+  border-radius:14px;
+  color:#bfc1c7;
+  font-size:11px;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.info b{color:var(--gold2)}
+
+.form{display:grid;gap:12px}
+.group label{display:block;color:#999ca3;font-size:10px;margin-bottom:6px}
+
+.group input,.group select{
+  width:100%;
+  padding:12px;
+  background:#0d0f12;
+  color:#f3f3f3;
+  border:1px solid #33363b;
+  border-radius:11px;
+  outline:none;
+  font-size:12px;
+}
+
+.group input:focus,.group select:focus{border-color:#806323}
+
+.account-select{
+  border-color:rgba(243,200,91,.45)!important;
+  background:linear-gradient(145deg,rgba(243,200,91,.08),#0d0f12)!important;
+  font-size:13px!important;
+}
+
+.account-preview{
+  display:none;
+  margin-top:2px;
+  padding:13px;
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(243,200,91,.09),rgba(243,200,91,.035));
+  border:1px solid rgba(243,200,91,.18);
+}
+
+.account-preview .title{color:var(--gold2);font-weight:800;font-size:12px;margin-bottom:7px}
+.account-preview .detail{color:#aeb1b8;font-size:10px;line-height:1.7}
+.account-preview .detail b{color:#e6e7e9}
+
+.no-account{
+  display:none;
+  padding:14px;
+  border-radius:13px;
+  background:#211312;
+  border:1px solid #63352f;
+  color:var(--red);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.no-account a{color:var(--gold2);font-weight:800;text-decoration:none}
+
+.fee-preview{
+  display:none;
+  margin-top:2px;
+  padding:12px 13px;
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(243,200,91,.09),rgba(243,200,91,.035));
+  border:1px solid rgba(243,200,91,.18);
+  font-size:10px;
+}
+
+.fee-preview .fee-row{display:flex;justify-content:space-between;gap:10px;margin:3px 0}
+.fee-preview .fee-label{color:#999ca3}
+.fee-preview .fee-value{color:var(--gold2);font-weight:800}
+.fee-preview .receive{padding-top:7px;margin-top:7px;border-top:1px solid rgba(243,200,91,.15)}
+.fee-preview .receive .fee-label{color:#bfc1c7;font-weight:700}
+.fee-preview .receive .fee-value{font-size:13px;color:var(--gold2)}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:13px;
+  font-size:12px;
+  font-weight:800;
+  background:linear-gradient(135deg,#ffe7a0,#d9aa3d);
+  color:#1a160c;
+  cursor:pointer;
+}
+
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.back{
+  display:block;
+  text-align:center;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#181a1e;
+  border:1px solid #292c31;
+  color:#d5d6da;
+  text-decoration:none;
+  font-size:11px;
+}
+
+.bank-link{
+  display:block;
+  text-align:center;
+  margin-top:9px;
+  padding:11px;
+  border-radius:12px;
+  background:linear-gradient(145deg,rgba(243,200,91,.10),rgba(243,200,91,.035));
+  border:1px solid rgba(243,200,91,.20);
+  color:var(--gold2);
+  text-decoration:none;
+  font-size:10px;
+  font-weight:700;
+}
+
+.alert{
+  display:none;
+  margin-bottom:13px;
+  padding:11px 12px;
+  border-radius:11px;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.error{background:#211312;border:1px solid #63352f;color:var(--red)}
+.success{background:#102018;border:1px solid #315d40;color:var(--green)}
+
+.history{margin-top:16px}
+.history h3{font-size:15px}
+
+.item{
+  padding:12px;
+  border:1px solid #292c31;
+  border-radius:13px;
+  background:#101216;
+  margin-bottom:8px;
+}
+
+.row{display:flex;justify-content:space-between;gap:10px;font-size:10px}
+.row+.row{margin-top:7px}
+.muted{color:#777}
+.money{color:var(--gold2);font-weight:800}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:8px;
+  border:1px solid #444;
+  background:#1b1d21;
+  color:#aaa;
+}
+
+.badge.pending{color:var(--gold2);border-color:#665020;background:#241d10}
+.badge.approved{color:var(--green);border-color:#315d40;background:#102018}
+.badge.rejected{color:var(--red);border-color:#63352f;background:#211311}
+
+/* =========================
+   BOTTOM NAV - PRESISI & ICON KECIL
+   ========================= */
+.bottom{
+  position:fixed;
+  z-index:100;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:96px;
+  padding:7px 0 calc(7px + env(safe-area-inset-bottom));
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  align-items:stretch;
+  background:rgba(8,10,12,.98);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(243,200,91,.18);
+}
+
+.bottom a{
+  min-width:0;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  gap:5px;
+  padding:5px 2px 0;
+  text-decoration:none;
+  color:#777b84;
+  text-align:center;
+  font-size:10px;
+  line-height:1;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.bottom a.active{color:var(--gold2)}
+
+.bottom .nav-icon{
+  width:23px;
+  height:23px;
+  flex:0 0 23px;
+  display:grid;
+  place-items:center;
+}
+
+.bottom .nav-icon svg{
+  width:22px;
+  height:22px;
+  display:block;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.15;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.bottom .nav-label{
+  display:block;
+  white-space:nowrap;
+  font-size:10px;
+  line-height:14px;
+}
+
+@media(max-width:400px){
+  .container{padding:12px}
+  .card{padding:17px}
+  .balance-value{font-size:28px}
+  .bottom{height:94px}
+  .bottom .nav-icon,.bottom .nav-icon svg{width:22px;height:22px}
+}
+</style>
+
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo">
+      <img class="sp-logo" src="logo.png" alt="MyShort Logo">
+    </div>
+    <div>
+      <b>MyShort App</b>
+      <small>Premium Gold • Member Area</small>
+    </div>
+  </div>
+  <h2>Withdrawal</h2>
+</header>
+
+<div class="container">
+  <div id="error" class="alert error"></div>
+  <div id="success" class="alert success"></div>
+
+  <div class="card">
+    <div class="balance">
+      <div class="balance-title">Saldo Wallet</div>
+      <div class="balance-value" id="saldo">Rp 0</div>
+    </div>
+
+    <h3>Ajukan Penarikan</h3>
+
+    <div class="info">
+      <b>Informasi Withdrawal</b><br>
+      Pilih rekening atau e-wallet yang sudah Anda simpan
+      di halaman Bank & E-Wallet.
+      Anda tidak perlu mengetik ulang nama dan nomor rekening.
+      Pengajuan masuk ke Admin dengan status <b>pending</b>.
+      Admin akan memeriksa dan memproses pengajuan.
+    </div>
+
+    <form id="withdrawForm" class="form">
+      <div class="group">
+        <label>Rekening / E-Wallet Tujuan</label>
+        <select id="bankAccount" class="account-select" required>
+          <option value="">Memuat rekening...</option>
+        </select>
+      </div>
+
+      <div id="accountPreview" class="account-preview">
+        <div class="title">Rekening Terpilih</div>
+        <div id="accountDetail" class="detail"></div>
+      </div>
+
+      <div id="noAccount" class="no-account">
+        Anda belum mempunyai rekening atau e-wallet yang tersimpan.
+        Silakan tambahkan terlebih dahulu melalui halaman Bank & E-Wallet.
+        <br><br>
+        <a href="bank.html">+ Tambah Rekening / E-Wallet</a>
+      </div>
+
+      <div class="group">
+        <label>Nominal Withdrawal</label>
+        <input id="amount" type="number" min="10000" step="1" placeholder="Contoh 100000" required>
+      </div>
+
+      <div id="feePreview" class="fee-preview" aria-live="polite">
+        <div class="fee-row">
+          <span class="fee-label">Biaya Admin (8,5%)</span>
+          <span id="adminFee" class="fee-value">Rp 0</span>
+        </div>
+        <div class="fee-row receive">
+          <span class="fee-label">Jumlah Diterima</span>
+          <span id="receivedAmount" class="fee-value">Rp 0</span>
+        </div>
+      </div>
+
+      <button class="btn" id="submitBtn" type="submit">AJUKAN WITHDRAWAL</button>
+    </form>
+
+    <a class="bank-link" href="bank.html">⚙ Kelola Rekening & E-Wallet</a>
+    <a class="back" href="wallet.html">← Kembali ke Wallet</a>
+
+    <div class="history">
+      <h3>Riwayat Withdrawal</h3>
+      <div id="historyList">
+        <div class="muted" style="font-size:10px;text-align:center;padding:15px">Memuat...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom" aria-label="Navigasi utama">
+  <a href="dashboard.html" aria-label="Home">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3.5 10.5 12 3.5l8.5 7v9a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1z"/>
+      </svg>
+    </span>
+    <span class="nav-label">Home</span>
+  </a>
+
+  <a href="mission.html" aria-label="Mission">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5"/>
+        <circle cx="12" cy="12" r="4.2"/>
+        <circle cx="12" cy="12" r="1.4"/>
+      </svg>
+    </span>
+    <span class="nav-label">Mission</span>
+  </a>
+
+  <a href="wallet.html" class="active" aria-current="page" aria-label="Wallet">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 6.5h14.5a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5.5a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2z"/>
+        <path d="M3.5 8.5V6a2 2 0 0 1 2-2h12"/>
+        <path d="M20.5 11h-5a2 2 0 0 0 0 4h5"/>
+        <circle cx="15.5" cy="13" r=".7" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <span class="nav-label">Wallet</span>
+  </a>
+
+  <a href="profile.html" aria-label="Profile">
+    <span class="nav-icon">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="7.5" r="3.2"/>
+        <path d="M5 20c.8-3.8 3.1-5.8 7-5.8s6.2 2 7 5.8"/>
+      </svg>
+    </span>
+    <span class="nav-label">Profile</span>
+  </a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL="https://jywzhwvbyifulqqvgxxd.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_2leqwU4YWbTg--GCIfQMmA_zOEKKG60";
+
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
+  auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+});
+
+let user=null;
+let wallet=null;
+let bankAccounts=[];
+
+const $=id=>document.getElementById(id);
+
+const money=n=>"Rp "+new Intl.NumberFormat("id-ID").format(Number(n||0));
+
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+}[c]));
+
+const date=s=>s?new Date(s).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}):"-";
+
+function alertBox(type,text){
+  const e=$(type);
+  e.textContent=text;
+  e.style.display="block";
+  const other=type==="error"?"success":"error";
+  $(other).style.display="none";
+}
+
+function hideAlerts(){
+  $("error").style.display="none";
+  $("success").style.display="none";
+}
+
+async function getUser(){
+  const {data,error}=await sb.auth.getUser();
+  if(error)throw error;
+  if(!data.user){
+    location.href="index.html";
+    return null;
+  }
+  return data.user;
+}
+
+async function loadWallet(){
+  const {data,error}=await sb.from("wallets")
+    .select("user_id,balance,total_in,total_out,updated_at")
+    .eq("user_id",user.id)
+    .maybeSingle();
+
+  if(error)throw error;
+
+  wallet=data||{balance:0};
+  $("saldo").textContent=money(wallet.balance);
+}
+
+async function loadBankAccounts(){
+  const {data,error}=await sb.from("bank_accounts")
+    .select("id,method,account_number,account_name,is_default,created_at")
+    .eq("user_id",user.id)
+    .order("is_default",{ascending:false})
+    .order("created_at",{ascending:false});
+
+  if(error)throw error;
+
+  bankAccounts=data||[];
+
+  const select=$("bankAccount");
+  const noAccount=$("noAccount");
+  const preview=$("accountPreview");
+
+  select.innerHTML="";
+
+  if(bankAccounts.length===0){
+    const option=document.createElement("option");
+    option.value="";
+    option.textContent="Belum ada rekening tersimpan";
+    select.appendChild(option);
+    select.disabled=true;
+    noAccount.style.display="block";
+    preview.style.display="none";
+    $("submitBtn").disabled=true;
+    return;
+  }
+
+  select.disabled=false;
+  noAccount.style.display="none";
+
+  const firstOption=document.createElement("option");
+  firstOption.value="";
+  firstOption.textContent="Pilih rekening / e-wallet";
+  select.appendChild(firstOption);
+
+  bankAccounts.forEach(account=>{
+    const option=document.createElement("option");
+    option.value=String(account.id);
+    option.textContent=`${account.method} • ${account.account_number}`;
+    select.appendChild(option);
+  });
+
+  const defaultAccount=bankAccounts.find(account=>account.is_default===true);
+
+  if(defaultAccount){
+    select.value=String(defaultAccount.id);
+    updateAccountPreview();
+  }
+}
+
+function updateAccountPreview(){
+  const selectedId=$("bankAccount").value;
+  const preview=$("accountPreview");
+  const detail=$("accountDetail");
+
+  if(!selectedId){
+    preview.style.display="none";
+    return;
+  }
+
+  const account=bankAccounts.find(item=>String(item.id)===String(selectedId));
+
+  if(!account){
+    preview.style.display="none";
+    return;
+  }
+
+  const isEwallet=["DANA","OVO","GoPay","ShopeePay"].includes(String(account.method));
+
+  detail.innerHTML=`
+    <div><b>Metode:</b> ${esc(account.method)}</div>
+    <div><b>${isEwallet?"Nomor E-Wallet":"Nomor Rekening"}:</b> ${esc(account.account_number)}</div>
+    <div><b>Nama Pemilik:</b> ${esc(account.account_name)}</div>
+  `;
+
+  preview.style.display="block";
+}
+
+$("bankAccount").addEventListener("change",updateAccountPreview);
+
+async function loadHistory(){
+  const {data,error}=await sb.from("withdrawals")
+    .select("id,amount,method,account_number,account_name,status,admin_note,created_at,processed_at")
+    .eq("user_id",user.id)
+    .order("created_at",{ascending:false})
+    .limit(30);
+
+  if(error)throw error;
+
+  const list=$("historyList");
+
+  if(!data?.length){
+    list.innerHTML=`
+      <div class="muted" style="font-size:10px;text-align:center;padding:15px">
+        Belum ada pengajuan withdrawal.
+      </div>`;
+    return;
+  }
+
+  list.innerHTML=data.map(x=>`
+    <div class="item">
+      <div class="row">
+        <span>${esc(x.method)}</span>
+        <b class="money">${money(x.amount)}</b>
+      </div>
+      <div class="row">
+        <span class="muted">${esc(x.account_name)} • ${esc(x.account_number)}</span>
+        ${badge(x.status)}
+      </div>
+      <div class="row">
+        <span class="muted">${date(x.created_at)}</span>
+        <span class="muted">${x.admin_note?esc(x.admin_note):""}</span>
+      </div>
+    </div>`).join("");
+}
+
+function badge(s){
+  const x=String(s||"").toLowerCase();
+  return `<span class="badge ${esc(x)}">${esc(s||"-")}</span>`;
+}
+
+const ADMIN_RATE=.085;
+
+function feeMoney(n){
+  return "Rp "+new Intl.NumberFormat("id-ID").format(Math.round(Number(n)||0));
+}
+
+function updateFeePreview(){
+  const amount=Number($("amount").value);
+  const box=$("feePreview");
+
+  if(!Number.isFinite(amount)||amount<=0){
+    box.style.display="none";
+    return;
+  }
+
+  $("adminFee").textContent=feeMoney(amount*ADMIN_RATE);
+  $("receivedAmount").textContent=feeMoney(amount-(amount*ADMIN_RATE));
+  box.style.display="block";
+}
+
+$("amount").addEventListener("input",updateFeePreview);
+
+$("withdrawForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  hideAlerts();
+
+  const accountId=$("bankAccount").value;
+  const amount=Number($("amount").value);
+
+  const account=bankAccounts.find(item=>String(item.id)===String(accountId));
+
+  if(!account){
+    alertBox("error","Pilih rekening atau e-wallet terlebih dahulu.");
+    return;
+  }
+
+  if(!Number.isFinite(amount)||amount<=0){
+    alertBox("error","Masukkan nominal withdrawal yang valid.");
+    return;
+  }
+
+  if(amount<10000){
+    alertBox("error","Minimum withdrawal Rp10.000.");
+    return;
+  }
+
+  if(!wallet){
+    alertBox("error","Saldo wallet belum berhasil dimuat.");
+    return;
+  }
+
+  if(amount>Number(wallet.balance||0)){
+    alertBox("error","Saldo tidak mencukupi.");
+    return;
+  }
+
+  const btn=$("submitBtn");
+  btn.disabled=true;
+  btn.textContent="MEMPROSES...";
+
+  try{
+    const {data,error}=await sb.rpc("request_withdrawal",{
+      p_amount:amount,
+      p_method:account.method,
+      p_account_number:account.account_number,
+      p_account_name:account.account_name
+    });
+
+    if(error)throw error;
+
+    alertBox("success",
+      "Withdrawal berhasil diajukan dan sekarang menunggu pemeriksaan admin. "+
+      "Rekening tujuan: "+account.method+" • "+account.account_number+
+      ". Biaya admin 8,5%: "+feeMoney(amount*ADMIN_RATE)+
+      ". Jumlah diterima: "+feeMoney(amount-(amount*ADMIN_RATE))+"."
+    );
+
+    $("amount").value="";
+    $("bankAccount").value="";
+    $("feePreview").style.display="none";
+    $("accountPreview").style.display="none";
+
+    await loadWallet();
+    await loadHistory();
+  }catch(err){
+    console.error(err);
+    alertBox("error",err.message||"Withdrawal gagal diproses.");
+  }finally{
+    btn.disabled=bankAccounts.length===0;
+    btn.textContent="AJUKAN WITHDRAWAL";
+  }
+});
+
+sb.auth.onAuthStateChange(event=>{
+  if(event==="SIGNED_OUT")location.href="index.html";
+});
+
+(async()=>{
+  try{
+    user=await getUser();
+    if(!user)return;
+
+    await Promise.all([
+      loadWallet(),
+      loadBankAccounts(),
+      loadHistory()
+    ]);
+  }catch(e){
+    console.error(e);
+    alertBox("error",e.message||"Gagal memuat data withdrawal.");
+  }
+})();
+</script>
+
+</body>
+</html>
