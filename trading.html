@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050607">
+<title>MyShort Trading - BTC/USDT</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#050607;
+  --panel:#0d1013;
+  --panel2:#11151a;
+  --line:#252b31;
+  --gold:#f3c64f;
+  --gold2:#dcae32;
+  --text:#f3f4f6;
+  --muted:#8f98a3;
+  --green:#28d17c;
+  --red:#ff5364;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  max-width:1100px;
+  margin:auto;
+  padding:14px;
+}
+
+/* HEADER */
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:12px 2px 16px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#f5c94f,#a87815);
+  color:#111;
+  font-weight:900;
+  font-size:20px;
+  box-shadow:0 4px 16px rgba(243,198,79,.15);
+}
+
+.brand b{
+  display:block;
+  font-size:18px;
+  letter-spacing:.7px;
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px;
+  letter-spacing:.7px;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--red);
+}
+
+.dot.live{
+  background:var(--green);
+  box-shadow:0 0 10px rgba(40,209,124,.65);
+}
+
+/* CARD */
+
+.card{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
+}
+
+/* MARKET */
+
+.market{
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:15px;
+}
+
+.symbol{
+  font-size:18px;
+  font-weight:800;
+}
+
+.symbol span{
+  font-size:10px;
+  color:var(--muted);
+  font-weight:500;
+  margin-left:5px;
+}
+
+.price{
+  font-size:28px;
+  font-weight:900;
+  margin-top:7px;
+  letter-spacing:.2px;
+}
+
+.change{
+  font-size:12px;
+  margin-top:4px;
+}
+
+.up{
+  color:var(--green);
+}
+
+.down{
+  color:var(--red);
+}
+
+.feed{
+  text-align:right;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.feed strong{
+  color:var(--gold);
+  font-size:12px;
+}
+
+/* MAIN GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);
+  gap:14px;
+  margin-top:14px;
+}
+
+/* CHART */
+
+.chart-card{
+  padding:12px;
+}
+
+.chart-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:3px 3px 10px;
+}
+
+.chart-head b{
+  font-size:13px;
+}
+
+.chart-head span{
+  font-size:10px;
+  color:var(--muted);
+}
+
+canvas{
+  display:block;
+  width:100%;
+  height:340px;
+  background:#090c0f;
+  border-radius:12px;
+}
+
+/* TRADE PANEL */
+
+.trade-card{
+  padding:15px;
+}
+
+.balance{
+  padding:13px;
+  border:1px solid #30363d;
+  border-radius:14px;
+  background:#090c0f;
+  margin-bottom:13px;
+}
+
+.balance small{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.balance .money{
+  font-size:24px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.balance-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:7px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.balance-row strong{
+  color:var(--text);
+}
+
+.label{
+  font-size:11px;
+  color:var(--muted);
+  margin:12px 0 6px;
+}
+
+.input{
+  width:100%;
+  height:43px;
+  padding:0 12px;
+  border-radius:11px;
+  border:1px solid #30363d;
+  background:#080a0c;
+  color:var(--text);
+  outline:none;
+}
+
+.input:focus{
+  border-color:var(--gold);
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.btns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:13px;
+}
+
+.btn{
+  height:45px;
+  border:0;
+  border-radius:11px;
+  font-weight:900;
+  color:#080a0c;
+}
+
+.long{
+  background:var(--green);
+}
+
+.short{
+  background:var(--red);
+}
+
+.btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.note{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:10px;
+}
+
+/* SECTIONS */
+
+.section{
+  margin-top:14px;
+  padding:15px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:11px;
+}
+
+.section-title b{
+  font-size:14px;
+}
+
+.section-title span{
+  font-size:10px;
+  color:var(--muted);
+}
+
+/* POSITION */
+
+.position{
+  border:1px solid #30363d;
+  border-radius:14px;
+  padding:13px;
+  background:#090c0f;
+}
+
+.pos-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.badge{
+  font-size:10px;
+  font-weight:900;
+  padding:5px 8px;
+  border-radius:7px;
+}
+
+.badge.long{
+  background:rgba(40,209,124,.12);
+  color:var(--green);
+}
+
+.badge.short{
+  background:rgba(255,83,100,.12);
+  color:var(--red);
+}
+
+.pos-symbol{
+  font-weight:800;
+  font-size:13px;
+}
+
+.pos-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:12px;
+}
+
+.metric{
+  background:#0e1216;
+  border-radius:9px;
+  padding:9px;
+}
+
+.metric small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.metric strong{
+  display:block;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.close-btn{
+  width:100%;
+  height:39px;
+  margin-top:11px;
+  border:1px solid #454b53;
+  background:#15191e;
+  color:var(--text);
+  border-radius:10px;
+  font-weight:800;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding:22px 10px;
+}
+
+/* HISTORY */
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:680px;
+}
+
+th,td{
+  text-align:left;
+  padding:10px 8px;
+  border-bottom:1px solid #20252a;
+  font-size:10px;
+  white-space:nowrap;
+}
+
+th{
+  color:var(--muted);
+  font-weight:600;
+}
+
+td{
+  color:#d9dde2;
+}
+
+.profit{
+  color:var(--green)!important;
+}
+
+.loss{
+  color:var(--red)!important;
+}
+
+.footer-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:11px;
+}
+
+.reset{
+  border:1px solid #353b42;
+  background:#11151a;
+  color:#cbd0d6;
+  border-radius:9px;
+  padding:8px 12px;
+  font-size:10px;
+}
+
+/* WARNING */
+
+.warning{
+  margin-top:14px;
+  padding:11px 13px;
+  border:1px solid #4c3d18;
+  background:#171309;
+  color:#cbbd93;
+  border-radius:12px;
+  font-size:10px;
+  line-height:1.5;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:780px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  canvas{
+    height:280px;
+  }
+
+}
+
+@media(max-width:420px){
+
+  .app{
+    padding:10px;
+  }
+
+  .price{
+    font-size:23px;
+  }
+
+  .market{
+    align-items:flex-start;
+  }
+
+  .pos-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+/* =========================================================
+   MYSHORT BOTTOM NAVIGATION
+   ========================================================= */
+body{padding-bottom:82px}
+.bottom-nav{
+  position:fixed;
+  left:0;right:0;bottom:0;
+  z-index:100;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  height:68px;
+  background:rgba(5,6,7,.97);
+  border-top:1px solid #252b31;
+  backdrop-filter:blur(14px);
+}
+.bottom-nav a{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  color:#8f98a3;
+  text-decoration:none;
+  font-size:10px;
+  font-weight:600;
+}
+.bottom-nav a.active{color:#f3c64f}
+.bottom-nav svg{width:25px;height:25px}
+@media(min-width:781px){.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(1100px,100%);border-radius:18px 18px 0 0}}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+
+  <div class="topbar">
+
+    <div class="brand">
+
+      <div class="logo">M</div>
+
+      <div>
+        <b>MYSHORT</b>
+        <small>TRADING CENTER</small>
+      </div>
+
+    </div>
+
+    <div class="status">
+
+      <i id="statusDot" class="dot"></i>
+
+      <span id="statusText">
+        Menghubungkan market...
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- MARKET PRICE -->
+
+  <div class="card market">
+
+    <div>
+
+      <div class="symbol">
+        BTC/USDT
+        <span>MARKET DATA</span>
+      </div>
+
+      <div id="price" class="price">
+        Memuat...
+      </div>
+
+      <div id="change" class="change">
+        —
+      </div>
+
+    </div>
+
+    <div class="feed">
+
+      Market feed
+
+      <br>
+
+      <strong id="feedStatus">
+        CONNECTING
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHART + TRADE -->
+
+  <div class="grid">
+
+    <!-- CHART -->
+
+    <div class="card chart-card">
+
+      <div class="chart-head">
+
+        <b>
+          BTC/USDT PRICE
+        </b>
+
+        <span id="chartInfo">
+          Real-time market data
+        </span>
+
+      </div>
+
+      <canvas id="chart"></canvas>
+
+    </div>
+
+
+    <!-- TRADE -->
+
+    <div class="card trade-card">
+
+      <div class="balance">
+
+        <small>
+          Saldo Utama MyShort
+        </small>
+
+        <div id="balance" class="money">
+          Rp0
+        </div>
+
+        <div class="balance-row">
+
+          <span>
+            Equity
+          </span>
+
+          <strong id="equity">
+            Rp0
+          </strong>
+
+        </div>
+
+        <div class="balance-row">
+
+          <span>
+            Total P/L
+          </span>
+
+          <strong id="totalPL">
+            Rp0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="label">
+        Nominal Posisi
+      </div>
+
+      <input
+        id="nominal"
+        class="input"
+        type="number"
+        min="1000"
+        step="1000"
+        value="100000"
+      >
+
+
+      <div class="label">
+        Stop Loss / Take Profit (%)
+      </div>
+
+      <div class="two">
+
+        <input
+          id="sl"
+          class="input"
+          type="number"
+          min="0.1"
+          max="50"
+          step="0.1"
+          value="2"
+          placeholder="SL %"
+        >
+
+        <input
+          id="tp"
+          class="input"
+          type="number"
+          min="0.1"
+          max="100"
+          step="0.1"
+          value="5"
+          placeholder="TP %"
+        >
+
+      </div>
+
+
+      <div class="btns">
+
+        <button
+          id="longBtn"
+          class="btn long"
+        >
+          BUY / LONG
+        </button>
+
+        <button
+          id="shortBtn"
+          class="btn short"
+        >
+          SELL / SHORT
+        </button>
+
+      </div>
+
+
+      <div class="note">
+        BUY / SELL menggunakan saldo utama MyShort.
+        Nominal posisi dikunci saat posisi dibuka dan
+        dikembalikan ke saldo utama saat posisi ditutup.
+        Harga BTC/USDT berasal dari market feed publik.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACTIVE POSITION -->
+
+  <div class="card section">
+
+    <div class="section-title">
+
+      <b>
+        Posisi Aktif
+      </b>
+
+      <span id="positionCount">
+        0 posisi
+      </span>
+
+    </div>
+
+    <div id="positionBox">
+
+      <div class="empty">
+        Belum ada posisi terbuka.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- HISTORY -->
+
+  <div class="card section">
+
+    <div class="section-title">
+
+      <b>
+        Riwayat Trading
+      </b>
+
+      <span id="historyCount">
+        0 transaksi
+      </span>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Waktu</th>
+            <th>Sisi</th>
+            <th>Entry</th>
+            <th>Exit</th>
+            <th>Nominal</th>
+            <th>P/L</th>
+            <th>Alasan</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="historyBody">
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div
+      id="historyEmpty"
+      class="empty"
+    >
+      Belum ada riwayat.
+    </div>
+
+
+
+  </div>
+
+
+  <!-- WARNING -->
+
+  <div class="warning">
+
+    <b>INFORMASI TRADING:</b>
+
+    Trading ini terhubung ke saldo utama MyShort.
+    BUY / SELL, posisi, dan CLOSE diproses melalui
+    Supabase RPC. Riwayat posisi tersimpan di database.
+
+    Harga BTC/USDT ditampilkan dari market feed publik.
+
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+
+(() => {
+"use strict";
+
+/* =========================================================
+   MYSHORT TRADING + SUPABASE RPC
+   - Saldo utama: public.wallets
+   - Buka posisi: open_trading_position()
+   - Tutup posisi: close_trading_position()
+   - Pengaturan: get_trading_settings()
+   - Posisi: public.trading_positions
+   ========================================================= */
+
+const sb = window.sb || window.supabaseClient || null;
+const MAX_POINTS = 120;
+
+const WS_URLS = [
+  "wss://fstream.binance.com/ws/btcusdt@aggTrade",
+  "wss://fstream.binance.com/stream?streams=btcusdt@aggTrade"
+];
+
+const REST_URLS = [
+  "https://fapi.binance.com/fapi/v1/ticker/price?symbol=BTCUSDT",
+  "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+];
+
+let user = null;
+let settings = null;
+let wallet = null;
+let position = null;
+let history = [];
+let lastPrice = null;
+let firstPrice = null;
+let prices = [];
+let connected = false;
+let loading = true;
+let opening = false;
+let closing = false;
+let ws = null;
+let reconnectTimer = null;
+let restTimer = null;
+let watchdogTimer = null;
+let wsIndex = 0;
+let reconnectDelay = 3000;
+let lastWsMessageAt = 0;
+
+const $ = id => document.getElementById(id);
+const priceEl = $("price");
+const changeEl = $("change");
+const balanceEl = $("balance");
+const equityEl = $("equity");
+const totalPLEl = $("totalPL");
+const positionBox = $("positionBox");
+const historyBody = $("historyBody");
+const historyEmpty = $("historyEmpty");
+const statusDot = $("statusDot");
+const statusText = $("statusText");
+const feedStatus = $("feedStatus");
+const canvas = $("chart");
+const ctx = canvas.getContext("2d");
+const longBtn = $("longBtn");
+const shortBtn = $("shortBtn");
+const nominalInput = $("nominal");
+const slInput = $("sl");
+const tpInput = $("tp");
+
+function rupiah(n){
+  const v = Number(n || 0);
+  const sign = v < 0 ? "-" : "";
+  return sign + "Rp" + Math.round(Math.abs(v)).toLocaleString("id-ID");
+}
+
+function btc(n){
+  return "$" + Number(n || 0).toLocaleString("en-US", {
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
+
+function pct(n){
+  return (Number(n) >= 0 ? "+" : "") + Number(n || 0).toFixed(2) + "%";
+}
+
+function nowText(ts){
+  if(!ts) return "-";
+  return new Date(ts).toLocaleString("id-ID", {
+    day:"2-digit", month:"2-digit", year:"2-digit",
+    hour:"2-digit", minute:"2-digit", second:"2-digit"
+  });
+}
+
+function esc(v){
+  return String(v ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+  }[c]));
+}
+
+function showMessage(message){
+  alert(message);
+}
+
+function errorText(err){
+  return err?.message || err?.details || err?.hint || "Terjadi kesalahan.";
+}
+
+function setStatus(text, live=false){
+  statusText.textContent = text;
+  feedStatus.textContent = live ? "LIVE" : "CONNECTING";
+  statusDot.classList.toggle("live", !!live);
+}
+
+function setTradingButtons(){
+  const disabled = loading || opening || !!position || !settings || !lastPrice || !connected;
+  longBtn.disabled = disabled || settings.trading_enabled !== true || settings.buy_enabled !== true;
+  shortBtn.disabled = disabled || settings.trading_enabled !== true || settings.sell_enabled !== true;
+}
+
+/* =========================================================
+   AUTH
+   ========================================================= */
+async function loadUser(){
+  if(!sb?.auth){
+    throw new Error("Supabase client tidak ditemukan. Periksa supabase-config.js.");
+  }
+
+  const {data, error} = await sb.auth.getUser();
+  if(error) throw error;
+
+  user = data?.user || null;
+  if(!user){
+    location.href = "login.html";
+    return false;
+  }
+  return true;
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+async function loadSettings(){
+  const {data, error} = await sb.rpc("get_trading_settings");
+  if(error) throw error;
+
+  settings = Array.isArray(data) ? data[0] : data;
+  if(!settings){
+    throw new Error("Pengaturan trading belum tersedia.");
+  }
+
+  nominalInput.min = String(Number(settings.min_trade_amount || 10000));
+  nominalInput.max = String(Number(settings.max_trade_amount || 10000000));
+  nominalInput.step = "1000";
+
+  const defaultNominal = Math.max(
+    Number(settings.min_trade_amount || 10000),
+    Math.min(Number(nominalInput.value || 100000), Number(settings.max_trade_amount || 10000000))
+  );
+  nominalInput.value = String(Math.round(defaultNominal));
+
+  slInput.value = Number(settings.default_stop_loss_percent || 2).toString();
+  tpInput.value = Number(settings.default_take_profit_percent || 5).toString();
+  slInput.readOnly = true;
+  tpInput.readOnly = true;
+
+  const symbol = String(settings.symbol || "BTCUSDT").toUpperCase();
+  if(symbol !== "BTCUSDT"){
+    throw new Error("Saat ini halaman trading hanya mendukung BTCUSDT.");
+  }
+
+  if(settings.trading_enabled !== true){
+    setStatus("Trading dinonaktifkan admin", false);
+  }
+}
+
+/* =========================================================
+   MAIN WALLET
+   ========================================================= */
+async function loadWallet(){
+  const {data, error} = await sb
+    .from("wallets")
+    .select("user_id,balance,total_in,total_out,updated_at")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if(error) throw error;
+  wallet = data || {balance:0,total_in:0,total_out:0};
+}
+
+/* =========================================================
+   OPEN POSITION FROM DATABASE
+   ========================================================= */
+async function loadActivePosition(){
+  const {data, error} = await sb
+    .from("trading_positions")
+    .select("id,user_id,symbol,side,nominal,entry_price,close_price,quantity,stop_loss,take_profit,pnl,status,opened_at,closed_at,created_at")
+    .eq("user_id", user.id)
+    .eq("status", "OPEN")
+    .order("created_at", {ascending:false})
+    .limit(1)
+    .maybeSingle();
+
+  if(error) throw error;
+  position = data || null;
+}
+
+/* =========================================================
+   HISTORY FROM DATABASE
+   ========================================================= */
+async function loadHistory(){
+  const {data, error} = await sb
+    .from("trading_positions")
+    .select("id,user_id,symbol,side,nominal,entry_price,close_price,quantity,stop_loss,take_profit,pnl,status,opened_at,closed_at,created_at")
+    .eq("user_id", user.id)
+    .eq("status", "CLOSED")
+    .order("closed_at", {ascending:false})
+    .limit(100);
+
+  if(error) throw error;
+  history = data || [];
+}
+
+async function refreshAccount(){
+  await Promise.all([
+    loadWallet(),
+    loadActivePosition(),
+    loadHistory()
+  ]);
+  updateUI();
+}
+
+/* =========================================================
+   OPEN BUY / SELL
+   ========================================================= */
+async function openPosition(side){
+  if(opening) return;
+  if(!user || !settings) return showMessage("Data akun belum siap.");
+  if(!lastPrice) return showMessage("Harga market belum tersedia.");
+  if(position) return showMessage("Tutup posisi aktif terlebih dahulu.");
+  if(!connected) return showMessage("Market belum terhubung.");
+  if(settings.trading_enabled !== true) return showMessage("Trading sedang dinonaktifkan admin.");
+
+  if(side === "LONG" && settings.buy_enabled !== true){
+    return showMessage("BUY / LONG sedang dinonaktifkan admin.");
+  }
+  if(side === "SHORT" && settings.sell_enabled !== true){
+    return showMessage("SELL / SHORT sedang dinonaktifkan admin.");
+  }
+
+  const nominal = Math.floor(Number(nominalInput.value));
+  const min = Number(settings.min_trade_amount);
+  const max = Number(settings.max_trade_amount);
+
+  if(!Number.isFinite(nominal) || nominal < min || nominal > max){
+    return showMessage(`Nominal harus antara ${rupiah(min)} dan ${rupiah(max)}.`);
+  }
+
+  opening = true;
+  setTradingButtons();
+  longBtn.textContent = side === "LONG" ? "MEMPROSES..." : "BUY / LONG";
+  shortBtn.textContent = side === "SHORT" ? "MEMPROSES..." : "SELL / SHORT";
+
+  try{
+    /*
+      SL/TP dikirim NULL agar server memakai nilai default
+      dari trading_settings. Jadi admin dapat mengubahnya
+      tanpa mengedit file HTML.
+    */
+    const {data, error} = await sb.rpc("open_trading_position", {
+      p_side: side,
+      p_nominal: nominal,
+      p_entry_price: Number(lastPrice),
+      p_stop_loss: null,
+      p_take_profit: null
+    });
+
+    if(error) throw error;
+
+    position = Array.isArray(data) ? data[0] : data;
+    await refreshAccount();
+    showMessage(`${side === "LONG" ? "BUY / LONG" : "SELL / SHORT"} berhasil dibuka.`);
+  }catch(err){
+    console.error("open_trading_position:", err);
+    showMessage(errorText(err));
+  }finally{
+    opening = false;
+    longBtn.textContent = "BUY / LONG";
+    shortBtn.textContent = "SELL / SHORT";
+    setTradingButtons();
+  }
+}
+
+/* =========================================================
+   FLOATING P/L - DISPLAY ONLY
+   ========================================================= */
+function floatingPL(){
+  const p = position;
+  const current = Number(lastPrice);
+  if(!p || !Number.isFinite(current) || current <= 0) return 0;
+
+  const entry = Number(p.entry_price);
+  const qty = Number(p.quantity);
+  if(!Number.isFinite(entry) || !Number.isFinite(qty)) return 0;
+
+  return p.side === "LONG"
+    ? (current - entry) * qty
+    : (entry - current) * qty;
+}
+
+/* =========================================================
+   CLOSE POSITION VIA RPC
+   ========================================================= */
+async function closePosition(){
+  if(closing) return;
+  if(!position) return;
+  if(!lastPrice) return showMessage("Harga market belum tersedia.");
+
+  const yes = confirm("Tutup posisi sekarang menggunakan harga market terakhir?");
+  if(!yes) return;
+
+  closing = true;
+  setTradingButtons();
+
+  try{
+    const positionId = Number(position.id);
+    if(!Number.isFinite(positionId)) throw new Error("ID posisi tidak valid.");
+
+    const {data, error} = await sb.rpc("close_trading_position", {
+      p_position_id: positionId,
+      p_close_price: Number(lastPrice)
+    });
+
+    if(error) throw error;
+
+    const closed = Array.isArray(data) ? data[0] : data;
+    const pnl = Number(closed?.pnl || 0);
+
+    await refreshAccount();
+    showMessage(`Posisi berhasil ditutup. P/L: ${rupiah(pnl)}.`);
+  }catch(err){
+    console.error("close_trading_position:", err);
+    showMessage(errorText(err));
+  }finally{
+    closing = false;
+    setTradingButtons();
+  }
+}
+
+/* =========================================================
+   STOP / TAKE PROFIT CHECK
+   ========================================================= */
+async function checkStops(){
+  if(!position || closing || opening || !lastPrice) return;
+
+  const current = Number(lastPrice);
+  const sl = Number(position.stop_loss);
+  const tp = Number(position.take_profit);
+  if(!Number.isFinite(current)) return;
+
+  let hit = false;
+  if(position.side === "LONG"){
+    hit = (Number.isFinite(sl) && current <= sl) || (Number.isFinite(tp) && current >= tp);
+  }else{
+    hit = (Number.isFinite(sl) && current >= sl) || (Number.isFinite(tp) && current <= tp);
+  }
+
+  if(hit){
+    closing = true;
+    setTradingButtons();
+    try{
+      const {error} = await sb.rpc("close_trading_position", {
+        p_position_id: Number(position.id),
+        p_close_price: current
+      });
+      if(error) throw error;
+      await refreshAccount();
+    }catch(err){
+      console.error("Auto close error:", err);
+    }finally{
+      closing = false;
+      setTradingButtons();
+    }
+  }
+}
+
+/* =========================================================
+   UI
+   ========================================================= */
+function updateUI(){
+  const balance = Number(wallet?.balance || 0);
+  const fl = floatingPL();
+  const equity = balance + fl;
+  const realized = history.reduce((sum, item) => sum + Number(item.pnl || 0), 0);
+
+  balanceEl.textContent = rupiah(balance);
+  equityEl.textContent = rupiah(equity);
+  totalPLEl.textContent = rupiah(realized);
+  totalPLEl.className = realized >= 0 ? "profit" : "loss";
+
+  $("positionCount").textContent = position ? "1 posisi" : "0 posisi";
+  $("historyCount").textContent = history.length + " transaksi";
+
+  renderPosition();
+  renderHistory();
+  setTradingButtons();
+}
+
+function renderPosition(){
+  if(!position){
+    positionBox.innerHTML = '<div class="empty">Belum ada posisi terbuka.</div>';
+    return;
+  }
+
+  const fl = floatingPL();
+  const cls = fl >= 0 ? "profit" : "loss";
+  const sideClass = position.side === "LONG" ? "long" : "short";
+
+  positionBox.innerHTML = `
+    <div class="position">
+      <div class="pos-top">
+        <div>
+          <div class="pos-symbol">BTC/USDT</div>
+          <small style="color:#8f98a3;font-size:10px">ID #${esc(position.id)}</small>
+        </div>
+        <span class="badge ${sideClass}">${esc(position.side)}</span>
+      </div>
+
+      <div class="pos-grid">
+        <div class="metric">
+          <small>Entry</small>
+          <strong>${btc(position.entry_price)}</strong>
+        </div>
+        <div class="metric">
+          <small>Current</small>
+          <strong>${btc(lastPrice || position.entry_price)}</strong>
+        </div>
+        <div class="metric">
+          <small>Nominal</small>
+          <strong>${rupiah(position.nominal)}</strong>
+        </div>
+        <div class="metric">
+          <small>Floating P/L</small>
+          <strong class="${cls}">${rupiah(fl)}</strong>
+        </div>
+        <div class="metric">
+          <small>Stop Loss</small>
+          <strong>${btc(position.stop_loss)}</strong>
+        </div>
+        <div class="metric">
+          <small>Take Profit</small>
+          <strong>${btc(position.take_profit)}</strong>
+        </div>
+      </div>
+
+      <button id="closePositionBtn" class="close-btn" ${closing ? "disabled" : ""}>
+        ${closing ? "MEMPROSES..." : "CLOSE POSITION"}
+      </button>
+    </div>
+  `;
+
+  $("closePositionBtn").onclick = closePosition;
+}
+
+function renderHistory(){
+  historyEmpty.style.display = history.length ? "none" : "block";
+
+  historyBody.innerHTML = history.map(item => {
+    const pnl = Number(item.pnl || 0);
+    const cls = pnl >= 0 ? "profit" : "loss";
+    const sideClass = item.side === "LONG" ? "long" : "short";
+    const reason = pnl > 0 ? "PROFIT" : pnl < 0 ? "LOSS" : "CLOSED";
+
+    return `
+      <tr>
+        <td>${esc(nowText(item.closed_at || item.created_at))}</td>
+        <td><span class="badge ${sideClass}">${esc(item.side)}</span></td>
+        <td>${btc(item.entry_price)}</td>
+        <td>${item.close_price ? btc(item.close_price) : "-"}</td>
+        <td>${rupiah(item.nominal)}</td>
+        <td class="${cls}">${rupiah(pnl)}</td>
+        <td>${reason}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+/* =========================================================
+   MARKET FEED
+   ========================================================= */
+function updateMarket(price){
+  const p = Number(price);
+  if(!Number.isFinite(p) || p <= 0) return;
+
+  lastPrice = p;
+  if(firstPrice === null) firstPrice = p;
+
+  prices.push(p);
+  if(prices.length > MAX_POINTS) prices = prices.slice(-MAX_POINTS);
+
+  priceEl.textContent = btc(p);
+
+  const base = firstPrice || p;
+  const change = base ? ((p - base) / base) * 100 : 0;
+  changeEl.textContent = "Session: " + pct(change);
+  changeEl.className = "change " + (change >= 0 ? "up" : "down");
+
+  updateUI();
+  drawChart();
+  checkStops();
+}
+
+function parsePriceMessage(raw){
+  try{
+    const data = JSON.parse(raw);
+    if(data?.p) return Number(data.p);
+    if(data?.data?.p) return Number(data.data.p);
+    if(data?.c) return Number(data.c);
+    return null;
+  }catch(e){
+    return null;
+  }
+}
+
+function connectMarket(){
+  clearTimeout(reconnectTimer);
+
+  try{ if(ws) ws.close(); }catch(e){}
+
+  const url = WS_URLS[wsIndex % WS_URLS.length];
+  try{
+    ws = new WebSocket(url);
+  }catch(err){
+    scheduleReconnect();
+    return;
+  }
+
+  ws.onopen = () => {
+    connected = true;
+    lastWsMessageAt = Date.now();
+    reconnectDelay = 3000;
+    setStatus("Market terhubung", true);
+    setTradingButtons();
+  };
+
+  ws.onmessage = event => {
+    const p = parsePriceMessage(event.data);
+    lastWsMessageAt = Date.now();
+    if(p > 0) updateMarket(p);
+  };
+
+  ws.onerror = () => {
+    connected = false;
+    setStatus("Market reconnecting...", false);
+    setTradingButtons();
+  };
+
+  ws.onclose = () => {
+    connected = false;
+    setStatus("Market reconnecting...", false);
+    setTradingButtons();
+    wsIndex++;
+    scheduleReconnect();
+  };
+}
+
+function scheduleReconnect(){
+  clearTimeout(reconnectTimer);
+  reconnectTimer = setTimeout(connectMarket, reconnectDelay);
+  reconnectDelay = Math.min(reconnectDelay * 2, 15000);
+}
+
+async function fetchRestPrice(){
+  for(const url of REST_URLS){
+    try{
+      const res = await fetch(url, {cache:"no-store"});
+      if(!res.ok) continue;
+      const data = await res.json();
+      const p = Number(data?.price);
+      if(p > 0){
+        updateMarket(p);
+        return true;
+      }
+    }catch(e){}
+  }
+  return false;
+}
+
+function startRestFallback(){
+  clearInterval(restTimer);
+  restTimer = setInterval(async () => {
+    if(!connected || !lastPrice) await fetchRestPrice();
+  }, 5000);
+  fetchRestPrice();
+}
+
+function startWatchdog(){
+  clearInterval(watchdogTimer);
+  watchdogTimer = setInterval(() => {
+    if(connected && lastWsMessageAt && Date.now() - lastWsMessageAt > 12000){
+      try{ ws.close(); }catch(e){}
+      connected = false;
+      setStatus("Market reconnecting...", false);
+      setTradingButtons();
+    }
+  }, 5000);
+}
+
+/* =========================================================
+   CHART
+   ========================================================= */
+function resizeCanvas(){
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+  canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  drawChart();
+}
+
+function drawChart(){
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle = "#090c0f";
+  ctx.fillRect(0,0,w,h);
+
+  const arr = prices;
+  if(arr.length < 2){
+    ctx.fillStyle = "#66707b";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Menunggu market data...", w/2, h/2);
+    return;
+  }
+
+  let min = Math.min(...arr);
+  let max = Math.max(...arr);
+  const pad = (max-min) * .12 || max * .0005 || 1;
+  min -= pad;
+  max += pad;
+
+  const xStep = w / (arr.length - 1);
+  const y = value => h - ((value-min)/(max-min)) * (h-20) - 10;
+
+  ctx.beginPath();
+  arr.forEach((value,i) => {
+    const x = i*xStep;
+    const yy = y(value);
+    if(i===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy);
+  });
+  ctx.strokeStyle = "#f3c64f";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  if(lastPrice){
+    const yy = y(lastPrice);
+    ctx.setLineDash([4,4]);
+    ctx.strokeStyle = "#555d66";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(0,yy); ctx.lineTo(w,yy); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+async function init(){
+  try{
+    setStatus("Menghubungkan akun...", false);
+    const ok = await loadUser();
+    if(!ok) return;
+
+    await loadSettings();
+    await refreshAccount();
+
+    loading = false;
+    setTradingButtons();
+    setStatus("Menghubungkan market...", false);
+
+    startRestFallback();
+    startWatchdog();
+    connectMarket();
+    resizeCanvas();
+  }catch(err){
+    console.error(err);
+    loading = false;
+    setTradingButtons();
+    setStatus("Gagal memuat", false);
+    showMessage("Gagal memuat trading: " + errorText(err));
+  }
+}
+
+longBtn.onclick = () => openPosition("LONG");
+shortBtn.onclick = () => openPosition("SHORT");
+window.addEventListener("resize", resizeCanvas);
+
+init();
+
+})();
+</script>
+
+<nav class="bottom-nav">
+<a href="dashboard.html"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z"/></svg></div>Home</a>
+<a href="mission.html"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></div>Mission</a>
+<a class="active" href="trading.html"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 17l5-5 4 3 7-8"/><path d="M16 7h4v4"/></svg></div>Trading</a>
+<a href="profile.html"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/></svg></div>Profile</a>
+</nav>
+</body>
+</html>
