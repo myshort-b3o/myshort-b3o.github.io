@@ -1,0 +1,1665 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050607">
+<title>MyShort App - Misi & Reward</title>
+<link rel="stylesheet" href="premium-brand.css">
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --gold:#f3c64f;
+  --gold2:#ffe9a2;
+  --bg:#050607;
+  --panel:#111317;
+  --muted:#858990;
+  --line:#3d301a;
+  --green:#4dd5a0;
+  --red:#ff8c82;
+}
+
+/* =========================================================
+   PREMIUM BLACK BACKGROUND
+   ========================================================= */
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#050607;
+  color:#f5f5f5;
+}
+
+body{
+  padding-bottom:92px;
+  background:
+    radial-gradient(
+      circle at 50% -12%,
+      rgba(255,211,103,.17) 0,
+      rgba(110,78,22,.10) 18%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 5% 40%,
+      rgba(255,202,83,.055) 0,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 95% 70%,
+      rgba(255,202,83,.045) 0,
+      transparent 30%
+    ),
+    linear-gradient(
+      145deg,
+      #020303 0%,
+      #070809 35%,
+      #0a0c0f 65%,
+      #030405 100%
+    );
+  background-attachment:fixed;
+}
+
+/* Premium titik halus */
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.13;
+  background-image:
+    radial-gradient(
+      rgba(238,193,83,.60) .55px,
+      transparent .55px
+    );
+  background-size:24px 24px;
+  z-index:0;
+}
+
+/* Glow diagonal sangat halus */
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(
+      125deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(255,215,120,.018) 50%,
+      transparent 62%,
+      transparent 100%
+    );
+}
+
+button,a{
+  font:inherit;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.head{
+  position:relative;
+  z-index:2;
+  padding:18px 18px 24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(24,25,29,.98),
+      rgba(8,9,11,.98)
+    );
+  border-bottom:1px solid #3e311a;
+  border-radius:0 0 24px 24px;
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.45),
+    inset 0 -1px 0 rgba(255,215,120,.025);
+}
+
+.brand{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.logo{
+  width:43px;
+  height:43px;
+  border:1px solid #70551e;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:#0d0e10;
+  overflow:hidden;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
+}
+
+.sp-logo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.brand b{
+  font-size:15px;
+}
+
+.brand small{
+  display:block;
+  color:#777;
+  font-size:9px;
+  margin-top:3px;
+}
+
+.balance{
+  margin-top:13px;
+  border:1px solid #4e3b18;
+  border-radius:14px;
+  padding:9px 12px;
+  background:
+    linear-gradient(145deg,#151417,#0b0c0e);
+  display:inline-block;
+  box-shadow:0 6px 20px rgba(0,0,0,.28);
+}
+
+.balance span{
+  display:block;
+  color:#9b9da3;
+  font-size:9px;
+}
+
+.balance b{
+  display:block;
+  color:#ffd65f;
+  font-size:16px;
+  margin-top:4px;
+}
+
+.head h1{
+  font-size:24px;
+  margin:18px 0 5px;
+}
+
+.head p{
+  font-size:10px;
+  color:#888;
+  margin:0;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:10px 14px;
+  position:relative;
+  z-index:2;
+}
+
+/* =========================================================
+   CLAIM CARD
+   ========================================================= */
+.claim-card{
+  margin:0 0 13px;
+  padding:16px;
+  border:1px solid #553c20;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(35,24,12,.96),
+      rgba(15,13,11,.98)
+    );
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,215,120,.025);
+}
+
+.claim-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.claim-label{
+  font-size:11px;
+  color:#aaa1a0;
+}
+
+.coin{
+  font-size:29px;
+  color:#ffd451;
+  font-weight:900;
+  line-height:1;
+  margin-top:7px;
+}
+
+.coin span{
+  font-size:12px;
+  color:#ddd;
+  margin-left:5px;
+}
+
+.claim-btn{
+  min-width:120px;
+  height:46px;
+  border-radius:13px;
+  border:1px solid #6d625f;
+  background:#211b1c;
+  color:#a8a3a2;
+  font-weight:800;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.claim-btn.ready{
+  background:linear-gradient(
+    135deg,
+    #ffe48b,
+    #d89d25
+  );
+  color:#1b1609;
+  border-color:#f2c65b;
+  box-shadow:0 5px 16px rgba(216,157,37,.16);
+}
+
+.claim-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.claim-sub{
+  margin-top:11px;
+  color:#8c8583;
+  font-size:8.5px;
+  line-height:1.55;
+}
+
+.claim-sub b{
+  color:#ffe3a0;
+}
+
+/* =========================================================
+   AI MINING CARD
+   ========================================================= */
+.max-card{
+  margin:13px 0;
+  padding:15px;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      145deg,
+      #181114,
+      #0d0b0d
+    );
+  border:1px solid #5c2b2b;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.58),
+    inset 0 1px 0 rgba(255,255,255,.018);
+}
+
+.max-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.max-logo{
+  width:62px;
+  height:62px;
+  border-radius:15px;
+  background:#f5f5f5;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  flex:0 0 62px;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
+}
+
+.max-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.max-title{
+  font-size:16px;
+  font-weight:900;
+}
+
+.max-sub{
+  font-size:9px;
+  color:#9a8d8d;
+  margin-top:4px;
+}
+
+.max-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:13px;
+}
+
+.max-stat{
+  background:#100c0e;
+  border-radius:10px;
+  padding:9px;
+  border:1px solid rgba(255,207,100,.035);
+}
+
+.max-stat small{
+  display:block;
+  color:#786d6d;
+  font-size:7px;
+  text-transform:uppercase;
+}
+
+.max-stat b{
+  display:block;
+  font-size:13px;
+  color:#ffe16d;
+  margin-top:5px;
+}
+
+.max-status{
+  margin-top:11px;
+  padding:10px;
+  border-radius:11px;
+  background:#1c1012;
+  border:1px solid #4d2528;
+  color:#aaa;
+  font-size:9px;
+}
+
+.max-status strong{
+  display:block;
+  color:#fff;
+  font-size:14px;
+  margin-top:3px;
+}
+
+.buy{
+  width:100%;
+  margin-top:10px;
+  border:0;
+  border-radius:11px;
+  padding:11px;
+  background:
+    linear-gradient(
+      135deg,
+      #ff766d,
+      #ff4f62
+    );
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 7px 18px rgba(255,79,98,.12);
+}
+
+.buy:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+
+/* =========================================================
+   HASIL MINING XMR
+   ========================================================= */
+.mining-card{
+  margin:14px 0;
+  padding:16px;
+  border:1px solid #39404d;
+  border-radius:20px;
+  background:
+    linear-gradient(145deg,#10151d,#080b10);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.58),
+    inset 0 1px 0 rgba(255,255,255,.02);
+}
+.mining-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.mining-label{
+  color:#8f98a7;
+  font-size:10px;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.xmr-main{
+  margin-top:7px;
+  font-size:27px;
+  line-height:1.15;
+  font-weight:900;
+  color:#f5f7fb;
+  word-break:break-word;
+}
+.xmr-main span{
+  color:#8e97a5;
+  font-size:12px;
+  margin-left:4px;
+}
+.mining-badge{
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid #3f604f;
+  background:#0e1b15;
+  color:#72e0af;
+  font-size:8px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.mining-badge.off{
+  border-color:#4b4d52;
+  background:#15171a;
+  color:#999da4;
+}
+.mining-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:14px;
+}
+.mining-stat{
+  padding:11px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.055);
+  background:#0b0e13;
+}
+.mining-stat small{
+  display:block;
+  color:#727987;
+  font-size:7px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+.mining-stat b{
+  display:block;
+  margin-top:5px;
+  color:#e9edf4;
+  font-size:12px;
+  word-break:break-word;
+}
+.mining-note{
+  margin-top:11px;
+  padding:10px;
+  border-radius:11px;
+  background:#0b1017;
+  border:1px solid #252f3d;
+  color:#7f8997;
+  font-size:8px;
+  line-height:1.5;
+}
+@media(max-width:380px){
+  .xmr-main{font-size:23px}
+  .mining-grid{gap:6px}
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+.tabs{
+  display:flex;
+  gap:7px;
+  overflow:auto;
+  margin:15px 0 11px;
+  padding-bottom:2px;
+  scrollbar-width:none;
+}
+
+.tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.tab{
+  border:1px solid #2b2d32;
+  background:#111317;
+  color:#888;
+  border-radius:20px;
+  padding:9px 13px;
+  font-size:9px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:
+    linear-gradient(
+      135deg,
+      #f0c552,
+      #c99022
+    );
+  color:#17130a;
+  border-color:#f0c75e;
+  font-weight:800;
+  box-shadow:0 4px 15px rgba(240,197,82,.10);
+}
+
+/* =========================================================
+   MISSION CARD
+   ========================================================= */
+.mission{
+  padding:15px;
+  border-radius:19px;
+  margin-bottom:11px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25,27,32,.98),
+      rgba(13,15,18,.98)
+    );
+  border:1px solid #342b1c;
+  box-shadow:
+    0 10px 27px rgba(0,0,0,.50),
+    inset 0 1px 0 rgba(255,255,255,.018);
+}
+
+.toprow{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.icon{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  border-radius:14px;
+  background:#241d0f;
+  border:1px solid #5c471d;
+  display:grid;
+  place-items:center;
+  color:#ffd65f;
+  font-size:20px;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+}
+
+.name{
+  font-size:12px;
+  font-weight:800;
+}
+
+.desc{
+  font-size:8.8px;
+  color:#777;
+  line-height:1.45;
+  margin-top:4px;
+}
+
+.reward{
+  text-align:right;
+  margin-left:auto;
+}
+
+.reward small{
+  display:block;
+  font-size:8px;
+  color:#777;
+}
+
+.reward b{
+  font-size:13px;
+  color:#ffd65f;
+}
+
+.foot{
+  display:flex;
+  align-items:center;
+  margin-top:12px;
+  gap:8px;
+}
+
+.status{
+  flex:1;
+  color:#777;
+  font-size:8px;
+}
+
+.actions{
+  display:flex;
+  gap:5px;
+  justify-content:flex-end;
+}
+
+.btn{
+  border:0;
+  background:
+    linear-gradient(
+      135deg,
+      #ffe7a0,
+      #d8a63b
+    );
+  color:#17130a;
+  border-radius:9px;
+  padding:9px 13px;
+  font-size:9px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.btn.secondary{
+  background:#211a0d;
+  color:#ffe19a;
+  border:1px solid #665020;
+}
+
+/* Tombol reward referral setelah berhasil diklaim */
+.btn.claimed{
+  background:#25272b;
+  color:#8f939a;
+  border:1px solid #45484e;
+  box-shadow:none;
+  cursor:not-allowed;
+  opacity:1;
+}
+
+.btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* =========================================================
+   LINK DOWNLOAD + SALIN
+   ========================================================= */
+.download-copy{
+  margin:11px 0 13px;
+  padding:10px 11px;
+  border:1px solid rgba(242,198,79,.25);
+  border-radius:14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25,24,20,.97),
+      rgba(10,11,13,.98)
+    );
+  box-shadow:
+    0 9px 24px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.015);
+}
+
+.download-copy-label{
+  font-size:8px;
+  color:#b5a78b;
+  margin-bottom:6px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+}
+
+.download-copy-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.download-copy input{
+  min-width:0;
+  flex:1;
+  height:34px;
+  padding:0 9px;
+  border:1px solid #3b3425;
+  border-radius:8px;
+  background:#070809;
+  color:#cfc9bc;
+  font-size:8.5px;
+  outline:0;
+}
+
+.download-copy input:focus{
+  border-color:#80652b;
+}
+
+.download-copy button{
+  height:34px;
+  padding:0 12px;
+  border:1px solid #b18a35;
+  border-radius:8px;
+  background:
+    linear-gradient(
+      135deg,
+      #ffe79a,
+      #d5a43b
+    );
+  color:#17130a;
+  font-size:9px;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap;
+  box-shadow:0 4px 12px rgba(213,164,59,.10);
+}
+
+.download-copy button:active{
+  transform:scale(.97);
+}
+
+/* =========================================================
+   NOTES
+   ========================================================= */
+.note{
+  margin-top:13px;
+  padding:12px;
+  border:1px solid #25272b;
+  border-radius:14px;
+  color:#7f8289;
+  font-size:8.5px;
+  line-height:1.55;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13,15,18,.88),
+      rgba(6,7,9,.88)
+    );
+  box-shadow:0 8px 22px rgba(0,0,0,.30);
+}
+
+.note b{
+  color:#ffe19a;
+}
+
+.error{
+  display:none;
+  margin:12px 0;
+  padding:12px;
+  border:1px solid #6a302a;
+  border-radius:12px;
+  background:#211311;
+  color:#ffb7ae;
+  font-size:9px;
+  line-height:1.5;
+}
+
+.empty{
+  padding:24px 15px;
+  border:1px dashed #3a352b;
+  border-radius:16px;
+  text-align:center;
+  color:#777;
+  font-size:10px;
+  background:#111317;
+}
+
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:78px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8,9,11,.97),
+      rgba(3,4,5,.99)
+    );
+  border-top:1px solid #302719;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:10;
+  box-shadow:0 -8px 25px rgba(0,0,0,.45);
+}
+
+.nav a{
+  text-decoration:none;
+  color:#70747c;
+  text-align:center;
+  font-size:8.5px;
+  padding-top:9px;
+}
+
+.nav a.active{
+  color:#ffe19a;
+}
+
+.nav i{
+  font-style:normal;
+  font-size:22px;
+  display:block;
+  margin-bottom:4px;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:92px;
+  transform:translateX(-50%);
+  background:
+    linear-gradient(
+      145deg,
+      #191b1f,
+      #0c0d0f
+    );
+  border:1px solid #665020;
+  color:#ffe39a;
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:10px;
+  display:none;
+  z-index:20;
+  box-shadow:0 10px 30px #0009;
+  max-width:90%;
+  text-align:center;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media(max-width:520px){
+  .claim-top{
+    align-items:flex-start;
+  }
+
+  .max-grid{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  .download-copy-row{
+    gap:5px;
+  }
+
+  .download-copy input{
+    font-size:8px;
+  }
+
+  .download-copy button{
+    padding:0 11px;
+  }
+}
+
+@media(max-width:380px){
+  .download-copy input{
+    font-size:7.5px;
+  }
+
+  .download-copy button{
+    padding:0 9px;
+    font-size:8px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="head">
+
+  <div class="brand">
+    <div class="logo">
+      <img class="sp-logo" src="logo.png" alt="MyShort Logo">
+    </div>
+
+    <div>
+      <b>MyShort App</b>
+      <small>Bonus & Misi Harian</small>
+    </div>
+  </div>
+
+  <div class="balance">
+    <span>Saldo Anda</span>
+    <b id="balance">Rp 0</b>
+  </div>
+
+  <h1>Mining XMR</h1>
+
+  <p>
+    Pantau status dan hasil mining XMR Anda secara langsung dari sistem mining MyShort.
+  </p>
+
+</header>
+
+
+<main class="wrap">
+
+  <div id="error" class="error"></div>
+
+  <section class="max-card">
+
+    <div class="max-head">
+
+      <div class="max-logo">
+        <img src="logo.png" alt="AI-MINING">
+      </div>
+
+      <div>
+        <div class="max-title">
+          AI-MINING
+        </div>
+
+        <div class="max-sub">
+          Harga dan reward ditetapkan di database.
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="max-grid">
+
+      <div class="max-stat">
+        <small>Harga</small>
+        <b>Rp100.000</b>
+      </div>
+
+      <div class="max-stat">
+        <small>Hadiah/hari</small>
+        <b>Rp3.000</b>
+      </div>
+
+      <div class="max-stat">
+        <small>Waktu</small>
+        <b>12–24 WIB</b>
+      </div>
+
+    </div>
+
+
+    <div class="max-status">
+      <span>Status AI-MINING</span>
+      <strong id="maxStatus">Memuat...</strong>
+    </div>
+
+
+    <button
+      class="buy"
+      id="buyMaxBtn"
+    >
+      AKTIFKAN MISI
+    </button>
+
+  </section>
+  <div class="tabs">
+    <button class="tab active" data-f="all">Semua</button>
+    <button class="tab" data-f="mining">Mining XMR</button>
+    <button class="tab" data-f="deposit">AI-MINING</button>
+    <button class="tab" data-f="Aplikasi">Aplikasi</button>
+  </div>
+
+  <div class="section-title" id="missionResultsTitle">HASIL MISSION</div>
+  <div id="list"></div>
+
+
+  <!-- =====================================================
+       LINK DOWNLOAD APLIKASI + SALIN
+       ===================================================== -->
+
+  <div class="download-copy">
+
+    <div class="download-copy-label">
+      Link Unduh Aplikasi
+    </div>
+
+    <div class="download-copy-row">
+
+      <input
+        id="downloadLink"
+        value="https://myshortai-mex.github.io"
+        readonly
+        aria-label="Link unduh aplikasi"
+      >
+
+      <button
+        id="copyDownloadLink"
+        type="button"
+      >
+        Salin
+      </button>
+
+    </div>
+
+  </div>
+<div class="note">
+    <b>🛡Unduh Aplikasi:</b>
+    unduh aplikasi di halaman resmi myshort
+    <b>silahkan di sini</b>
+    Kredit reward perlu divalidasi melalui Supabase/RPC agar aman.
+
+    <br><br>
+
+    <b>🛡Keamanan:</b>
+    data saldo, kepemilikan AI-MINING, dan hasil mining
+    dibaca dari Supabase. Tampilan browser tidak menjadi sumber saldo.
+  </div>
+
+</main>
+
+
+<nav class="nav">
+
+  <a href="dashboard.html">
+    <i>⌂</i>
+    Home
+  </a>
+
+  <a class="active" href="mission.html">
+    <i>◎</i>
+    Mission
+  </a>
+
+  <a href="wallet.html">
+    <i>▣</i>
+    Wallet
+  </a>
+
+  <a href="profile.html">
+    <i>♙</i>
+    Profile
+  </a>
+
+</nav>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+
+<script>
+
+const supa =
+  (typeof sb !== "undefined" && sb && sb.auth)
+    ? sb
+    : (window.sb || window.supabaseClient || window.supabase || null);
+
+let user=null,
+    wallet=null,
+    activePlan=null,
+    todayClaim=null,
+    miningWallet=null,
+    miningStatus=null,
+    dramaClaimed=false,
+    filter="all";
+
+
+const money=n =>
+  "Rp "+new Intl.NumberFormat("id-ID")
+  .format(Number(n||0));
+
+
+const esc=s =>
+  String(s??"")
+  .replace(
+    /[&<>"']/g,
+    c=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[c])
+  );
+
+
+const toast=msg=>{
+  const e=document.getElementById("toast");
+
+  e.textContent=msg;
+  e.style.display="block";
+
+  clearTimeout(window.__t);
+
+  window.__t=setTimeout(
+    ()=>e.style.display="none",
+    2600
+  );
+};
+
+
+const error=msg=>{
+  const e=document.getElementById("error");
+
+  e.textContent=msg;
+  e.style.display=msg?"block":"none";
+};
+
+
+
+
+
+function jakartaDate(){
+  const parts=new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"
+  }).formatToParts(new Date());
+  const get=k=>parts.find(x=>x.type===k)?.value||"00";
+  return `${get("year")}-${get("month")}-${get("day")}`;
+}
+
+async function load(){
+
+  error("");
+
+  if(!supa || !supa.auth){
+    throw new Error("Supabase client belum tersedia. Periksa supabase-config.js.");
+  }
+
+  const {
+    data:{user:u},
+    error:ae
+  }=await supa.auth.getUser();
+
+  if(ae) throw ae;
+
+  if(!u){
+    location.href="index.html";
+    return;
+  }
+
+  user=u;
+
+  const [
+    w,
+    p,
+    c,
+    mw,
+    ms
+  ]=await Promise.all([
+
+    supa
+      .from("wallets")
+      .select("balance")
+      .eq("user_id",user.id)
+      .single(),
+
+    supa
+      .from("ai_max_purchases")
+      .select("id,purchased_at,active")
+      .eq("user_id",user.id)
+      .eq("active",true)
+      .order("purchased_at",{ascending:false})
+      .limit(1),
+
+    supa
+      .from("ai_max_daily_claims")
+      .select("id,claim_date,amount,claimed_at")
+      .eq("user_id",user.id)
+      .eq("claim_date",jakartaDate())
+      .maybeSingle(),
+
+    supa
+      .from("mining_wallets")
+      .select("available_amount,locked_amount,total_mined")
+      .eq("user_id",user.id)
+      .maybeSingle(),
+
+    supa.rpc("ms_mining_status")
+  ]);
+
+  if(w.error) throw w.error;
+  if(p.error) throw p.error;
+
+  wallet=w.data;
+  activePlan=(p.data||[])[0]||null;
+  if(c.error) throw c.error;
+  todayClaim=c.data||null;
+  miningWallet=mw.error ? null : (mw.data||null);
+
+  if(ms.error){
+    console.warn("ms_mining_status:",ms.error);
+    miningStatus=null;
+  }else{
+    const raw=Array.isArray(ms.data) ? ms.data[0] : ms.data;
+    miningStatus=raw||null;
+  }
+
+  document.getElementById("balance").textContent=money(wallet?.balance);
+
+  document.getElementById("maxStatus").textContent=
+    activePlan
+      ?"Aktif — hasil mining dapat dipantau"
+      :"Belum aktif";
+
+  document.getElementById("buyMaxBtn").disabled=!!activePlan;
+
+  document.getElementById("buyMaxBtn").textContent=
+    activePlan
+      ?"AI-MINING Sudah Aktif"
+      :"AKTIFKAN MISI";
+
+  render();
+}
+
+function num(v){
+  const n=Number(v);
+  return Number.isFinite(n)?n:0;
+}
+
+function xmr(v){
+  return num(v).toFixed(12).replace(/0+$/,"").replace(/\.$/,"");
+}
+
+function pick(obj, keys, fallback=""){
+  if(!obj) return fallback;
+  for(const k of keys){
+    if(obj[k]!==undefined && obj[k]!==null && obj[k]!=="") return obj[k];
+  }
+  return fallback;
+}
+
+function formatDate(v){
+  if(!v) return "-";
+  const d=new Date(v);
+  if(Number.isNaN(d.getTime())) return String(v);
+  return d.toLocaleString("id-ID",{
+    timeZone:"Asia/Jakarta",
+    day:"2-digit",
+    month:"2-digit",
+    year:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  })+" WIB";
+}
+
+function miningView(){
+  const mw=miningWallet||{};
+  const ms=miningStatus||{};
+
+  const available=pick(mw,["available_amount","available","xmr_balance"],0);
+  const locked=pick(mw,["locked_amount","locked"],0);
+  const total=pick(mw,["total_mined","total","total_xmr"],0);
+
+  const active=pick(ms,[
+    "is_mining","mining","active","running","is_active"
+  ],null);
+
+  const rate=pick(ms,[
+    "rate","mining_rate","xmr_per_minute","rate_per_minute"
+  ],"-");
+
+  const session=pick(ms,[
+    "session_mined","session_amount","current_session","earned"
+  ],0);
+
+  const started=pick(ms,[
+    "started_at","mining_started_at","session_started_at"
+  ],null);
+
+  const lastActive=pick(ms,[
+    "last_active_at","last_active","updated_at"
+  ],null);
+
+  return {
+    available,locked,total,active,rate,session,started,lastActive
+  };
+}
+
+function render(){
+
+  const m=miningView();
+
+  const miningActive =
+    m.active===true ||
+    m.active==="true" ||
+    m.active===1 ||
+    m.active==="1";
+
+  document.getElementById("miningAvailable").textContent =
+    xmr(m.available)+" XMR";
+
+  document.getElementById("miningLocked").textContent =
+    xmr(m.locked)+" XMR";
+
+  document.getElementById("miningTotal").textContent =
+    xmr(m.total)+" XMR";
+
+  document.getElementById("miningRate").textContent =
+    m.rate==="-" ? "-" : xmr(m.rate)+" XMR";
+
+  document.getElementById("miningSession").textContent =
+    xmr(m.session)+" XMR";
+
+  document.getElementById("miningStarted").textContent =
+    formatDate(m.started);
+
+  document.getElementById("miningLastActive").textContent =
+    formatDate(m.lastActive);
+
+  const badge=document.getElementById("miningBadge");
+  badge.textContent=
+    miningActive
+      ?"● Mining Aktif"
+      :activePlan
+        ?"● Siap / Menunggu"
+        :"● Belum Aktif";
+
+  badge.classList.toggle("off",!miningActive);
+
+  const status=document.getElementById("miningStatusText");
+  status.textContent=
+    miningActive
+      ?"Mining XMR sedang berjalan."
+      :activePlan
+        ?"AI-MINING aktif, tetapi status mining belum berjalan."
+        :"Aktifkan AI-MINING terlebih dahulu.";
+
+  const cards=[
+
+    {
+      cat:"daily",
+      icon:"✓",
+      title:"Klaim Hadiah Harian",
+      desc:"Klaim hadiah Rp3.000 setiap hari setelah AI-MINING aktif. Tersedia pukul 12.00–24.00 WIB.",
+      reward:money(3000),
+      status:todayClaim
+        ? "Sudah diklaim hari ini"
+        : activePlan
+          ? "Hadiah harian tersedia"
+          : "Aktifkan AI-MINING terlebih dahulu",
+      action:todayClaim
+        ? '<button class="btn secondary" disabled>Sudah Diklaim</button>'
+        : '<button class="btn" id="dailyClaimBtn" '+(activePlan?'':'disabled')+'>Klaim Rp3.000</button>'
+    },
+
+    {
+      cat:"mining",
+      icon:"◆",
+      title:"Hasil Mining XMR",
+      desc:"Saldo dan hasil mining diambil dari wallet mining yang sama dengan Dashboard.",
+      reward:"XMR",
+      status:miningActive
+        ?"Mining sedang berjalan"
+        :"Status mining tidak aktif",
+      action:'<button class="btn secondary" id="refreshMining">↻ Perbarui</button>'
+    },
+
+    {
+      cat:"deposit",
+      icon:"◆",
+      title:"Beli AI-MINING",
+      desc:"Gunakan saldo wallet untuk membeli AI-MINING seharga Rp100.000.",
+      reward:money(3000),
+      status:activePlan
+        ?"Sudah aktif"
+        :"Belum aktif",
+      action:
+        '<button class="btn" id="buyInline" '+
+        (activePlan?'disabled':'')+
+        '>'+
+        (activePlan?'Sudah Aktif':'Beli AI-MINING')+
+        '</button>'
+    },
+
+    {
+      cat:"Aplikasi",
+      icon:"▣",
+      title:"Unduh Aplikasi",
+      desc:"Buka halaman resmi aplikasi MyShort.",
+      reward:money(2000),
+      status:"Silakan buka halaman aplikasi",
+      action:'<button class="btn" id="dramaWatch">▶ Unduh Aplikasi</button>'
+    }
+
+  ];
+
+  const visible=
+    cards.filter(x=>filter==="all"||x.cat===filter);
+
+  document.getElementById("list").innerHTML=
+    visible.map(x=>`
+      <article class="mission">
+        <div class="toprow">
+          <div class="icon">${x.icon}</div>
+          <div style="flex:1">
+            <div class="name">${esc(x.title)}</div>
+            <div class="desc">${esc(x.desc)}</div>
+          </div>
+          <div class="reward">
+            <small>${x.reward==="XMR"?"HASIL":"Reward"}</small>
+            <b>${esc(x.reward)}</b>
+          </div>
+        </div>
+        <div class="foot">
+          <span class="status">${esc(x.status)}</span>
+          <span class="actions">${x.action}</span>
+        </div>
+      </article>
+    `).join("");
+
+  const dc=document.getElementById("dailyClaimBtn");
+  if(dc) dc.onclick=claimDaily;
+
+  const bi=document.getElementById("buyInline");
+  if(bi) bi.onclick=purchase;
+
+  const dw=document.getElementById("dramaWatch");
+  if(dw) dw.onclick=watchDrama;
+
+  const rm=document.getElementById("refreshMining");
+  if(rm) rm.onclick=load;
+}
+
+
+/* =========================================================
+   DAILY CLAIM
+   ========================================================= */
+
+async function claimDaily(){
+  const b=document.getElementById("dailyClaimBtn");
+  if(!activePlan){
+    toast("Aktifkan AI-MINING terlebih dahulu.");
+    return;
+  }
+  if(todayClaim){
+    toast("Hadiah harian hari ini sudah diklaim.");
+    return;
+  }
+  if(b){b.disabled=true;b.textContent="Memproses...";}
+  try{
+    const {error:e}=await supa.rpc("claim_ai_max_daily_reward");
+    if(e) throw e;
+    toast("Hadiah Rp3.000 berhasil diklaim.");
+    await load();
+  }catch(e){
+    toast(e?.message||"Klaim hadiah gagal.");
+    if(b){b.disabled=false;b.textContent="Klaim Rp3.000";}
+  }
+}
+
+
+/* =========================================================
+   PURCHASE AI MINING
+   ========================================================= */
+
+async function purchase(){
+
+  if(activePlan){
+
+    toast(
+      "AI-MINING sudah aktif."
+    );
+
+    return;
+  }
+
+  try{
+
+    const {
+      error:e
+    }=
+      await supa.rpc(
+        "purchase_ai_max"
+      );
+
+    if(e)
+      throw e;
+
+    toast(
+      "AI-MINING berhasil dibeli."
+    );
+
+    await load();
+
+  }catch(e){
+
+    toast(
+      e.message||
+      "Pembelian gagal."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   DOWNLOAD APPLICATION
+   ========================================================= */
+
+async function watchDrama(){
+
+  if(dramaClaimed){
+
+    toast(
+      "Halaman aplikasi sudah dibuka."
+    );
+
+    return;
+
+  }
+
+  window.open(
+    "https://myshortai-mex.github.io",
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+  toast(
+    "unduh aplikasi dibuka."
+  );
+
+}
+
+
+/* =========================================================
+   COPY DOWNLOAD LINK
+   ========================================================= */
+
+const copyDownloadLink=
+  document.getElementById(
+    "copyDownloadLink"
+  );
+
+
+if(copyDownloadLink){
+
+  copyDownloadLink.onclick=
+    async()=>{
+
+      const input=
+        document.getElementById(
+          "downloadLink"
+        );
+
+
+      try{
+
+        await navigator.clipboard.writeText(
+          input.value
+        );
+
+        toast(
+          "Link unduh berhasil disalin."
+        );
+
+      }catch(e){
+
+        input.focus();
+
+        input.select();
+
+        input.setSelectionRange(
+          0,
+          input.value.length
+        );
+
+        try{
+
+          document.execCommand(
+            "copy"
+          );
+
+        }catch(_){}
+
+        toast(
+          "Link unduh berhasil disalin."
+        );
+
+      }
+
+    };
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+document.getElementById(
+  "buyMaxBtn"
+).onclick=
+  purchase;
+
+
+
+
+document.querySelectorAll(
+  ".tab"
+).forEach(
+
+  b=>
+    b.onclick=()=>{
+
+      document
+        .querySelectorAll(".tab")
+        .forEach(
+          x=>x.classList.remove(
+            "active"
+          )
+        );
+
+      b.classList.add(
+        "active"
+      );
+
+      filter=
+        b.dataset.f;
+
+      render();
+
+    }
+
+);
+
+
+load().catch(
+
+  e=>{
+
+    console.error(e);
+
+    error(
+      "Gagal memuat data: "+
+      (
+        e.message||
+        "periksa login dan migrasi Supabase."
+      )
+    );
+
+  }
+
+);
+
+</script>
+
+</body>
+</html>
