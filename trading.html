@@ -1,0 +1,3001 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050607">
+<title>MyShort Trading Demo - BTC/USDT</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+  --bg:#050607;
+  --panel:#0d1013;
+  --panel2:#11151a;
+  --line:#252b31;
+  --gold:#f3c64f;
+  --gold2:#dcae32;
+  --text:#f3f4f6;
+  --muted:#8f98a3;
+  --green:#28d17c;
+  --red:#ff5364;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  max-width:1100px;
+  margin:auto;
+  padding:14px;
+}
+
+/* HEADER */
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:12px 2px 16px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#f5c94f,#a87815);
+  color:#111;
+  font-weight:900;
+  font-size:20px;
+  box-shadow:0 4px 16px rgba(243,198,79,.15);
+}
+
+.brand b{
+  display:block;
+  font-size:18px;
+  letter-spacing:.7px;
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px;
+  letter-spacing:.7px;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--red);
+}
+
+.dot.live{
+  background:var(--green);
+  box-shadow:0 0 10px rgba(40,209,124,.65);
+}
+
+/* CARD */
+
+.card{
+  background:linear-gradient(180deg,var(--panel2),var(--panel));
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 12px 35px rgba(0,0,0,.22);
+}
+
+/* MARKET */
+
+.market{
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:15px;
+}
+
+.symbol{
+  font-size:18px;
+  font-weight:800;
+}
+
+.symbol span{
+  font-size:10px;
+  color:var(--muted);
+  font-weight:500;
+  margin-left:5px;
+}
+
+.price{
+  font-size:28px;
+  font-weight:900;
+  margin-top:7px;
+  letter-spacing:.2px;
+}
+
+.change{
+  font-size:12px;
+  margin-top:4px;
+}
+
+.up{
+  color:var(--green);
+}
+
+.down{
+  color:var(--red);
+}
+
+.feed{
+  text-align:right;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.feed strong{
+  color:var(--gold);
+  font-size:12px;
+}
+
+/* MAIN GRID */
+
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);
+  gap:14px;
+  margin-top:14px;
+}
+
+/* CHART */
+
+.chart-card{
+  padding:12px;
+}
+
+.chart-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:3px 3px 10px;
+}
+
+.chart-head b{
+  font-size:13px;
+}
+
+.chart-head span{
+  font-size:10px;
+  color:var(--muted);
+}
+
+canvas{
+  display:block;
+  width:100%;
+  height:340px;
+  background:#090c0f;
+  border-radius:12px;
+}
+
+/* TRADE PANEL */
+
+.trade-card{
+  padding:15px;
+}
+
+.balance{
+  padding:13px;
+  border:1px solid #30363d;
+  border-radius:14px;
+  background:#090c0f;
+  margin-bottom:13px;
+}
+
+.balance small{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.balance .money{
+  font-size:24px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.balance-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:7px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.balance-row strong{
+  color:var(--text);
+}
+
+.label{
+  font-size:11px;
+  color:var(--muted);
+  margin:12px 0 6px;
+}
+
+.input{
+  width:100%;
+  height:43px;
+  padding:0 12px;
+  border-radius:11px;
+  border:1px solid #30363d;
+  background:#080a0c;
+  color:var(--text);
+  outline:none;
+}
+
+.input:focus{
+  border-color:var(--gold);
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.btns{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:13px;
+}
+
+.btn{
+  height:45px;
+  border:0;
+  border-radius:11px;
+  font-weight:900;
+  color:#080a0c;
+}
+
+.long{
+  background:var(--green);
+}
+
+.short{
+  background:var(--red);
+}
+
+.btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+.note{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:10px;
+}
+
+/* SECTIONS */
+
+.section{
+  margin-top:14px;
+  padding:15px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:11px;
+}
+
+.section-title b{
+  font-size:14px;
+}
+
+.section-title span{
+  font-size:10px;
+  color:var(--muted);
+}
+
+/* POSITION */
+
+.position{
+  border:1px solid #30363d;
+  border-radius:14px;
+  padding:13px;
+  background:#090c0f;
+}
+
+.pos-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.badge{
+  font-size:10px;
+  font-weight:900;
+  padding:5px 8px;
+  border-radius:7px;
+}
+
+.badge.long{
+  background:rgba(40,209,124,.12);
+  color:var(--green);
+}
+
+.badge.short{
+  background:rgba(255,83,100,.12);
+  color:var(--red);
+}
+
+.pos-symbol{
+  font-weight:800;
+  font-size:13px;
+}
+
+.pos-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:12px;
+}
+
+.metric{
+  background:#0e1216;
+  border-radius:9px;
+  padding:9px;
+}
+
+.metric small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+}
+
+.metric strong{
+  display:block;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.close-btn{
+  width:100%;
+  height:39px;
+  margin-top:11px;
+  border:1px solid #454b53;
+  background:#15191e;
+  color:var(--text);
+  border-radius:10px;
+  font-weight:800;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  padding:22px 10px;
+}
+
+/* HISTORY */
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:680px;
+}
+
+th,td{
+  text-align:left;
+  padding:10px 8px;
+  border-bottom:1px solid #20252a;
+  font-size:10px;
+  white-space:nowrap;
+}
+
+th{
+  color:var(--muted);
+  font-weight:600;
+}
+
+td{
+  color:#d9dde2;
+}
+
+.profit{
+  color:var(--green)!important;
+}
+
+.loss{
+  color:var(--red)!important;
+}
+
+.footer-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:11px;
+}
+
+.reset{
+  border:1px solid #353b42;
+  background:#11151a;
+  color:#cbd0d6;
+  border-radius:9px;
+  padding:8px 12px;
+  font-size:10px;
+}
+
+/* WARNING */
+
+.warning{
+  margin-top:14px;
+  padding:11px 13px;
+  border:1px solid #4c3d18;
+  background:#171309;
+  color:#cbbd93;
+  border-radius:12px;
+  font-size:10px;
+  line-height:1.5;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:780px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  canvas{
+    height:280px;
+  }
+
+}
+
+@media(max-width:420px){
+
+  .app{
+    padding:10px;
+  }
+
+  .price{
+    font-size:23px;
+  }
+
+  .market{
+    align-items:flex-start;
+  }
+
+  .pos-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+
+  <div class="topbar">
+
+    <div class="brand">
+
+      <div class="logo">M</div>
+
+      <div>
+        <b>MYSHORT</b>
+        <small>TRADING DEMO</small>
+      </div>
+
+    </div>
+
+    <div class="status">
+
+      <i id="statusDot" class="dot"></i>
+
+      <span id="statusText">
+        Menghubungkan market...
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- MARKET PRICE -->
+
+  <div class="card market">
+
+    <div>
+
+      <div class="symbol">
+        BTC/USDT
+        <span>MARKET DATA</span>
+      </div>
+
+      <div id="price" class="price">
+        Memuat...
+      </div>
+
+      <div id="change" class="change">
+        —
+      </div>
+
+    </div>
+
+    <div class="feed">
+
+      Market feed
+
+      <br>
+
+      <strong id="feedStatus">
+        CONNECTING
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHART + TRADE -->
+
+  <div class="grid">
+
+    <!-- CHART -->
+
+    <div class="card chart-card">
+
+      <div class="chart-head">
+
+        <b>
+          BTC/USDT PRICE
+        </b>
+
+        <span id="chartInfo">
+          Real-time market data
+        </span>
+
+      </div>
+
+      <canvas id="chart"></canvas>
+
+    </div>
+
+
+    <!-- TRADE -->
+
+    <div class="card trade-card">
+
+      <div class="balance">
+
+        <small>
+          Saldo Virtual
+        </small>
+
+        <div id="balance" class="money">
+          Rp1.000.000
+        </div>
+
+        <div class="balance-row">
+
+          <span>
+            Equity
+          </span>
+
+          <strong id="equity">
+            Rp1.000.000
+          </strong>
+
+        </div>
+
+        <div class="balance-row">
+
+          <span>
+            Total P/L
+          </span>
+
+          <strong id="totalPL">
+            Rp0
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="label">
+        Nominal Posisi
+      </div>
+
+      <input
+        id="nominal"
+        class="input"
+        type="number"
+        min="1000"
+        step="1000"
+        value="100000"
+      >
+
+
+      <div class="label">
+        Stop Loss / Take Profit (%)
+      </div>
+
+      <div class="two">
+
+        <input
+          id="sl"
+          class="input"
+          type="number"
+          min="0.1"
+          max="50"
+          step="0.1"
+          value="2"
+          placeholder="SL %"
+        >
+
+        <input
+          id="tp"
+          class="input"
+          type="number"
+          min="0.1"
+          max="100"
+          step="0.1"
+          value="5"
+          placeholder="TP %"
+        >
+
+      </div>
+
+
+      <div class="btns">
+
+        <button
+          id="longBtn"
+          class="btn long"
+        >
+          BUY / LONG
+        </button>
+
+        <button
+          id="shortBtn"
+          class="btn short"
+        >
+          SELL / SHORT
+        </button>
+
+      </div>
+
+
+      <div class="note">
+
+        Mode demo. Saldo hanya virtual dan
+        tidak terhubung ke saldo utama MyShort.
+
+        Harga BTC/USDT berasal dari market
+        feed publik.
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACTIVE POSITION -->
+
+  <div class="card section">
+
+    <div class="section-title">
+
+      <b>
+        Posisi Aktif
+      </b>
+
+      <span id="positionCount">
+        0 posisi
+      </span>
+
+    </div>
+
+    <div id="positionBox">
+
+      <div class="empty">
+        Belum ada posisi terbuka.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- HISTORY -->
+
+  <div class="card section">
+
+    <div class="section-title">
+
+      <b>
+        Riwayat Trading
+      </b>
+
+      <span id="historyCount">
+        0 transaksi
+      </span>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Waktu</th>
+            <th>Sisi</th>
+            <th>Entry</th>
+            <th>Exit</th>
+            <th>Nominal</th>
+            <th>P/L</th>
+            <th>Alasan</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="historyBody">
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div
+      id="historyEmpty"
+      class="empty"
+    >
+      Belum ada riwayat.
+    </div>
+
+
+    <div class="footer-actions">
+
+      <button
+        id="resetBtn"
+        class="reset"
+      >
+        Reset Demo
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- WARNING -->
+
+  <div class="warning">
+
+    <b>CATATAN:</b>
+
+    Ini adalah simulator trading.
+
+    Tidak ada uang nyata,
+    tidak melakukan order ke exchange,
+    dan tidak mengubah saldo MyShort.
+
+    Data harga digunakan untuk simulasi
+    pergerakan market.
+
+  </div>
+
+</div>
+
+
+<script>
+
+(() => {
+
+"use strict";
+
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const STORAGE =
+  "myshort_trading_demo_v1";
+
+const START_BALANCE =
+  1000000;
+
+const MAX_POINTS =
+  120;
+
+
+/* =========================================================
+   MARKET FEED CONFIG
+========================================================= */
+
+/*
+  WebSocket utama.
+  Jika gagal, endpoint kedua akan dicoba.
+*/
+
+const WS_URLS = [
+
+  "wss://fstream.binance.com/ws/btcusdt@aggTrade",
+
+  "wss://fstream.binance.com/stream?streams=btcusdt@aggTrade"
+
+];
+
+
+/*
+  REST fallback.
+
+  Endpoint pertama adalah Futures BTCUSDT.
+
+  Endpoint kedua digunakan sebagai cadangan.
+*/
+
+const REST_URLS = [
+
+  "https://fapi.binance.com/fapi/v1/ticker/price?symbol=BTCUSDT",
+
+  "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let state = {
+
+  balance:
+    START_BALANCE,
+
+  realizedPL:
+    0,
+
+  position:
+    null,
+
+  history:
+    [],
+
+  prices:
+    [],
+
+  lastPrice:
+    null,
+
+  firstPrice:
+    null,
+
+  connected:
+    false
+
+};
+
+
+let ws =
+  null;
+
+let reconnectTimer =
+  null;
+
+let restTimer =
+  null;
+
+let watchdogTimer =
+  null;
+
+let wsIndex =
+  0;
+
+let reconnectDelay =
+  3000;
+
+let lastWsMessageAt =
+  0;
+
+let manualClose =
+  false;
+
+
+/* =========================================================
+   ELEMENT
+========================================================= */
+
+const $ =
+  id => document.getElementById(id);
+
+
+const priceEl =
+  $("price");
+
+const changeEl =
+  $("change");
+
+const balanceEl =
+  $("balance");
+
+const equityEl =
+  $("equity");
+
+const totalPLEl =
+  $("totalPL");
+
+const positionBox =
+  $("positionBox");
+
+const historyBody =
+  $("historyBody");
+
+const historyEmpty =
+  $("historyEmpty");
+
+const statusDot =
+  $("statusDot");
+
+const statusText =
+  $("statusText");
+
+const feedStatus =
+  $("feedStatus");
+
+const canvas =
+  $("chart");
+
+const ctx =
+  canvas.getContext("2d");
+
+
+/* =========================================================
+   FORMAT RUPIAH
+========================================================= */
+
+function rupiah(n){
+
+  const sign =
+    n < 0 ? "-" : "";
+
+  return sign +
+    "Rp" +
+    Math.round(
+      Math.abs(n)
+    ).toLocaleString("id-ID");
+
+}
+
+
+/* =========================================================
+   FORMAT BTC PRICE
+========================================================= */
+
+function btc(n){
+
+  return "$" +
+    Number(n).toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+/* =========================================================
+   PERCENT
+========================================================= */
+
+function pct(n){
+
+  return (
+    n >= 0 ? "+" : ""
+  ) +
+  Number(n).toFixed(2) +
+  "%";
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function nowText(
+  ts = Date.now()
+){
+
+  return new Date(ts)
+    .toLocaleString(
+      "id-ID",
+      {
+        day:"2-digit",
+        month:"2-digit",
+        year:"2-digit",
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+      }
+    );
+
+}
+
+
+/* =========================================================
+   SAVE LOCAL DEMO
+========================================================= */
+
+function save(){
+
+  const copy =
+    {
+      ...state,
+
+      prices:
+        state.prices.slice(
+          -MAX_POINTS
+        )
+    };
+
+  try{
+
+    localStorage.setItem(
+      STORAGE,
+      JSON.stringify(copy)
+    );
+
+  }catch(error){
+
+    console.warn(
+      "Save demo error",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD LOCAL DEMO
+========================================================= */
+
+function load(){
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        STORAGE
+      );
+
+    if(!raw){
+      return;
+    }
+
+    const saved =
+      JSON.parse(raw);
+
+    if(
+      saved &&
+      typeof saved.balance ===
+      "number"
+    ){
+
+      state =
+        {
+          ...state,
+          ...saved
+        };
+
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Load demo error",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CANVAS RESIZE
+========================================================= */
+
+function resizeCanvas(){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+  canvas.width =
+    Math.max(
+      1,
+      Math.floor(
+        rect.width * dpr
+      )
+    );
+
+  canvas.height =
+    Math.max(
+      1,
+      Math.floor(
+        rect.height * dpr
+      )
+    );
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+  drawChart();
+
+}
+
+
+/* =========================================================
+   DRAW CHART
+========================================================= */
+
+function drawChart(){
+
+  const w =
+    canvas.clientWidth;
+
+  const h =
+    canvas.clientHeight;
+
+  ctx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+
+  ctx.fillStyle =
+    "#090c0f";
+
+  ctx.fillRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+
+  const arr =
+    state.prices;
+
+
+  if(arr.length < 2){
+
+    ctx.fillStyle =
+      "#66707b";
+
+    ctx.font =
+      "12px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "Menunggu data harga BTC/USDT...",
+      w / 2,
+      h / 2
+    );
+
+    return;
+
+  }
+
+
+  let min =
+    Math.min(...arr);
+
+  let max =
+    Math.max(...arr);
+
+
+  const range =
+    Math.max(
+      max - min,
+      max * 0.0001
+    );
+
+
+  const pad =
+    range * 0.18;
+
+
+  min -= pad;
+  max += pad;
+
+
+  /* GRID */
+
+  ctx.strokeStyle =
+    "#1d2329";
+
+  ctx.lineWidth =
+    1;
+
+
+  for(
+    let i=1;
+    i<5;
+    i++
+  ){
+
+    const y =
+      (h / 5) * i;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      y
+    );
+
+    ctx.lineTo(
+      w,
+      y
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  /* PRICE LINE */
+
+  ctx.beginPath();
+
+
+  arr.forEach(
+    (v,i) => {
+
+      const x =
+        i /
+        (arr.length - 1) *
+        w;
+
+      const y =
+        h -
+        30 -
+        (
+          (v-min) /
+          (max-min)
+        ) *
+        (h-48);
+
+
+      if(i===0){
+
+        ctx.moveTo(
+          x,
+          y
+        );
+
+      }else{
+
+        ctx.lineTo(
+          x,
+          y
+        );
+
+      }
+
+    }
+  );
+
+
+  ctx.strokeStyle =
+    "#f3c64f";
+
+  ctx.lineWidth =
+    2;
+
+  ctx.stroke();
+
+
+  /* CURRENT PRICE LINE */
+
+  const last =
+    arr[arr.length-1];
+
+
+  const ly =
+    h -
+    30 -
+    (
+      (last-min) /
+      (max-min)
+    ) *
+    (h-48);
+
+
+  ctx.setLineDash(
+    [4,4]
+  );
+
+
+  ctx.strokeStyle =
+    "#737d87";
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    0,
+    ly
+  );
+
+  ctx.lineTo(
+    w,
+    ly
+  );
+
+  ctx.stroke();
+
+
+  ctx.setLineDash([]);
+
+
+  /* PRICE LABEL */
+
+  ctx.fillStyle =
+    "#d5d9de";
+
+  ctx.font =
+    "10px Arial";
+
+  ctx.textAlign =
+    "right";
+
+  ctx.fillText(
+    btc(last),
+    w-7,
+    Math.max(
+      14,
+      ly-7
+    )
+  );
+
+}
+
+
+/* =========================================================
+   CONNECTION STATUS
+========================================================= */
+
+function setConnection(
+  ok,
+  mode = ""
+){
+
+  state.connected =
+    ok;
+
+
+  statusDot.classList.toggle(
+    "live",
+    ok
+  );
+
+
+  if(ok){
+
+    if(mode === "REST"){
+
+      statusText.textContent =
+        "Market fallback";
+
+      feedStatus.textContent =
+        "REST FALLBACK";
+
+    }else{
+
+      statusText.textContent =
+        "Market live";
+
+      feedStatus.textContent =
+        "LIVE";
+
+    }
+
+  }else{
+
+    statusText.textContent =
+      "Menghubungkan ulang...";
+
+    feedStatus.textContent =
+      "RECONNECTING";
+
+  }
+
+}
+
+
+/* =========================================================
+   EXTRACT PRICE
+========================================================= */
+
+function extractPrice(
+  payload
+){
+
+  try{
+
+    const data =
+      typeof payload === "string"
+        ? JSON.parse(payload)
+        : payload;
+
+
+    /*
+      Raw:
+
+      {
+        "p":"..."
+      }
+
+      Combined:
+
+      {
+        "data":{
+          "p":"..."
+        }
+      }
+    */
+
+    const source =
+      data &&
+      data.data
+        ? data.data
+        : data;
+
+
+    const price =
+      Number(
+        source &&
+        source.p
+      );
+
+
+    if(
+      Number.isFinite(price) &&
+      price > 0
+    ){
+
+      return price;
+
+    }
+
+
+  }catch(error){
+
+    console.warn(
+      "Market parse error",
+      error
+    );
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   FETCH REST PRICE
+========================================================= */
+
+async function fetchRestPrice(){
+
+  for(
+    let i=0;
+    i<REST_URLS.length;
+    i++
+  ){
+
+    try{
+
+      const response =
+        await fetch(
+          REST_URLS[i],
+          {
+            method:"GET",
+            cache:"no-store",
+            headers:{
+              "Accept":
+                "application/json"
+            }
+          }
+        );
+
+
+      if(!response.ok){
+
+        continue;
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      const price =
+        Number(
+          data &&
+          data.price
+        );
+
+
+      if(
+        Number.isFinite(price) &&
+        price > 0
+      ){
+
+        /*
+          REST hanya menjadi fallback.
+
+          Jika WebSocket sehat dan baru
+          menerima data, REST tidak menimpa
+          harga live.
+        */
+
+        const wsHealthy =
+          ws &&
+          ws.readyState ===
+          WebSocket.OPEN &&
+          lastWsMessageAt &&
+          (
+            Date.now() -
+            lastWsMessageAt
+          ) < 7000;
+
+
+        if(!wsHealthy){
+
+          updateMarket(
+            price
+          );
+
+          setConnection(
+            true,
+            "REST"
+          );
+
+        }
+
+
+        return true;
+
+      }
+
+    }catch(error){
+
+      console.warn(
+        "REST market error:",
+        REST_URLS[i],
+        error
+      );
+
+    }
+
+  }
+
+
+  return false;
+
+}
+
+
+/* =========================================================
+   START REST FALLBACK
+========================================================= */
+
+function startRestFallback(){
+
+  clearInterval(
+    restTimer
+  );
+
+
+  /*
+    Ambil harga langsung.
+  */
+
+  fetchRestPrice();
+
+
+  /*
+    Cek setiap 5 detik.
+
+    REST hanya aktif sebagai fallback.
+  */
+
+  restTimer =
+    setInterval(
+      () => {
+
+        const wsHealthy =
+          ws &&
+          ws.readyState ===
+          WebSocket.OPEN &&
+          lastWsMessageAt &&
+          (
+            Date.now() -
+            lastWsMessageAt
+          ) < 7000;
+
+
+        if(!wsHealthy){
+
+          fetchRestPrice();
+
+        }
+
+      },
+      5000
+    );
+
+}
+
+
+/* =========================================================
+   STOP REST FALLBACK
+========================================================= */
+
+function stopRestFallback(){
+
+  clearInterval(
+    restTimer
+  );
+
+  restTimer =
+    null;
+
+}
+
+
+/* =========================================================
+   WEBSOCKET WATCHDOG
+========================================================= */
+
+function startWatchdog(){
+
+  clearInterval(
+    watchdogTimer
+  );
+
+
+  watchdogTimer =
+    setInterval(
+      () => {
+
+        if(
+          !ws ||
+          ws.readyState !==
+          WebSocket.OPEN
+        ){
+
+          return;
+
+        }
+
+
+        /*
+          WebSocket kadang terlihat OPEN
+          tetapi tidak mengirim data lagi.
+
+          Jika >7 detik tidak ada data,
+          REST mengambil alih sementara.
+        */
+
+        if(
+          !lastWsMessageAt ||
+          (
+            Date.now() -
+            lastWsMessageAt
+          ) > 7000
+        ){
+
+          fetchRestPrice();
+
+        }
+
+      },
+      3000
+    );
+
+}
+
+
+/* =========================================================
+   STOP WATCHDOG
+========================================================= */
+
+function stopWatchdog(){
+
+  clearInterval(
+    watchdogTimer
+  );
+
+  watchdogTimer =
+    null;
+
+}
+
+
+/* =========================================================
+   RECONNECT
+========================================================= */
+
+function scheduleReconnect(){
+
+  clearTimeout(
+    reconnectTimer
+  );
+
+
+  setConnection(
+    false
+  );
+
+
+  reconnectTimer =
+    setTimeout(
+      () => {
+
+        connectMarket();
+
+      },
+      reconnectDelay
+    );
+
+
+  reconnectDelay =
+    Math.min(
+      reconnectDelay * 1.5,
+      15000
+    );
+
+}
+
+
+/* =========================================================
+   CONNECT MARKET
+========================================================= */
+
+function connectMarket(){
+
+  clearTimeout(
+    reconnectTimer
+  );
+
+
+  manualClose =
+    false;
+
+
+  try{
+
+    if(ws){
+
+      ws.onopen =
+        null;
+
+      ws.onmessage =
+        null;
+
+      ws.onerror =
+        null;
+
+      ws.onclose =
+        null;
+
+      ws.close();
+
+    }
+
+  }catch(error){}
+
+
+  const url =
+    WS_URLS[
+      wsIndex %
+      WS_URLS.length
+    ];
+
+
+  wsIndex =
+    (
+      wsIndex + 1
+    ) %
+    WS_URLS.length;
+
+
+  console.log(
+    "Connecting market:",
+    url
+  );
+
+
+  try{
+
+    ws =
+      new WebSocket(
+        url
+      );
+
+  }catch(error){
+
+    console.warn(
+      "WebSocket create error",
+      error
+    );
+
+    scheduleReconnect();
+
+    return;
+
+  }
+
+
+  ws.onopen =
+    () => {
+
+      console.log(
+        "Market WebSocket connected"
+      );
+
+
+      reconnectDelay =
+        3000;
+
+
+      lastWsMessageAt =
+        Date.now();
+
+
+      setConnection(
+        true,
+        "WS"
+      );
+
+    };
+
+
+  ws.onmessage =
+    event => {
+
+      lastWsMessageAt =
+        Date.now();
+
+
+      const price =
+        extractPrice(
+          event.data
+        );
+
+
+      if(price){
+
+        updateMarket(
+          price
+        );
+
+
+        setConnection(
+          true,
+          "WS"
+        );
+
+      }
+
+    };
+
+
+  ws.onerror =
+    error => {
+
+      console.warn(
+        "Market WebSocket error",
+        error
+      );
+
+
+      setConnection(
+        false
+      );
+
+    };
+
+
+  ws.onclose =
+    () => {
+
+      console.warn(
+        "Market WebSocket closed"
+      );
+
+
+      if(manualClose){
+
+        return;
+
+      }
+
+
+      setConnection(
+        false
+      );
+
+
+      scheduleReconnect();
+
+    };
+
+}
+
+
+/* =========================================================
+   MARKET UPDATE
+========================================================= */
+
+function updateMarket(
+  price
+){
+
+  if(
+    !Number.isFinite(price) ||
+    price <= 0
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !state.firstPrice
+  ){
+
+    state.firstPrice =
+      price;
+
+  }
+
+
+  state.lastPrice =
+    price;
+
+
+  state.prices.push(
+    price
+  );
+
+
+  if(
+    state.prices.length >
+    MAX_POINTS
+  ){
+
+    state.prices.shift();
+
+  }
+
+
+  priceEl.textContent =
+    btc(price);
+
+
+  const base =
+    state.firstPrice ||
+    price;
+
+
+  const change =
+    (
+      (price-base) /
+      base
+    ) *
+    100;
+
+
+  changeEl.textContent =
+    "Session: " +
+    pct(change);
+
+
+  changeEl.className =
+    "change " +
+    (
+      change >= 0
+        ? "up"
+        : "down"
+    );
+
+
+  updateUI();
+
+  drawChart();
+
+  checkStops();
+
+}
+
+
+/* =========================================================
+   GET NOMINAL
+========================================================= */
+
+function getNominal(){
+
+  const n =
+    Number(
+      $("nominal").value
+    );
+
+
+  return Number.isFinite(n)
+    ? Math.floor(n)
+    : 0;
+
+}
+
+
+/* =========================================================
+   OPEN POSITION
+========================================================= */
+
+function openPosition(
+  side
+){
+
+  const price =
+    state.lastPrice;
+
+
+  const nominal =
+    getNominal();
+
+
+  const slPct =
+    Number(
+      $("sl").value
+    );
+
+
+  const tpPct =
+    Number(
+      $("tp").value
+    );
+
+
+  if(!price){
+
+    alert(
+      "Harga market belum tersedia."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    nominal < 1000
+  ){
+
+    alert(
+      "Nominal minimum demo adalah Rp1.000."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    nominal > state.balance
+  ){
+
+    alert(
+      "Saldo virtual tidak cukup."
+    );
+
+    return;
+
+  }
+
+
+  if(state.position){
+
+    alert(
+      "Tutup posisi aktif terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !(slPct > 0) ||
+    !(tpPct > 0)
+  ){
+
+    alert(
+      "SL dan TP harus lebih dari 0."
+    );
+
+    return;
+
+  }
+
+
+  const quantity =
+    nominal /
+    price;
+
+
+  let sl;
+
+  let tp;
+
+
+  if(
+    side === "LONG"
+  ){
+
+    sl =
+      price *
+      (
+        1 -
+        slPct / 100
+      );
+
+
+    tp =
+      price *
+      (
+        1 +
+        tpPct / 100
+      );
+
+  }else{
+
+    sl =
+      price *
+      (
+        1 +
+        slPct / 100
+      );
+
+
+    tp =
+      price *
+      (
+        1 -
+        tpPct / 100
+      );
+
+  }
+
+
+  /*
+    Modal virtual dikunci
+    selama posisi aktif.
+  */
+
+  state.balance -=
+    nominal;
+
+
+  state.position =
+    {
+
+      id:
+        "POS-" +
+        Date.now(),
+
+      symbol:
+        "BTC/USDT",
+
+      side:
+        side,
+
+      entry:
+        price,
+
+      quantity:
+        quantity,
+
+      nominal:
+        nominal,
+
+      slPct:
+        slPct,
+
+      tpPct:
+        tpPct,
+
+      sl:
+        sl,
+
+      tp:
+        tp,
+
+      openedAt:
+        Date.now()
+
+    };
+
+
+  save();
+
+  updateUI();
+
+}
+
+
+/* =========================================================
+   FLOATING P/L
+========================================================= */
+
+function floatingPL(){
+
+  const p =
+    state.position;
+
+
+  const current =
+    state.lastPrice;
+
+
+  if(
+    !p ||
+    !current
+  ){
+
+    return 0;
+
+  }
+
+
+  let movement;
+
+
+  if(
+    p.side === "LONG"
+  ){
+
+    movement =
+      current -
+      p.entry;
+
+  }else{
+
+    movement =
+      p.entry -
+      current;
+
+  }
+
+
+  return (
+    movement *
+    p.quantity
+  );
+
+}
+
+
+/* =========================================================
+   CLOSE POSITION
+========================================================= */
+
+function closePosition(
+  reason = "MANUAL"
+){
+
+  const p =
+    state.position;
+
+
+  const exit =
+    state.lastPrice;
+
+
+  if(
+    !p ||
+    !exit
+  ){
+
+    return;
+
+  }
+
+
+  const pl =
+    floatingPL();
+
+
+  /*
+    Kembalikan modal virtual
+    + profit/loss.
+  */
+
+  state.balance +=
+    p.nominal +
+    pl;
+
+
+  state.realizedPL +=
+    pl;
+
+
+  state.history.unshift(
+    {
+
+      time:
+        nowText(),
+
+      side:
+        p.side,
+
+      entry:
+        p.entry,
+
+      exit:
+        exit,
+
+      nominal:
+        p.nominal,
+
+      pl:
+        pl,
+
+      reason:
+        reason
+
+    }
+  );
+
+
+  state.history =
+    state.history.slice(
+      0,
+      100
+    );
+
+
+  state.position =
+    null;
+
+
+  save();
+
+  updateUI();
+
+}
+
+
+/* =========================================================
+   STOP LOSS / TAKE PROFIT
+========================================================= */
+
+function checkStops(){
+
+  const p =
+    state.position;
+
+
+  const price =
+    state.lastPrice;
+
+
+  if(
+    !p ||
+    !price
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    p.side === "LONG"
+  ){
+
+    if(
+      price <= p.sl
+    ){
+
+      closePosition(
+        "STOP LOSS"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      price >= p.tp
+    ){
+
+      closePosition(
+        "TAKE PROFIT"
+      );
+
+      return;
+
+    }
+
+  }else{
+
+    if(
+      price >= p.sl
+    ){
+
+      closePosition(
+        "STOP LOSS"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      price <= p.tp
+    ){
+
+      closePosition(
+        "TAKE PROFIT"
+      );
+
+      return;
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   UPDATE UI
+========================================================= */
+
+function updateUI(){
+
+  const fl =
+    floatingPL();
+
+
+  const equity =
+    state.balance +
+    (
+      state.position
+        ? state.position.nominal +
+          fl
+        : 0
+    );
+
+
+  const totalPL =
+    state.realizedPL +
+    fl;
+
+
+  balanceEl.textContent =
+    rupiah(
+      state.balance
+    );
+
+
+  equityEl.textContent =
+    rupiah(
+      equity
+    );
+
+
+  totalPLEl.textContent =
+    rupiah(
+      totalPL
+    );
+
+
+  totalPLEl.className =
+    totalPL >= 0
+      ? "profit"
+      : "loss";
+
+
+  $("positionCount")
+    .textContent =
+      state.position
+        ? "1 posisi"
+        : "0 posisi";
+
+
+  renderPosition();
+
+  renderHistory();
+
+}
+
+
+/* =========================================================
+   POSITION UI
+========================================================= */
+
+function renderPosition(){
+
+  if(
+    !state.position
+  ){
+
+    positionBox.innerHTML =
+      `
+      <div class="empty">
+        Belum ada posisi terbuka.
+      </div>
+      `;
+
+    return;
+
+  }
+
+
+  const p =
+    state.position;
+
+
+  const fl =
+    floatingPL();
+
+
+  const cls =
+    fl >= 0
+      ? "profit"
+      : "loss";
+
+
+  const sideClass =
+    p.side === "LONG"
+      ? "long"
+      : "short";
+
+
+  positionBox.innerHTML =
+    `
+
+    <div class="position">
+
+      <div class="pos-top">
+
+        <div class="pos-symbol">
+          ${p.symbol}
+        </div>
+
+        <span
+          class="badge ${sideClass}"
+        >
+          ${p.side}
+        </span>
+
+      </div>
+
+
+      <div class="pos-grid">
+
+        <div class="metric">
+
+          <small>
+            Entry
+          </small>
+
+          <strong>
+            ${btc(p.entry)}
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <small>
+            Current
+          </small>
+
+          <strong>
+            ${btc(
+              state.lastPrice ||
+              p.entry
+            )}
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <small>
+            Nominal
+          </small>
+
+          <strong>
+            ${rupiah(p.nominal)}
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <small>
+            Floating P/L
+          </small>
+
+          <strong
+            class="${cls}"
+          >
+            ${rupiah(fl)}
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <small>
+            Stop Loss
+          </small>
+
+          <strong>
+            ${btc(p.sl)}
+          </strong>
+
+        </div>
+
+
+        <div class="metric">
+
+          <small>
+            Take Profit
+          </small>
+
+          <strong>
+            ${btc(p.tp)}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="closePositionBtn"
+        class="close-btn"
+      >
+        CLOSE POSITION
+      </button>
+
+    </div>
+
+    `;
+
+
+  $("closePositionBtn")
+    .onclick =
+      () => {
+
+        closePosition(
+          "MANUAL"
+        );
+
+      };
+
+}
+
+
+/* =========================================================
+   HISTORY UI
+========================================================= */
+
+function renderHistory(){
+
+  $("historyCount")
+    .textContent =
+      state.history.length +
+      " transaksi";
+
+
+  historyEmpty.style.display =
+    state.history.length
+      ? "none"
+      : "block";
+
+
+  historyBody.innerHTML =
+    state.history.map(
+      item => {
+
+        const cls =
+          item.pl >= 0
+            ? "profit"
+            : "loss";
+
+
+        const sideClass =
+          item.side === "LONG"
+            ? "long"
+            : "short";
+
+
+        return `
+
+        <tr>
+
+          <td>
+            ${item.time}
+          </td>
+
+          <td>
+
+            <span
+              class="badge ${sideClass}"
+            >
+              ${item.side}
+            </span>
+
+          </td>
+
+          <td>
+            ${btc(item.entry)}
+          </td>
+
+          <td>
+            ${btc(item.exit)}
+          </td>
+
+          <td>
+            ${rupiah(item.nominal)}
+          </td>
+
+          <td
+            class="${cls}"
+          >
+            ${rupiah(item.pl)}
+          </td>
+
+          <td>
+            ${item.reason}
+          </td>
+
+        </tr>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetDemo(){
+
+  const yes =
+    confirm(
+      "Reset semua saldo, posisi, dan riwayat demo?"
+    );
+
+
+  if(!yes){
+
+    return;
+
+  }
+
+
+  state =
+    {
+
+      balance:
+        START_BALANCE,
+
+      realizedPL:
+        0,
+
+      position:
+        null,
+
+      history:
+        [],
+
+      prices:
+        state.prices.slice(-10),
+
+      lastPrice:
+        state.lastPrice,
+
+      firstPrice:
+        state.lastPrice,
+
+      connected:
+        state.connected
+
+    };
+
+
+  save();
+
+  updateUI();
+
+  drawChart();
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
+
+$("longBtn")
+  .onclick =
+    () => {
+
+      openPosition(
+        "LONG"
+      );
+
+    };
+
+
+$("shortBtn")
+  .onclick =
+    () => {
+
+      openPosition(
+        "SHORT"
+      );
+
+    };
+
+
+$("resetBtn")
+  .onclick =
+    resetDemo;
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  resizeCanvas
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+load();
+
+resizeCanvas();
+
+updateUI();
+
+
+/*
+  REST langsung dimulai.
+
+  Ini penting:
+  harga akan dicoba melalui REST
+  walaupun WebSocket HP gagal.
+*/
+
+startRestFallback();
+
+
+/*
+  Setelah itu WebSocket digunakan
+  sebagai sumber live utama.
+*/
+
+startWatchdog();
+
+connectMarket();
+
+
+})();
+
+</script>
+
+</body>
+</html>
