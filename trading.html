@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050607">
+
+<title>MyShort Trading</title>
+
+<link rel="stylesheet" href="premium-brand.css">
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#050607;
+  --card:#101214;
+  --card2:#151719;
+  --border:#2b2e32;
+  --text:#f5f5f5;
+  --muted:#999;
+  --gold:#f3c64e;
+  --green:#49c77a;
+  --red:#ef6666;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+.page{
+  width:min(760px,94%);
+  margin:0 auto;
+  padding:20px 0 45px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.logo-title{
+  font-size:21px;
+  font-weight:700;
+  letter-spacing:.4px;
+}
+
+.login-status{
+  padding:7px 11px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:#ccc;
+  font-size:11px;
+  white-space:nowrap;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,.035),
+    rgba(255,255,255,.012)
+  );
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:14px;
+  box-shadow:0 8px 28px rgba(0,0,0,.22);
+}
+
+.card-title{
+  margin:0 0 13px;
+  font-size:15px;
+  font-weight:700;
+}
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.market-label{
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+.symbol{
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.5px;
+  margin-bottom:7px;
+}
+
+.price{
+  font-size:31px;
+  line-height:1.15;
+  font-weight:700;
+  letter-spacing:.2px;
+}
+
+.price-status{
+  margin-top:8px;
+  color:#999;
+  font-size:11px;
+}
+
+.internal-note{
+  margin-top:12px;
+  padding:11px;
+  border-radius:12px;
+  border:1px solid #292c30;
+  background:#0a0c0e;
+  color:#aaa;
+  font-size:11px;
+  line-height:1.55;
+}
+
+/* =========================================================
+   BALANCE
+========================================================= */
+
+.balance-label{
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:6px;
+}
+
+.balance{
+  font-size:25px;
+  font-weight:700;
+}
+
+.balance-note{
+  margin-top:7px;
+  color:#888;
+  font-size:11px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-label{
+  display:block;
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+.input{
+  width:100%;
+  height:46px;
+  padding:0 13px;
+  border-radius:12px;
+  border:1px solid #36393d;
+  outline:none;
+  background:#080a0c;
+  color:#fff;
+  font-size:15px;
+}
+
+.input:focus{
+  border-color:#666;
+}
+
+.limit{
+  margin-top:7px;
+  color:#777;
+  font-size:10px;
+}
+
+.trade-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:13px;
+}
+
+.btn{
+  height:46px;
+  border-radius:12px;
+  background:#080a0c;
+  color:#fff;
+  border:1px solid #383b3f;
+  font-weight:700;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.btn-long{
+  border-color:#32734f;
+  color:#72dc9a;
+}
+
+.btn-short{
+  border-color:#8a4646;
+  color:#ff8b8b;
+}
+
+.message{
+  min-height:20px;
+  margin-top:10px;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.message.good{
+  color:var(--green);
+}
+
+.message.bad{
+  color:var(--red);
+}
+
+.message.info{
+  color:#aaa;
+}
+
+/* =========================================================
+   ACTIVE POSITION
+========================================================= */
+
+.position-empty{
+  text-align:center;
+  padding:18px 5px;
+  color:#777;
+  font-size:12px;
+}
+
+.position-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:9px 0;
+  border-bottom:1px solid #24272a;
+  font-size:12px;
+}
+
+.position-row:last-child{
+  border-bottom:0;
+}
+
+.position-key{
+  color:#888;
+}
+
+.position-value{
+  color:#eee;
+  font-weight:600;
+  text-align:right;
+}
+
+.side-long{
+  color:#65d993;
+}
+
+.side-short{
+  color:#ff8585;
+}
+
+.close-btn{
+  width:100%;
+  height:44px;
+  margin-top:13px;
+  border-radius:12px;
+  border:1px solid #9b7f32;
+  background:#0b0b0a;
+  color:var(--gold);
+  font-weight:700;
+  cursor:pointer;
+}
+
+.close-btn:disabled{
+  opacity:.45;
+}
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.history-wrap{
+  overflow-x:auto;
+}
+
+.history-table{
+  width:100%;
+  min-width:640px;
+  border-collapse:collapse;
+  font-size:11px;
+}
+
+.history-table th{
+  color:#888;
+  font-weight:500;
+  text-align:left;
+  padding:9px 7px;
+  border-bottom:1px solid #303337;
+}
+
+.history-table td{
+  color:#ddd;
+  padding:9px 7px;
+  border-bottom:1px solid #24272a;
+  white-space:nowrap;
+}
+
+.profit{
+  color:var(--green)!important;
+}
+
+.loss{
+  color:var(--red)!important;
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading{
+  color:#777;
+  font-size:12px;
+  text-align:center;
+  padding:15px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:520px){
+
+  .page{
+    width:94%;
+    padding-top:16px;
+  }
+
+  .logo-title{
+    font-size:18px;
+  }
+
+  .price{
+    font-size:27px;
+  }
+
+  .balance{
+    font-size:22px;
+  }
+
+  .trade-buttons{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="header">
+
+    <div class="logo-title">
+      MYSHORT TRADING
+    </div>
+
+    <div
+      id="loginStatus"
+      class="login-status">
+      Memeriksa login...
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       MARKET
+  ====================================================== -->
+
+  <div class="card">
+
+    <div class="symbol">
+      BTCUSDT
+    </div>
+
+    <div class="market-label">
+      Harga Internal MyShort
+    </div>
+
+    <div
+      id="marketPrice"
+      class="price">
+      -
+    </div>
+
+    <div
+      id="marketUpdated"
+      class="price-status">
+      Memuat harga...
+    </div>
+
+    <div class="internal-note">
+      Harga ini digunakan sebagai referensi pada sistem trading
+      internal MyShort. Trading ini tidak mengirim order ke
+      exchange eksternal.
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       WALLET
+  ====================================================== -->
+
+  <div class="card">
+
+    <div class="balance-label">
+      Saldo Utama MyShort
+    </div>
+
+    <div
+      id="walletBalance"
+      class="balance">
+      Rp0
+    </div>
+
+    <div class="balance-note">
+      Modal trading menggunakan saldo utama MyShort.
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       OPEN TRADE
+  ====================================================== -->
+
+  <div class="card">
+
+    <h2 class="card-title">
+      Buka Posisi
+    </h2>
+
+    <label
+      class="form-label"
+      for="nominal">
+      Nominal Trading
+    </label>
+
+    <input
+      id="nominal"
+      class="input"
+      type="number"
+      inputmode="numeric"
+      min="10000"
+      step="1000"
+      value="10000">
+
+    <div
+      id="tradeLimit"
+      class="limit">
+      Memuat batas trading...
+    </div>
+
+    <div class="trade-buttons">
+
+      <button
+        id="longButton"
+        class="btn btn-long">
+        LONG / BUY
+      </button>
+
+      <button
+        id="shortButton"
+        class="btn btn-short">
+        SHORT / SELL
+      </button>
+
+    </div>
+
+    <div
+      id="openMessage"
+      class="message">
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ACTIVE POSITION
+  ====================================================== -->
+
+  <div class="card">
+
+    <h2 class="card-title">
+      Posisi Aktif
+    </h2>
+
+    <div id="activePosition">
+
+      <div class="position-empty">
+        Tidak ada posisi aktif.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       HISTORY
+  ====================================================== -->
+
+  <div class="card">
+
+    <h2 class="card-title">
+      Riwayat Trading
+    </h2>
+
+    <div
+      id="history"
+      class="history-wrap">
+
+      <div class="loading">
+        Memuat riwayat...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     SUPABASE
+========================================================== -->
+
+<script type="module">
+
+import { sb } from "./supabase-config.js";
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let currentUser = null;
+let settings = null;
+let refreshTimer = null;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const loginStatus =
+  document.getElementById("loginStatus");
+
+const marketPrice =
+  document.getElementById("marketPrice");
+
+const marketUpdated =
+  document.getElementById("marketUpdated");
+
+const walletBalance =
+  document.getElementById("walletBalance");
+
+const nominal =
+  document.getElementById("nominal");
+
+const tradeLimit =
+  document.getElementById("tradeLimit");
+
+const longButton =
+  document.getElementById("longButton");
+
+const shortButton =
+  document.getElementById("shortButton");
+
+const openMessage =
+  document.getElementById("openMessage");
+
+const activePosition =
+  document.getElementById("activePosition");
+
+const history =
+  document.getElementById("history");
+
+
+/* =========================================================
+   FORMAT
+========================================================= */
+
+function formatRupiah(value){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style:"currency",
+      currency:"IDR",
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  ).format(Number(value || 0));
+
+}
+
+
+function formatNumber(value){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      maximumFractionDigits:8
+    }
+  ).format(Number(value || 0));
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(
+  text,
+  type="info"
+){
+
+  openMessage.textContent = text || "";
+
+  openMessage.className =
+    "message " + type;
+
+}
+
+
+/* =========================================================
+   LOGIN CHECK
+========================================================= */
+
+async function checkLogin(){
+
+  const {
+    data,
+    error
+  } = await sb.auth.getSession();
+
+
+  if(error){
+
+    loginStatus.textContent =
+      "Login error";
+
+    disableTrading();
+
+    showMessage(
+      error.message,
+      "bad"
+    );
+
+    return false;
+
+  }
+
+
+  if(!data.session){
+
+    loginStatus.textContent =
+      "Belum login";
+
+    disableTrading();
+
+    showMessage(
+      "Silakan login ke akun MyShort terlebih dahulu.",
+      "bad"
+    );
+
+    return false;
+
+  }
+
+
+  currentUser =
+    data.session.user;
+
+
+  loginStatus.textContent =
+    "Login aktif";
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   DISABLE
+========================================================= */
+
+function disableTrading(){
+
+  longButton.disabled = true;
+  shortButton.disabled = true;
+
+}
+
+
+/* =========================================================
+   LOAD TRADING SETTINGS
+========================================================= */
+
+async function loadSettings(){
+
+  const {
+    data,
+    error
+  } = await sb.rpc(
+    "get_trading_settings"
+  );
+
+
+  if(error){
+
+    tradeLimit.textContent =
+      "Gagal memuat pengaturan trading.";
+
+    showMessage(
+      error.message,
+      "bad"
+    );
+
+    disableTrading();
+
+    return;
+
+  }
+
+
+  settings =
+    Array.isArray(data)
+      ? data[0]
+      : data;
+
+
+  if(!settings){
+
+    disableTrading();
+
+    showMessage(
+      "Pengaturan trading tidak ditemukan.",
+      "bad"
+    );
+
+    return;
+
+  }
+
+
+  const min =
+    Number(settings.min_trade_amount || 0);
+
+  const max =
+    Number(settings.max_trade_amount || 0);
+
+
+  nominal.min = min;
+  nominal.max = max;
+
+
+  tradeLimit.textContent =
+    "Minimum " +
+    formatRupiah(min) +
+    " • Maksimum " +
+    formatRupiah(max);
+
+
+  if(Number(nominal.value) < min){
+
+    nominal.value = min;
+
+  }
+
+
+  if(settings.trading_enabled === false){
+
+    disableTrading();
+
+    showMessage(
+      "Trading sedang dinonaktifkan.",
+      "bad"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD INTERNAL MARKET PRICE
+========================================================= */
+
+async function loadMarket(){
+
+  const {
+    data,
+    error
+  } = await sb.rpc(
+    "get_trading_market_price"
+  );
+
+
+  if(error){
+
+    marketPrice.textContent =
+      "-";
+
+    marketUpdated.textContent =
+      "Harga tidak tersedia.";
+
+    return;
+
+  }
+
+
+  const market =
+    Array.isArray(data)
+      ? data[0]
+      : data;
+
+
+  if(!market){
+
+    return;
+
+  }
+
+
+  const price =
+    Number(
+      market.price ??
+      market.current_price ??
+      0
+    );
+
+
+  marketPrice.textContent =
+    formatNumber(price);
+
+
+  if(market.updated_at){
+
+    marketUpdated.textContent =
+      "Diperbarui " +
+      new Date(
+        market.updated_at
+      ).toLocaleString(
+        "id-ID"
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   LOAD MAIN WALLET
+========================================================= */
+
+async function loadWallet(){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("wallets")
+    .select("balance")
+    .eq(
+      "user_id",
+      currentUser.id
+    )
+    .maybeSingle();
+
+
+  if(error){
+
+    walletBalance.textContent =
+      "-";
+
+    return;
+
+  }
+
+
+  walletBalance.textContent =
+    formatRupiah(
+      data?.balance || 0
+    );
+
+}
+
+
+/* =========================================================
+   LOAD ACTIVE POSITION
+========================================================= */
+
+async function loadActivePosition(){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("trading_positions")
+    .select(`
+      id,
+      symbol,
+      side,
+      nominal,
+      entry_price,
+      close_price,
+      quantity,
+      stop_loss,
+      take_profit,
+      pnl,
+      status,
+      opened_at
+    `)
+    .eq(
+      "user_id",
+      currentUser.id
+    )
+    .eq(
+      "status",
+      "OPEN"
+    )
+    .order(
+      "id",
+      {ascending:false}
+    )
+    .limit(1);
+
+
+  if(error){
+
+    activePosition.innerHTML =
+      `<div class="position-empty">
+        ${escapeHtml(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  const position =
+    data?.[0];
+
+
+  if(!position){
+
+    activePosition.innerHTML =
+      `<div class="position-empty">
+        Tidak ada posisi aktif.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const sideClass =
+    position.side === "LONG"
+      ? "side-long"
+      : "side-short";
+
+
+  activePosition.innerHTML = `
+
+    <div class="position-row">
+      <span class="position-key">
+        Posisi
+      </span>
+
+      <span class="position-value ${sideClass}">
+        ${escapeHtml(position.side)}
+        ${escapeHtml(position.symbol)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        Nominal
+      </span>
+
+      <span class="position-value">
+        ${formatRupiah(position.nominal)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        Entry Price
+      </span>
+
+      <span class="position-value">
+        ${formatNumber(position.entry_price)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        Quantity
+      </span>
+
+      <span class="position-value">
+        ${formatNumber(position.quantity)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        Stop Loss
+      </span>
+
+      <span class="position-value">
+        ${formatNumber(position.stop_loss)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        Take Profit
+      </span>
+
+      <span class="position-value">
+        ${formatNumber(position.take_profit)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        P/L
+      </span>
+
+      <span class="position-value ${
+        Number(position.pnl) >= 0
+          ? "profit"
+          : "loss"
+      }">
+        ${formatRupiah(position.pnl)}
+      </span>
+    </div>
+
+
+    <div class="position-row">
+      <span class="position-key">
+        Dibuka
+      </span>
+
+      <span class="position-value">
+        ${new Date(
+          position.opened_at
+        ).toLocaleString("id-ID")}
+      </span>
+    </div>
+
+
+    <button
+      id="closePositionButton"
+      class="close-btn">
+      CLOSE POSITION
+    </button>
+
+    <div
+      id="closeMessage"
+      class="message">
+    </div>
+
+  `;
+
+
+  document
+    .getElementById(
+      "closePositionButton"
+    )
+    .onclick = () => {
+
+      closePosition(
+        position.id
+      );
+
+    };
+
+}
+
+
+/* =========================================================
+   LOAD HISTORY
+========================================================= */
+
+async function loadHistory(){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("trading_positions")
+    .select(`
+      id,
+      symbol,
+      side,
+      nominal,
+      entry_price,
+      close_price,
+      pnl,
+      status,
+      opened_at,
+      closed_at
+    `)
+    .eq(
+      "user_id",
+      currentUser.id
+    )
+    .eq(
+      "status",
+      "CLOSED"
+    )
+    .order(
+      "id",
+      {ascending:false}
+    )
+    .limit(30);
+
+
+  if(error){
+
+    history.innerHTML =
+      `<div class="position-empty">
+        ${escapeHtml(error.message)}
+      </div>`;
+
+    return;
+
+  }
+
+
+  if(!data?.length){
+
+    history.innerHTML =
+      `<div class="position-empty">
+        Belum ada riwayat trading.
+      </div>`;
+
+    return;
+
+  }
+
+
+  history.innerHTML = `
+
+    <table class="history-table">
+
+      <thead>
+
+        <tr>
+          <th>ID</th>
+          <th>Side</th>
+          <th>Nominal</th>
+          <th>Entry</th>
+          <th>Close</th>
+          <th>P/L</th>
+          <th>Waktu</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        ${data.map(
+          position => {
+
+            const pnl =
+              Number(position.pnl || 0);
+
+
+            return `
+
+              <tr>
+
+                <td>
+                  #${position.id}
+                </td>
+
+                <td class="${
+                  position.side === "LONG"
+                    ? "side-long"
+                    : "side-short"
+                }">
+                  ${escapeHtml(
+                    position.side
+                  )}
+                </td>
+
+                <td>
+                  ${formatRupiah(
+                    position.nominal
+                  )}
+                </td>
+
+                <td>
+                  ${formatNumber(
+                    position.entry_price
+                  )}
+                </td>
+
+                <td>
+                  ${formatNumber(
+                    position.close_price
+                  )}
+                </td>
+
+                <td class="${
+                  pnl >= 0
+                    ? "profit"
+                    : "loss"
+                }">
+                  ${formatRupiah(pnl)}
+                </td>
+
+                <td>
+                  ${new Date(
+                    position.closed_at ||
+                    position.opened_at
+                  ).toLocaleString(
+                    "id-ID"
+                  )}
+                </td>
+
+              </tr>
+
+            `;
+
+          }
+        ).join("")}
+
+      </tbody>
+
+    </table>
+
+  `;
+
+}
+
+
+/* =========================================================
+   CHECK ACTIVE POSITION BEFORE OPEN
+========================================================= */
+
+async function hasOpenPosition(){
+
+  const {
+    data,
+    error
+  } = await sb
+    .from("trading_positions")
+    .select("id")
+    .eq(
+      "user_id",
+      currentUser.id
+    )
+    .eq(
+      "status",
+      "OPEN"
+    )
+    .limit(1);
+
+
+  if(error){
+
+    throw error;
+
+  }
+
+
+  return Boolean(
+    data?.length
+  );
+
+}
+
+
+/* =========================================================
+   OPEN POSITION
+========================================================= */
+
+async function openPosition(side){
+
+  if(!currentUser){
+
+    showMessage(
+      "Silakan login terlebih dahulu.",
+      "bad"
+    );
+
+    return;
+
+  }
+
+
+  if(settings?.trading_enabled === false){
+
+    showMessage(
+      "Trading sedang dinonaktifkan.",
+      "bad"
+    );
+
+    return;
+
+  }
+
+
+  const amount =
+    Number(
+      nominal.value
+    );
+
+
+  if(!Number.isFinite(amount)){
+
+    showMessage(
+      "Nominal tidak valid.",
+      "bad"
+    );
+
+    return;
+
+  }
+
+
+  const min =
+    Number(
+      settings.min_trade_amount
+    );
+
+  const max =
+    Number(
+      settings.max_trade_amount
+    );
+
+
+  if(amount < min){
+
+    showMessage(
+      "Nominal minimum adalah " +
+      formatRupiah(min),
+      "bad"
+    );
+
+    return;
+
+  }
+
+
+  if(amount > max){
+
+    showMessage(
+      "Nominal maksimum adalah " +
+      formatRupiah(max),
+      "bad"
+    );
+
+    return;
+
+  }
+
+
+  longButton.disabled = true;
+  shortButton.disabled = true;
+
+
+  showMessage(
+    "Membuka posisi " +
+    side +
+    "...",
+    "info"
+  );
+
+
+  try{
+
+    const alreadyOpen =
+      await hasOpenPosition();
+
+
+    if(alreadyOpen){
+
+      showMessage(
+        "Masih ada posisi aktif. Tutup posisi tersebut terlebih dahulu.",
+        "bad"
+      );
+
+      return;
+
+    }
+
+
+    /*
+     * Server-side RPC.
+     *
+     * Browser hanya mengirim:
+     * side + nominal.
+     *
+     * Entry price, quantity, SL dan TP
+     * diproses di Supabase.
+     */
+
+    const {
+      data,
+      error
+    } = await sb.rpc(
+      "open_trading_position",
+      {
+        p_side: side,
+        p_nominal: amount
+      }
+    );
+
+
+    if(error){
+
+      showMessage(
+        error.message,
+        "bad"
+      );
+
+      return;
+
+    }
+
+
+    showMessage(
+      "Posisi " +
+      side +
+      " berhasil dibuka.",
+      "good"
+    );
+
+
+    await refreshAll();
+
+  }
+  catch(error){
+
+    showMessage(
+      error.message ||
+      "Gagal membuka posisi.",
+      "bad"
+    );
+
+  }
+  finally{
+
+    longButton.disabled = false;
+    shortButton.disabled = false;
+
+  }
+
+}
+
+
+/* =========================================================
+   CLOSE POSITION
+========================================================= */
+
+async function closePosition(
+  positionId
+){
+
+  const button =
+    document.getElementById(
+      "closePositionButton"
+    );
+
+  const closeMessage =
+    document.getElementById(
+      "closeMessage"
+    );
+
+
+  if(button){
+
+    button.disabled = true;
+
+  }
+
+
+  if(closeMessage){
+
+    closeMessage.textContent =
+      "Menutup posisi...";
+
+    closeMessage.className =
+      "message info";
+
+  }
+
+
+  try{
+
+    /*
+     * Server-side RPC.
+     *
+     * Harga close tidak dikirim
+     * dari browser.
+     */
+
+    const {
+      data,
+      error
+    } = await sb.rpc(
+      "close_trading_position",
+      {
+        p_position_id: positionId
+      }
+    );
+
+
+    if(error){
+
+      if(closeMessage){
+
+        closeMessage.textContent =
+          error.message;
+
+        closeMessage.className =
+          "message bad";
+
+      }
+
+      return;
+
+    }
+
+
+    if(closeMessage){
+
+      closeMessage.textContent =
+        "Posisi berhasil ditutup.";
+
+      closeMessage.className =
+        "message good";
+
+    }
+
+
+    await refreshAll();
+
+  }
+  catch(error){
+
+    if(closeMessage){
+
+      closeMessage.textContent =
+        error.message ||
+        "Gagal menutup posisi.";
+
+      closeMessage.className =
+        "message bad";
+
+    }
+
+  }
+  finally{
+
+    if(button){
+
+      button.disabled = false;
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+async function refreshAll(){
+
+  await Promise.all([
+    loadMarket(),
+    loadWallet(),
+    loadActivePosition(),
+    loadHistory()
+  ]);
+
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+sb.auth.onAuthStateChange(
+  async (event, session) => {
+
+    if(!session){
+
+      if(refreshTimer){
+
+        clearInterval(
+          refreshTimer
+        );
+
+      }
+
+
+      location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    currentUser =
+      session.user;
+
+    loginStatus.textContent =
+      "Login aktif";
+
+    await refreshAll();
+
+  }
+);
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+longButton.onclick =
+  () => openPosition("LONG");
+
+shortButton.onclick =
+  () => openPosition("SHORT");
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+(async function(){
+
+  const loggedIn =
+    await checkLogin();
+
+
+  if(!loggedIn){
+
+    return;
+
+  }
+
+
+  await loadSettings();
+
+  await refreshAll();
+
+
+  /*
+   * Refresh tampilan setiap 5 detik.
+   * Ini hanya membaca data.
+   * Hasil trading tetap diproses server-side.
+   */
+
+  refreshTimer =
+    setInterval(
+      refreshAll,
+      5000
+    );
+
+})();
+
+</script>
+
+</body>
+</html>
