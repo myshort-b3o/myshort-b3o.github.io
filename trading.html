@@ -1,0 +1,3078 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#050607">
+
+<title>MyShort - Trading</title>
+
+<link rel="stylesheet" href="premium-brand.css">
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  background:#050607;
+  color:#f2f2f2;
+  font-family:Roboto,Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.page{
+  width:100%;
+  max-width:760px;
+  margin:auto;
+  padding:14px 14px 100px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:#f0a500;
+  color:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:17px;
+}
+
+.brand-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+.brand-sub{
+  font-size:11px;
+  color:#8e969e;
+  margin-top:2px;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:11px;
+  color:#8f989f;
+}
+
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#777;
+}
+
+.status-dot.live{
+  background:#42d77d;
+  box-shadow:0 0 8px rgba(66,215,125,.7);
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
+  background:#0c0f12;
+  border:1px solid #20252a;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:13px;
+}
+
+.market-card{
+  padding:17px;
+}
+
+.market-label{
+  color:#8e979f;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.market-price{
+  font-size:28px;
+  font-weight:800;
+  margin-top:5px;
+  letter-spacing:-.5px;
+}
+
+.market-change{
+  font-size:12px;
+  margin-top:3px;
+}
+
+.market-change.up{
+  color:#44d989;
+}
+
+.market-change.down{
+  color:#ff6262;
+}
+
+.market-info{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid #1d2227;
+}
+
+.market-info-item{
+  flex:1;
+}
+
+.market-info-label{
+  font-size:10px;
+  color:#737c84;
+}
+
+.market-info-value{
+  font-size:12px;
+  margin-top:3px;
+}
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.chart-wrap{
+  position:relative;
+  height:235px;
+  margin-top:13px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#080a0c;
+  border:1px solid #181d21;
+}
+
+#chart{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* =========================================================
+   BALANCE
+========================================================= */
+
+.balance-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.balance-box{
+  background:#090b0d;
+  border:1px solid #1e2429;
+  border-radius:12px;
+  padding:13px;
+}
+
+.balance-label{
+  color:#737c84;
+  font-size:10px;
+  text-transform:uppercase;
+}
+
+.balance-value{
+  margin-top:5px;
+  font-size:17px;
+  font-weight:800;
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:13px;
+}
+
+.section-title b{
+  font-size:14px;
+}
+
+.section-title span{
+  color:#777f87;
+  font-size:10px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-row{
+  margin-bottom:12px;
+}
+
+.form-label{
+  display:block;
+  font-size:11px;
+  color:#899199;
+  margin-bottom:6px;
+}
+
+.input{
+  width:100%;
+  min-height:44px;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #282e33;
+  background:#080a0c;
+  color:#fff;
+  outline:none;
+}
+
+.input:focus{
+  border-color:#c89119;
+}
+
+.input[readonly]{
+  color:#c5cbd0;
+  opacity:.9;
+}
+
+.sl-tp{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.trade-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.trade-btn{
+  min-height:48px;
+  border:0;
+  border-radius:11px;
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+.long-btn{
+  background:#164e35;
+  color:#8affbd;
+  border:1px solid #267a51;
+}
+
+.short-btn{
+  background:#571e25;
+  color:#ff9ba3;
+  border:1px solid #84323c;
+}
+
+.trade-btn:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+/* =========================================================
+   ACTIVE POSITION
+========================================================= */
+
+.position-empty{
+  color:#727b83;
+  font-size:12px;
+  text-align:center;
+  padding:16px 5px;
+}
+
+.position-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.position-item{
+  background:#090b0d;
+  border-radius:10px;
+  border:1px solid #1d2227;
+  padding:10px;
+}
+
+.position-label{
+  color:#707982;
+  font-size:9px;
+}
+
+.position-value{
+  font-size:12px;
+  margin-top:4px;
+  font-weight:700;
+  word-break:break-word;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:4px 8px;
+  border-radius:7px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.badge.long{
+  background:#153d2c;
+  color:#68e9a0;
+}
+
+.badge.short{
+  background:#481c22;
+  color:#ff8c96;
+}
+
+.pnl{
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background:#090b0d;
+  border:1px solid #1d2227;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.pnl-label{
+  font-size:10px;
+  color:#777f87;
+}
+
+.pnl-value{
+  font-size:16px;
+  font-weight:900;
+}
+
+.pnl-profit{
+  color:#48db8a;
+}
+
+.pnl-loss{
+  color:#ff6262;
+}
+
+.close-btn{
+  width:100%;
+  min-height:45px;
+  margin-top:11px;
+  border-radius:10px;
+  border:1px solid #9a741c;
+  background:#2b210d;
+  color:#f4c94d;
+  font-weight:800;
+}
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+  border-radius:10px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:690px;
+}
+
+th,
+td{
+  padding:9px 7px;
+  text-align:left;
+  border-bottom:1px solid #1b2024;
+  font-size:10px;
+  white-space:nowrap;
+}
+
+th{
+  color:#737c84;
+  font-weight:600;
+}
+
+td{
+  color:#d3d7da;
+}
+
+.empty{
+  padding:17px 5px;
+  text-align:center;
+  color:#707982;
+  font-size:11px;
+}
+
+/* =========================================================
+   STATUS MESSAGE
+========================================================= */
+
+.message{
+  display:none;
+  padding:11px 12px;
+  border-radius:10px;
+  margin-bottom:13px;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.info{
+  background:#15191d;
+  border:1px solid #30373d;
+  color:#cbd1d6;
+}
+
+.message.success{
+  background:#10271c;
+  border:1px solid #245c3e;
+  color:#80e8aa;
+}
+
+.message.error{
+  background:#2a1417;
+  border:1px solid #693037;
+  color:#ff9da5;
+}
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.warning{
+  padding:13px;
+  border-radius:12px;
+  background:#11100c;
+  border:1px solid #3d3218;
+  color:#aaa18b;
+  font-size:10px;
+  line-height:1.6;
+}
+
+.warning b{
+  color:#e0b84a;
+}
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav{
+  position:fixed;
+  z-index:20;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:760px;
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  background:rgba(6,8,10,.97);
+  border-top:1px solid #20252a;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.nav-item{
+  text-decoration:none;
+  color:#6e777f;
+  text-align:center;
+  font-size:9px;
+  padding:7px 2px;
+  border-radius:9px;
+}
+
+.nav-icon{
+  font-size:17px;
+  line-height:18px;
+  margin-bottom:2px;
+}
+
+.nav-item.active{
+  color:#f0bc39;
+  background:#131108;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:430px){
+
+  .page{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .market-price{
+    font-size:25px;
+  }
+
+  .chart-wrap{
+    height:210px;
+  }
+
+  .position-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="topbar">
+
+    <div class="brand">
+
+      <div class="logo">M</div>
+
+      <div>
+        <div class="brand-title">MYSHORT</div>
+        <div class="brand-sub">INTERNAL TRADING</div>
+      </div>
+
+    </div>
+
+    <div class="status">
+
+      <span
+        id="statusDot"
+        class="status-dot">
+      </span>
+
+      <span id="statusText">
+        Menghubungkan...
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- MESSAGE -->
+  <div
+    id="message"
+    class="message">
+  </div>
+
+
+  <!-- MARKET -->
+  <div class="card market-card">
+
+    <div class="market-label">
+      BTC / USDT
+    </div>
+
+    <div
+      id="price"
+      class="market-price">
+      Memuat...
+    </div>
+
+    <div
+      id="change"
+      class="market-change">
+      Session: 0.00%
+    </div>
+
+
+    <div class="market-info">
+
+      <div class="market-info-item">
+
+        <div class="market-info-label">
+          MARKET
+        </div>
+
+        <div
+          id="marketStatus"
+          class="market-info-value">
+          -
+        </div>
+
+      </div>
+
+
+      <div class="market-info-item">
+
+        <div class="market-info-label">
+          TICK
+        </div>
+
+        <div
+          id="tickNumber"
+          class="market-info-value">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="market-info-item">
+
+        <div class="market-info-label">
+          UPDATE
+        </div>
+
+        <div
+          id="marketUpdatedAt"
+          class="market-info-value">
+          -
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="chart-wrap">
+
+      <canvas id="chart"></canvas>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACCOUNT -->
+  <div class="card">
+
+    <div class="section-title">
+
+      <b>Akun Trading</b>
+
+      <span id="feedStatus">
+        OFFLINE
+      </span>
+
+    </div>
+
+
+    <div class="balance-grid">
+
+      <div class="balance-box">
+
+        <div class="balance-label">
+          Saldo MyShort
+        </div>
+
+        <div
+          id="balance"
+          class="balance-value">
+          Rp0
+        </div>
+
+      </div>
+
+
+      <div class="balance-box">
+
+        <div class="balance-label">
+          Equity
+        </div>
+
+        <div
+          id="equity"
+          class="balance-value">
+          Rp0
+        </div>
+
+      </div>
+
+
+      <div class="balance-box">
+
+        <div class="balance-label">
+          Total P/L
+        </div>
+
+        <div
+          id="totalPL"
+          class="balance-value">
+          Rp0
+        </div>
+
+      </div>
+
+
+      <div class="balance-box">
+
+        <div class="balance-label">
+          Status
+        </div>
+
+        <div
+          id="accountStatus"
+          class="balance-value">
+          -
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TRADE -->
+  <div class="card">
+
+    <div class="section-title">
+
+      <b>Buka Trading</b>
+
+      <span>
+        Server-side
+      </span>
+
+    </div>
+
+
+    <div class="form-row">
+
+      <label class="form-label">
+        Nominal Trading
+      </label>
+
+      <input
+        id="nominal"
+        class="input"
+        type="number"
+        inputmode="numeric"
+        min="10000"
+        max="10000000"
+        step="1000"
+        value="10000">
+
+    </div>
+
+
+    <div class="sl-tp">
+
+      <div class="form-row">
+
+        <label class="form-label">
+          Stop Loss %
+        </label>
+
+        <input
+          id="sl"
+          class="input"
+          type="number"
+          readonly>
+
+      </div>
+
+
+      <div class="form-row">
+
+        <label class="form-label">
+          Take Profit %
+        </label>
+
+        <input
+          id="tp"
+          class="input"
+          type="number"
+          readonly>
+
+      </div>
+
+    </div>
+
+
+    <div class="trade-buttons">
+
+      <button
+        id="longBtn"
+        class="trade-btn long-btn"
+        type="button">
+        LONG
+      </button>
+
+
+      <button
+        id="shortBtn"
+        class="trade-btn short-btn"
+        type="button">
+        SHORT
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ACTIVE POSITION -->
+  <div class="card">
+
+    <div class="section-title">
+
+      <b>Posisi Aktif</b>
+
+      <span id="positionStatus">
+        Tidak ada
+      </span>
+
+    </div>
+
+
+    <div id="positionEmpty" class="position-empty">
+
+      Belum ada posisi trading aktif.
+
+    </div>
+
+
+    <div
+      id="positionBox"
+      style="display:none;">
+
+      <div class="position-grid">
+
+        <div class="position-item">
+
+          <div class="position-label">
+            Sisi
+          </div>
+
+          <div
+            id="positionSide"
+            class="position-value">
+          </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+          <div class="position-label">
+            Nominal
+          </div>
+
+          <div
+            id="positionNominal"
+            class="position-value">
+          </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+          <div class="position-label">
+            Entry
+          </div>
+
+          <div
+            id="positionEntry"
+            class="position-value">
+          </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+          <div class="position-label">
+            Harga Sekarang
+          </div>
+
+          <div
+            id="positionCurrent"
+            class="position-value">
+          </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+          <div class="position-label">
+            Stop Loss
+          </div>
+
+          <div
+            id="positionSL"
+            class="position-value">
+          </div>
+
+        </div>
+
+
+        <div class="position-item">
+
+          <div class="position-label">
+            Take Profit
+          </div>
+
+          <div
+            id="positionTP"
+            class="position-value">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="pnl">
+
+        <div>
+
+          <div class="pnl-label">
+            Floating P/L
+          </div>
+
+          <div
+            id="floatingPL"
+            class="pnl-value">
+            Rp0
+          </div>
+
+        </div>
+
+        <div
+          id="floatingPercent"
+          class="pnl-label">
+          0.00%
+        </div>
+
+      </div>
+
+
+      <button
+        id="closeBtn"
+        class="close-btn"
+        type="button">
+
+        TUTUP POSISI
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- HISTORY -->
+  <div class="card">
+
+    <div class="section-title">
+
+      <b>Riwayat Trading</b>
+
+      <span id="historyCount">
+        0 transaksi
+      </span>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Waktu</th>
+            <th>Sisi</th>
+            <th>Entry</th>
+            <th>Exit</th>
+            <th>Nominal</th>
+            <th>P/L</th>
+            <th>Status</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="historyBody">
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div
+      id="historyEmpty"
+      class="empty">
+
+      Belum ada riwayat trading.
+
+    </div>
+
+  </div>
+
+
+  <!-- WARNING -->
+  <div class="warning">
+
+    <b>CATATAN:</b><br>
+
+    Ini adalah <b>Internal Trading MyShort</b>.
+    Tidak mengirim order ke exchange.
+    Harga grafik berasal dari
+    <b>trading_market_state</b> di Supabase.
+    Saldo dan transaksi menggunakan wallet MyShort.
+    Penyelesaian posisi diproses oleh server trading.
+
+  </div>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+  <a
+    class="nav-item"
+    href="dashboard.html">
+
+    <div class="nav-icon">⌂</div>
+    Home
+
+  </a>
+
+
+  <a
+    class="nav-item"
+    href="mission.html">
+
+    <div class="nav-icon">◈</div>
+    Mission
+
+  </a>
+
+
+  <a
+    class="nav-item active"
+    href="trading.html">
+
+    <div class="nav-icon">▥</div>
+    Trading
+
+  </a>
+
+
+  <a
+    class="nav-item"
+    href="profile.html">
+
+    <div class="nav-icon">●</div>
+    Profile
+
+  </a>
+
+</nav>
+
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
+
+<script>
+
+(() => {
+
+"use strict";
+
+
+/* =========================================================
+   SUPABASE CLIENT
+========================================================= */
+
+const sb =
+  window.sb ||
+  window.supabaseClient ||
+  null;
+
+
+if(!sb){
+
+  alert(
+    "Supabase belum terhubung. Periksa supabase-config.js."
+  );
+
+  return;
+
+}
+
+
+/* =========================================================
+   ELEMENT
+========================================================= */
+
+const $ =
+  id => document.getElementById(id);
+
+
+const priceEl =
+  $("price");
+
+const changeEl =
+  $("change");
+
+const balanceEl =
+  $("balance");
+
+const equityEl =
+  $("equity");
+
+const totalPLEl =
+  $("totalPL");
+
+const positionBox =
+  $("positionBox");
+
+const positionEmpty =
+  $("positionEmpty");
+
+const positionStatus =
+  $("positionStatus");
+
+const historyBody =
+  $("historyBody");
+
+const historyEmpty =
+  $("historyEmpty");
+
+const historyCount =
+  $("historyCount");
+
+const statusDot =
+  $("statusDot");
+
+const statusText =
+  $("statusText");
+
+const feedStatus =
+  $("feedStatus");
+
+const messageEl =
+  $("message");
+
+const nominalInput =
+  $("nominal");
+
+const slInput =
+  $("sl");
+
+const tpInput =
+  $("tp");
+
+const longBtn =
+  $("longBtn");
+
+const shortBtn =
+  $("shortBtn");
+
+const closeBtn =
+  $("closeBtn");
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let lastPrice = null;
+
+let firstPrice = null;
+
+let prices = [];
+
+let settings = null;
+
+let wallet = null;
+
+let activePosition = null;
+
+let closedPositions = [];
+
+let marketTimer = null;
+
+let accountTimer = null;
+
+const MAX_POINTS = 120;
+
+
+/* =========================================================
+   FORMAT
+========================================================= */
+
+function rupiah(value){
+
+  const n =
+    Number(value || 0);
+
+  return "Rp" +
+    Math.round(n).toLocaleString(
+      "id-ID"
+    );
+
+}
+
+
+function btc(value){
+
+  const n =
+    Number(value || 0);
+
+  return n.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+function percent(value){
+
+  const n =
+    Number(value || 0);
+
+  return (
+    n >= 0 ? "+" : ""
+  ) +
+  n.toFixed(2) +
+  "%";
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+let messageTimer = null;
+
+function showMessage(
+  text,
+  type = "info"
+){
+
+  clearTimeout(messageTimer);
+
+  messageEl.textContent =
+    text;
+
+  messageEl.className =
+    "message show " +
+    type;
+
+  messageTimer =
+    setTimeout(() => {
+
+      messageEl.classList.remove(
+        "show"
+      );
+
+    },5000);
+
+}
+
+
+/* =========================================================
+   CONNECTION
+========================================================= */
+
+function setConnection(ok){
+
+  statusDot.classList.toggle(
+    "live",
+    !!ok
+  );
+
+  statusText.textContent =
+    ok
+      ? "Market internal"
+      : "Market offline";
+
+  feedStatus.textContent =
+    ok
+      ? "SUPABASE"
+      : "OFFLINE";
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function getSession(){
+
+  const {
+    data,
+    error
+  } =
+    await sb.auth.getSession();
+
+  if(error){
+
+    throw error;
+
+  }
+
+  if(
+    !data ||
+    !data.session
+  ){
+
+    window.location.href =
+      "index.html";
+
+    return null;
+
+  }
+
+  return data.session;
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+async function loadSettings(){
+
+  const {
+    data,
+    error
+  } =
+    await sb.rpc(
+      "get_trading_settings"
+    );
+
+  if(error){
+
+    throw error;
+
+  }
+
+  settings =
+    Array.isArray(data)
+      ? data[0]
+      : data;
+
+  if(!settings){
+
+    throw new Error(
+      "Trading settings tidak tersedia."
+    );
+
+  }
+
+  nominalInput.min =
+    Number(
+      settings.min_trade_amount ||
+      10000
+    );
+
+  nominalInput.max =
+    Number(
+      settings.max_trade_amount ||
+      10000000
+    );
+
+  if(
+    !Number(nominalInput.value) ||
+    Number(nominalInput.value) <
+      Number(settings.min_trade_amount)
+  ){
+
+    nominalInput.value =
+      Number(settings.min_trade_amount);
+
+  }
+
+  slInput.value =
+    Number(
+      settings.default_stop_loss_percent ||
+      settings.max_loss_percent ||
+      5
+    );
+
+  tpInput.value =
+    Number(
+      settings.default_take_profit_percent ||
+      settings.max_profit_percent ||
+      2
+    );
+
+}
+
+
+/* =========================================================
+   WALLET
+========================================================= */
+
+async function loadWallet(){
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from("wallets")
+      .select(
+        "user_id,balance,total_in,total_out,updated_at"
+      )
+      .eq(
+        "user_id",
+        (await sb.auth.getUser()).data.user.id
+      )
+      .maybeSingle();
+
+  if(error){
+
+    throw error;
+
+  }
+
+  wallet =
+    data;
+
+  const balance =
+    Number(
+      wallet?.balance || 0
+    );
+
+  balanceEl.textContent =
+    rupiah(balance);
+
+}
+
+
+/* =========================================================
+   MARKET STATE
+========================================================= */
+
+async function loadMarketState(){
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from("trading_market_state")
+      .select(
+        "id,symbol,price,previous_price,tick_number,direction,updated_at"
+      )
+      .eq(
+        "id",
+        1
+      )
+      .maybeSingle();
+
+  if(error){
+
+    console.warn(
+      "Market state error:",
+      error.message
+    );
+
+    setConnection(false);
+
+    return;
+
+  }
+
+  if(
+    !data ||
+    !Number.isFinite(
+      Number(data.price)
+    ) ||
+    Number(data.price) <= 0
+  ){
+
+    setConnection(false);
+
+    return;
+
+  }
+
+  updateMarket(
+    Number(data.price),
+    Number(data.previous_price || data.price),
+    Number(data.tick_number || 0),
+    Number(data.direction || 0),
+    data.updated_at
+  );
+
+  setConnection(true);
+
+}
+
+
+/* =========================================================
+   MARKET UPDATE
+========================================================= */
+
+function updateMarket(
+  price,
+  previousPrice,
+  tickNumber,
+  direction,
+  updatedAt
+){
+
+  if(
+    !Number.isFinite(price) ||
+    price <= 0
+  ){
+
+    return;
+
+  }
+
+
+  if(firstPrice === null){
+
+    firstPrice =
+      price;
+
+  }
+
+
+  lastPrice =
+    price;
+
+
+  const old =
+    prices.length
+      ? prices[prices.length - 1]
+      : null;
+
+
+  if(
+    old === null ||
+    Math.abs(old - price) >
+      0.0000001
+  ){
+
+    prices.push(
+      price
+    );
+
+  }
+
+
+  if(
+    prices.length >
+    MAX_POINTS
+  ){
+
+    prices.shift();
+
+  }
+
+
+  priceEl.textContent =
+    btc(price);
+
+
+  const base =
+    firstPrice ||
+    price;
+
+
+  const change =
+    (
+      (price - base) /
+      base
+    ) * 100;
+
+
+  changeEl.textContent =
+    "Session: " +
+    percent(change);
+
+
+  changeEl.className =
+    "market-change " +
+    (
+      change >= 0
+        ? "up"
+        : "down"
+    );
+
+
+  const marketStatus =
+    $("marketStatus");
+
+  if(marketStatus){
+
+    marketStatus.textContent =
+      direction > 0
+        ? "NAIK"
+        : direction < 0
+          ? "TURUN"
+          : "STABIL";
+
+  }
+
+
+  const tickNumber =
+    $("tickNumber");
+
+  if(tickNumber){
+
+    tickNumber.textContent =
+      String(
+        tickNumberValue(
+          tickNumber,
+          tickNumber
+        )
+      );
+
+  }
+
+
+  const tickEl =
+    $("tickNumber");
+
+  if(tickEl){
+
+    tickEl.textContent =
+      String(
+        Number(tickNumber.dataset.value || 0)
+      );
+
+    tickEl.dataset.value =
+      String(
+        Number(tickNumber)
+      );
+
+  }
+
+
+  $("tickNumber").textContent =
+    String(
+      Number.isFinite(
+        Number(tickNumberValueRaw(tickNumber, tickNumber))
+      )
+        ? Number(
+            tickNumberValueRaw(
+              tickNumber,
+              tickNumber
+            )
+          )
+        : 0
+    );
+
+
+  const updatedEl =
+    $("marketUpdatedAt");
+
+  if(
+    updatedEl &&
+    updatedAt
+  ){
+
+    try{
+
+      updatedEl.textContent =
+        new Date(
+          updatedAt
+        ).toLocaleTimeString(
+          "id-ID"
+        );
+
+    }catch(e){}
+
+  }
+
+
+  updatePositionUI();
+
+  drawChart();
+
+}
+
+
+/*
+  Helper aman untuk nilai tick.
+*/
+function tickNumberValueRaw(
+  element,
+  ignored
+){
+
+  if(
+    !element ||
+    !element.dataset
+  ){
+
+    return 0;
+
+  }
+
+  const current =
+    Number(
+      element.dataset.value
+    );
+
+  return Number.isFinite(current)
+    ? current
+    : 0;
+
+}
+
+
+function tickNumberValue(
+  element,
+  ignored
+){
+
+  return tickNumberValueRaw(
+    element,
+    ignored
+  );
+
+}
+
+
+/* =========================================================
+   START MARKET
+========================================================= */
+
+function startMarketFeed(){
+
+  if(marketTimer){
+
+    clearInterval(
+      marketTimer
+    );
+
+  }
+
+  loadMarketState();
+
+  marketTimer =
+    setInterval(
+      loadMarketState,
+      1500
+    );
+
+}
+
+
+/* =========================================================
+   POSITIONS
+========================================================= */
+
+async function loadPositions(){
+
+  const user =
+    (
+      await sb.auth.getUser()
+    ).data.user;
+
+  if(!user){
+
+    return;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await sb
+      .from("trading_positions")
+      .select(
+        "id,user_id,symbol,side,nominal,entry_price,close_price,quantity,stop_loss,take_profit,pnl,status,opened_at,closed_at"
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(100);
+
+
+  if(error){
+
+    throw error;
+
+  }
+
+
+  const list =
+    data || [];
+
+
+  activePosition =
+    list.find(
+      item =>
+        item.status === "OPEN"
+    ) ||
+    null;
+
+
+  closedPositions =
+    list.filter(
+      item =>
+        item.status === "CLOSED"
+    );
+
+
+  renderHistory();
+
+  updatePositionUI();
+
+  updateAccountUI();
+
+}
+
+
+/* =========================================================
+   ACCOUNT
+========================================================= */
+
+async function refreshAccount(){
+
+  try{
+
+    await loadWallet();
+
+    await loadPositions();
+
+  }catch(error){
+
+    console.warn(
+      "Account refresh:",
+      error
+    );
+
+  }
+
+}
+
+
+function updateAccountUI(){
+
+  const balance =
+    Number(
+      wallet?.balance || 0
+    );
+
+
+  let floating =
+    0;
+
+
+  if(activePosition){
+
+    floating =
+      calculateFloatingPL(
+        activePosition,
+        lastPrice
+      );
+
+  }
+
+
+  const equity =
+    balance +
+    (
+      activePosition
+        ? Number(activePosition.nominal || 0) +
+          floating
+        : 0
+    );
+
+
+  equityEl.textContent =
+    rupiah(
+      Math.max(
+        0,
+        equity
+      )
+    );
+
+
+  let realized =
+    closedPositions.reduce(
+      (
+        total,
+        item
+      ) =>
+        total +
+        Number(
+          item.pnl || 0
+        ),
+      0
+    );
+
+
+  totalPLEl.textContent =
+    rupiah(
+      realized +
+      floating
+    );
+
+
+  totalPLEl.className =
+    "balance-value " +
+    (
+      realized + floating >= 0
+        ? "pnl-profit"
+        : "pnl-loss"
+    );
+
+
+  $("accountStatus").textContent =
+    activePosition
+      ? "OPEN"
+      : "READY";
+
+}
+
+
+/* =========================================================
+   FLOATING P/L
+========================================================= */
+
+function calculateFloatingPL(
+  position,
+  currentPrice
+){
+
+  if(
+    !position ||
+    !Number.isFinite(
+      Number(currentPrice)
+    )
+  ){
+
+    return 0;
+
+  }
+
+
+  const entry =
+    Number(
+      position.entry_price
+    );
+
+  const quantity =
+    Number(
+      position.quantity
+    );
+
+
+  if(
+    !entry ||
+    !quantity
+  ){
+
+    return 0;
+
+  }
+
+
+  if(
+    position.side === "LONG"
+  ){
+
+    return (
+      currentPrice -
+      entry
+    ) * quantity;
+
+  }
+
+
+  return (
+    entry -
+    currentPrice
+  ) * quantity;
+
+}
+
+
+/* =========================================================
+   POSITION UI
+========================================================= */
+
+function updatePositionUI(){
+
+  if(!activePosition){
+
+    positionBox.style.display =
+      "none";
+
+    positionEmpty.style.display =
+      "block";
+
+    positionStatus.textContent =
+      "Tidak ada";
+
+    updateAccountUI();
+
+    return;
+
+  }
+
+
+  positionBox.style.display =
+    "block";
+
+  positionEmpty.style.display =
+    "none";
+
+  positionStatus.textContent =
+    activePosition.side;
+
+
+  const side =
+    String(
+      activePosition.side
+    ).toUpperCase();
+
+
+  $("positionSide").innerHTML =
+    `<span class="badge ${
+      side === "LONG"
+        ? "long"
+        : "short"
+    }">${escapeHTML(side)}</span>`;
+
+
+  $("positionNominal").textContent =
+    rupiah(
+      activePosition.nominal
+    );
+
+
+  $("positionEntry").textContent =
+    btc(
+      activePosition.entry_price
+    );
+
+
+  $("positionCurrent").textContent =
+    lastPrice
+      ? btc(lastPrice)
+      : "-";
+
+
+  $("positionSL").textContent =
+    btc(
+      activePosition.stop_loss
+    );
+
+
+  $("positionTP").textContent =
+    btc(
+      activePosition.take_profit
+    );
+
+
+  const floating =
+    calculateFloatingPL(
+      activePosition,
+      lastPrice
+    );
+
+
+  const nominal =
+    Number(
+      activePosition.nominal || 0
+    );
+
+
+  const floatingPct =
+    nominal
+      ? (
+          floating /
+          nominal
+        ) * 100
+      : 0;
+
+
+  const floatingEl =
+    $("floatingPL");
+
+  floatingEl.textContent =
+    rupiah(
+      floating
+    );
+
+
+  floatingEl.className =
+    "pnl-value " +
+    (
+      floating >= 0
+        ? "pnl-profit"
+        : "pnl-loss"
+    );
+
+
+  $("floatingPercent").textContent =
+    percent(
+      floatingPct
+    );
+
+
+  updateAccountUI();
+
+}
+
+
+/* =========================================================
+   SERVER STOP WATCH
+========================================================= */
+
+function checkStops(){
+
+  if(
+    !activePosition ||
+    !Number.isFinite(lastPrice)
+  ){
+
+    return;
+
+  }
+
+
+  const side =
+    String(
+      activePosition.side || ""
+    ).toUpperCase();
+
+
+  const sl =
+    Number(
+      activePosition.stop_loss
+    );
+
+  const tp =
+    Number(
+      activePosition.take_profit
+    );
+
+
+  const hitSL =
+    side === "LONG"
+      ? lastPrice <= sl
+      : lastPrice >= sl;
+
+
+  const hitTP =
+    side === "LONG"
+      ? lastPrice >= tp
+      : lastPrice <= tp;
+
+
+  if(
+    hitSL ||
+    hitTP
+  ){
+
+    const reason =
+      hitTP
+        ? "Take Profit tercapai"
+        : "Stop Loss tercapai";
+
+
+    showMessage(
+      reason +
+      ". Penyelesaian diproses oleh server trading.",
+      "info"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   OPEN POSITION
+========================================================= */
+
+async function openPosition(
+  side
+){
+
+  if(activePosition){
+
+    showMessage(
+      "Tutup posisi aktif terlebih dahulu.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !lastPrice
+  ){
+
+    showMessage(
+      "Harga market belum tersedia.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const nominal =
+    Math.floor(
+      Number(
+        nominalInput.value
+      )
+    );
+
+
+  const min =
+    Number(
+      settings?.min_trade_amount ||
+      10000
+    );
+
+
+  const max =
+    Number(
+      settings?.max_trade_amount ||
+      10000000
+    );
+
+
+  if(
+    !Number.isFinite(nominal) ||
+    nominal < min ||
+    nominal > max
+  ){
+
+    showMessage(
+      "Nominal harus antara " +
+      rupiah(min) +
+      " dan " +
+      rupiah(max) +
+      ".",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const balance =
+    Number(
+      wallet?.balance || 0
+    );
+
+
+  if(
+    nominal > balance
+  ){
+
+    showMessage(
+      "Saldo MyShort tidak mencukupi.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  longBtn.disabled =
+    true;
+
+  shortBtn.disabled =
+    true;
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await sb.rpc(
+        "open_trading_position",
+        {
+          p_side:
+            side,
+
+          p_nominal:
+            nominal,
+
+          p_entry_price:
+            Number(lastPrice),
+
+          p_stop_loss:
+            null,
+
+          p_take_profit:
+            null
+        }
+      );
+
+
+    if(error){
+
+      throw error;
+
+    }
+
+
+    if(
+      data &&
+      data.success === false
+    ){
+
+      throw new Error(
+        data.message ||
+        "Gagal membuka posisi."
+      );
+
+    }
+
+
+    showMessage(
+      "Posisi " +
+      side +
+      " berhasil dibuka.",
+      "success"
+    );
+
+
+    await refreshAccount();
+
+  }catch(error){
+
+    console.error(
+      "Open position:",
+      error
+    );
+
+    showMessage(
+      error.message ||
+      "Gagal membuka posisi.",
+      "error"
+    );
+
+  }finally{
+
+    longBtn.disabled =
+      false;
+
+    shortBtn.disabled =
+      false;
+
+  }
+
+}
+
+
+/* =========================================================
+   CLOSE POSITION
+========================================================= */
+
+async function closePosition(){
+
+  if(!activePosition){
+
+    return;
+
+  }
+
+
+  const yes =
+    confirm(
+      "Tutup posisi trading sekarang?"
+    );
+
+
+  if(!yes){
+
+    return;
+
+  }
+
+
+  closeBtn.disabled =
+    true;
+
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await sb.rpc(
+        "close_trading_position",
+        {
+          p_position_id:
+            Number(
+              activePosition.id
+            ),
+
+          p_close_price:
+            Number(
+              lastPrice
+            )
+        }
+      );
+
+
+    if(error){
+
+      throw error;
+
+    }
+
+
+    if(
+      data &&
+      data.success === false
+    ){
+
+      throw new Error(
+        data.message ||
+        "Gagal menutup posisi."
+      );
+
+    }
+
+
+    showMessage(
+      "Posisi berhasil dikirim untuk penyelesaian.",
+      "success"
+    );
+
+
+    await refreshAccount();
+
+  }catch(error){
+
+    console.error(
+      "Close position:",
+      error
+    );
+
+    showMessage(
+      error.message ||
+      "Gagal menutup posisi.",
+      "error"
+    );
+
+  }finally{
+
+    closeBtn.disabled =
+      false;
+
+  }
+
+}
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function renderHistory(){
+
+  historyBody.innerHTML =
+    "";
+
+
+  if(
+    !closedPositions.length
+  ){
+
+    historyEmpty.style.display =
+      "block";
+
+    historyCount.textContent =
+      "0 transaksi";
+
+    return;
+
+  }
+
+
+  historyEmpty.style.display =
+    "none";
+
+
+  historyCount.textContent =
+    closedPositions.length +
+    " transaksi";
+
+
+  historyBody.innerHTML =
+    closedPositions
+      .map(
+        item => {
+
+          const pnl =
+            Number(
+              item.pnl || 0
+            );
+
+
+          const cls =
+            pnl >= 0
+              ? "pnl-profit"
+              : "pnl-loss";
+
+
+          const sideClass =
+            item.side === "LONG"
+              ? "long"
+              : "short";
+
+
+          const time =
+            item.closed_at
+              ? new Date(
+                  item.closed_at
+                ).toLocaleString(
+                  "id-ID"
+                )
+              : "-";
+
+
+          return `
+
+            <tr>
+
+              <td>
+                ${escapeHTML(time)}
+              </td>
+
+              <td>
+
+                <span class="badge ${sideClass}">
+                  ${escapeHTML(item.side)}
+                </span>
+
+              </td>
+
+              <td>
+                ${btc(item.entry_price)}
+              </td>
+
+              <td>
+                ${btc(item.close_price)}
+              </td>
+
+              <td>
+                ${rupiah(item.nominal)}
+              </td>
+
+              <td class="${cls}">
+                ${rupiah(pnl)}
+              </td>
+
+              <td>
+                CLOSED
+              </td>
+
+            </tr>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+const canvas =
+  $("chart");
+
+const ctx =
+  canvas.getContext(
+    "2d"
+  );
+
+
+function resizeCanvas(){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  const dpr =
+    window.devicePixelRatio ||
+    1;
+
+
+  canvas.width =
+    Math.max(
+      1,
+      Math.floor(
+        rect.width * dpr
+      )
+    );
+
+
+  canvas.height =
+    Math.max(
+      1,
+      Math.floor(
+        rect.height * dpr
+      )
+    );
+
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+
+  drawChart();
+
+}
+
+
+function drawChart(){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  const w =
+    rect.width;
+
+  const h =
+    rect.height;
+
+
+  ctx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+
+  if(
+    prices.length < 2
+  ){
+
+    return;
+
+  }
+
+
+  let min =
+    Math.min(
+      ...prices
+    );
+
+  let max =
+    Math.max(
+      ...prices
+    );
+
+
+  if(
+    min === max
+  ){
+
+    min -= 1;
+
+    max += 1;
+
+  }
+
+
+  const pad =
+    18;
+
+
+  /* GRID */
+
+  ctx.strokeStyle =
+    "#1a1f23";
+
+  ctx.lineWidth =
+    1;
+
+
+  for(
+    let i = 1;
+    i <= 4;
+    i++
+  ){
+
+    const y =
+      pad +
+      (
+        (h - pad * 2) *
+        i / 5
+      );
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      y
+    );
+
+    ctx.lineTo(
+      w,
+      y
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  /* LINE */
+
+  ctx.beginPath();
+
+
+  prices.forEach(
+    (
+      value,
+      index
+    ) => {
+
+      const x =
+        prices.length === 1
+          ? 0
+          : (
+              index /
+              (prices.length - 1)
+            ) *
+            w;
+
+
+      const y =
+        h -
+        pad -
+        (
+          (
+            value - min
+          ) /
+          (
+            max - min
+          )
+        ) *
+        (
+          h - pad * 2
+        );
+
+
+      if(index === 0){
+
+        ctx.moveTo(
+          x,
+          y
+        );
+
+      }else{
+
+        ctx.lineTo(
+          x,
+          y
+        );
+
+      }
+
+    }
+  );
+
+
+  ctx.strokeStyle =
+    "#e1a928";
+
+  ctx.lineWidth =
+    2;
+
+  ctx.stroke();
+
+
+  /* CURRENT PRICE */
+
+  if(
+    Number.isFinite(lastPrice)
+  ){
+
+    const y =
+      h -
+      pad -
+      (
+        (
+          lastPrice - min
+        ) /
+        (
+          max - min
+        )
+      ) *
+      (
+        h - pad * 2
+      );
+
+
+    ctx.setLineDash(
+      [4,4]
+    );
+
+    ctx.strokeStyle =
+      "#666d74";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      y
+    );
+
+    ctx.lineTo(
+      w,
+      y
+    );
+
+    ctx.stroke();
+
+    ctx.setLineDash([]);
+
+
+    ctx.fillStyle =
+      "#d5d9de";
+
+    ctx.font =
+      "10px Arial";
+
+    ctx.textAlign =
+      "right";
+
+    ctx.fillText(
+      btc(lastPrice),
+      w - 7,
+      Math.max(
+        13,
+        y - 7
+      )
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+longBtn.addEventListener(
+  "click",
+  () => {
+    openPosition(
+      "LONG"
+    );
+  }
+);
+
+
+shortBtn.addEventListener(
+  "click",
+  () => {
+    openPosition(
+      "SHORT"
+    );
+  }
+);
+
+
+closeBtn.addEventListener(
+  "click",
+  closePosition
+);
+
+
+window.addEventListener(
+  "resize",
+  resizeCanvas
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+async function start(){
+
+  try{
+
+    const session =
+      await getSession();
+
+    if(!session){
+
+      return;
+
+    }
+
+
+    await loadSettings();
+
+    await refreshAccount();
+
+    resizeCanvas();
+
+    startMarketFeed();
+
+
+    if(accountTimer){
+
+      clearInterval(
+        accountTimer
+      );
+
+    }
+
+
+    accountTimer =
+      setInterval(
+        refreshAccount,
+        5000
+      );
+
+
+  }catch(error){
+
+    console.error(
+      "Trading init:",
+      error
+    );
+
+
+    showMessage(
+      error.message ||
+      "Gagal memuat halaman trading.",
+      "error"
+    );
+
+  }
+
+}
+
+
+start();
+
+
+})();
+
+</script>
+
+</body>
+</html>
