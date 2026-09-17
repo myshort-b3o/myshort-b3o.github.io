@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0d0f13">
+<title>MyShort App - Login</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}:root{--bg:#06101c;--card:#0c1b30;--line:rgba(118,166,225,.17);--text:#f5f8ff;--muted:#8fa3bd;--lime:#b8ff24;--blue:#4b9bff}html,body{min-height:100%;background:var(--bg)}body{min-height:100vh;color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;background:radial-gradient(circle at 78% 13%,rgba(45,116,225,.25),transparent 30%),radial-gradient(circle at 7% 88%,rgba(38,128,130,.12),transparent 28%),linear-gradient(180deg,#040b14,#071426 55%,#06101c)}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.23;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:30px 30px}.decor{position:fixed;width:270px;height:270px;border:1px solid rgba(63,133,224,.12);border-radius:50%;pointer-events:none}.decor.one{right:-165px;top:10%;background:rgba(41,107,211,.06)}.decor.two{left:-180px;bottom:-160px;background:rgba(38,128,130,.05)}.wrap{width:100%;max-width:520px;margin:0 auto;min-height:100vh;padding:17px 15px 22px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.brand-mini{display:flex;align-items:center;gap:10px}.logo{width:45px;height:45px;border-radius:13px;overflow:hidden;background:#0d1a2c;border:1px solid rgba(105,160,226,.18)}.logo img{width:100%;height:100%;object-fit:cover}.brand-name{font-size:17px;font-weight:900}.brand-sub{font-size:9px;color:#8095b0;margin-top:3px}.online{font-size:8px;font-weight:900;color:#69e85b;border:1px solid rgba(105,232,91,.3);border-radius:20px;padding:7px 9px}.heading{text-align:center;margin:8px 0 15px}.heading h1{font-size:24px;line-height:1.18;font-weight:900;letter-spacing:-.4px}.heading h1 span{color:var(--lime)}.heading p{margin:7px auto 0;max-width:390px;font-size:11px;line-height:1.5;color:var(--muted)}.card{width:100%;padding:20px 16px 17px;border-radius:22px;background:linear-gradient(145deg,#10233d,#09172a);border:1px solid rgba(112,164,225,.18);box-shadow:0 20px 45px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.03)}.field{margin-bottom:13px}.field label{display:block;color:#aebed1;font-size:10px;font-weight:800;margin:0 0 7px 2px}.input-wrap{position:relative}.input-wrap .field-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:#63aaff}.input-wrap input{width:100%;height:47px;border:1px solid rgba(112,157,211,.16);border-radius:11px;background:#071321;color:#fff;outline:none;padding:0 42px;font-size:12px}.input-wrap input:focus{border-color:rgba(91,159,255,.55);box-shadow:0 0 0 3px rgba(61,141,255,.08)}.input-wrap input::placeholder{color:#627791}.toggle{position:absolute;right:9px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:transparent;color:#8094ad;border:0;display:grid;place-items:center}.options{display:flex;justify-content:space-between;align-items:center;margin:1px 1px 15px;font-size:10px}.remember{display:flex;align-items:center;gap:6px;color:#8093ab;cursor:pointer}.remember input{accent-color:var(--lime);width:13px;height:13px}.forgot{color:#a9c6e8;text-decoration:none}.login-btn{width:100%;height:49px;border-radius:11px;border:0;background:linear-gradient(135deg,#caff3c,#89dc18);color:#142000;font-size:13px;font-weight:1000;cursor:pointer;box-shadow:0 9px 22px rgba(148,220,27,.15)}.login-btn:disabled{opacity:.55}.divider{display:flex;align-items:center;gap:12px;margin:17px 0;color:#62758d;font-size:9px}.divider:before,.divider:after{content:"";height:1px;flex:1;background:rgba(112,157,211,.13)}.register{width:100%;height:44px;border-radius:11px;border:1px solid rgba(112,157,211,.2);background:#0a182a;color:#bdcddd;font-size:10px;cursor:pointer}.register strong{color:var(--lime)}.help{text-align:center;margin-top:13px;font-size:9px;color:#647991}.help a{color:#9fc1e8}.footer{text-align:center;margin-top:14px;color:#566b84;font-size:8px;line-height:1.7}.footer a{color:#7896b8;margin:0 4px}.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,18px);background:#132235;color:#eef5ff;border:1px solid rgba(105,232,91,.28);padding:9px 12px;border-radius:10px;font-size:10px;opacity:0;pointer-events:none;transition:.2s;z-index:10;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis}.toast.show{opacity:1;transform:translate(-50%,0)}@media(max-height:700px){.wrap{justify-content:flex-start;padding-top:14px}.heading{margin:5px 0 12px}.card{padding:17px 15px 14px}}
+</style>
+<link rel="stylesheet" href="premium-brand.css">
+</head>
+
+<body>
+<div class="decor one"></div><div class="decor two"></div>
+<main class="wrap">
+  <div class="topbar"><div class="brand-mini"><div class="logo"><img src="logo.png" alt="MyShort"></div><div><div class="brand-name">MYSHORT</div><div class="brand-sub">XMR Mining Center</div></div></div><div class="online">● SECURE LOGIN</div></div>
+  <section class="heading"><h1>Selamat Datang di <span>MyShort</span></h1><p>Masuk ke Member Area untuk mengakses dashboard dan fitur akun Anda.</p></section>
+  <section class="card">
+    <form id="loginForm" autocomplete="on">
+      <div class="field"><label for="username">Email atau Username</label><div class="input-wrap"><svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/></svg><input id="username" name="username" type="text" placeholder="Masukkan email atau username" required></div></div>
+      <div class="field"><label for="password">Password</label><div class="input-wrap"><svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><input id="password" name="password" type="password" placeholder="Masukkan password" required><button class="toggle" type="button" onclick="togglePassword()" aria-label="Tampilkan password"><svg id="eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 12s3.2-5 9.5-5 9.5 5 9.5 5-3.2 5-9.5 5-9.5-5-9.5-5Z"/><circle cx="12" cy="12" r="2.3"/></svg></button></div></div>
+      <div class="options"><label class="remember"><input id="remember" type="checkbox"><span>Ingat saya</span></label><a class="forgot" href="forgot-password.html">Lupa password?</a></div>
+      <button class="login-btn" type="submit">LOGIN / MASUK</button>
+      <div class="divider"><span>atau</span></div>
+      <button class="register" type="button" onclick="location.href='register.html'">Belum punya akun? <strong>Daftar sekarang</strong></button>
+    </form>
+    <div class="help">Butuh bantuan? <a href="https://play.google.com/d">Hubungi bantuan</a></div>
+  </section>
+  <footer class="footer">© 2026 MyShort App. Semua hak dilindungi.<br><a href="https://play.google.com/d">Kebijakan Privasi</a> • <a href="https://play.google.com/d">Syarat & Ketentuan</a> • <a href="https://play.google.com/d">Bantuan</a></footer>
+</main>
+<div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="app.js"></script>
+<script src="pages.js"></script>
+<script>
+/* FIX LOGIN: pages.js lama hanya menjalankan loginPage() untuk index.html.
+   Karena sekarang index.html adalah beranda publik, login.html perlu
+   memasang handler login sendiri. Koneksi Supabase tetap memakai
+   supabase-config.js yang sama. */
+(function(){
+  function bootLogin(){
+    const form=document.getElementById("loginForm");
+    const userInput=document.getElementById("username");
+    const passInput=document.getElementById("password");
+    if(!form||!userInput||!passInput) return;
+    if(form.dataset.loginFixed==="1") return;
+    form.dataset.loginFixed="1";
+
+    window.togglePassword=function(){
+      passInput.type=passInput.type==="password"?"text":"password";
+    };
+
+    const toast=document.getElementById("toast");
+    function message(text){
+      if(toast){
+        toast.textContent=text||"Terjadi kesalahan.";
+        toast.classList.add("show");
+        clearTimeout(window.__myshortToastTimer);
+        window.__myshortToastTimer=setTimeout(()=>toast.classList.remove("show"),3500);
+      }else alert(text||"Terjadi kesalahan.");
+    }
+
+    form.addEventListener("submit",async function(e){
+      e.preventDefault();
+      const identifier=userInput.value.trim();
+      const password=passInput.value;
+      if(!identifier||!password){message("Email/username dan password wajib diisi.");return;}
+
+      const sb=window.sb;
+      if(!sb||!sb.auth){
+        message("Koneksi Supabase belum siap. Pastikan supabase-config.js ada di repository.");
+        return;
+      }
+
+      const btn=form.querySelector(".login-btn");
+      if(btn){btn.disabled=true;btn.textContent="Memproses...";}
+      try{
+        let email=identifier;
+        if(!identifier.includes("@")){
+          const result=await sb.rpc("get_login_email",{p_username:identifier});
+          if(result.error) throw result.error;
+          if(!result.data) throw new Error("Username tidak ditemukan.");
+          email=String(result.data).trim();
+        }
+
+        const result=await sb.auth.signInWithPassword({email,password});
+        if(result.error) throw result.error;
+
+        /* Supabase menyimpan session di browser. */
+        message("Login berhasil. Membuka dashboard...");
+        setTimeout(()=>{window.location.replace("dashboard.html");},250);
+      }catch(err){
+        console.error("MyShort login:",err);
+        let text=err&&err.message?err.message:"Login gagal.";
+        if(/invalid login credentials/i.test(text)) text="Email/username atau password salah.";
+        message(text);
+        if(btn){btn.disabled=false;btn.textContent="Masuk Sekarang";}
+      }
+    });
+
+    /* Jika masih ada session, langsung ke dashboard. */
+    sbReadyCheck();
+    async function sbReadyCheck(){
+      try{
+        const sb=window.sb;
+        if(!sb||!sb.auth)return;
+        const {data}=await sb.auth.getSession();
+        if(data&&data.session){
+          window.location.replace("dashboard.html");
+        }
+      }catch(err){console.warn("Session check:",err);}
+    }
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bootLogin);
+  else bootLogin();
+})();
+</script>
+</body>
+
+
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<meta
+    name="theme-color"
+    content="#f3f1ec"
+>
+
+<meta
+    name="mobile-web-app-capable"
+    content="yes"
+>
+
+<title>MyShort — XMR Mining Center</title>
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#06101c;--card:#0c1b30;--card2:#10233d;--line:rgba(118,166,225,.17);--text:#f5f8ff;--muted:#8ea2bd;--blue:#3d8dff;--lime:#b8ff24;--gold:#ffbd31}
+html,body{min-height:100%;background:var(--bg)}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);overflow-x:hidden;background:radial-gradient(circle at 78% 13%,rgba(45,116,225,.25),transparent 30%),radial-gradient(circle at 5% 80%,rgba(38,128,130,.12),transparent 28%),linear-gradient(180deg,#040b14,#071426 55%,#06101c)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:30px 30px}
+.page{position:relative;z-index:1;width:100%;max-width:760px;margin:auto;min-height:100vh;padding-bottom:25px}
+.header{min-height:86px;padding:17px 18px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(5,13,24,.94);border-bottom:1px solid rgba(120,169,226,.11)}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:47px;height:47px;border-radius:14px;overflow:hidden;flex:0 0 47px;background:#0d1a2c;border:1px solid rgba(105,160,226,.18);box-shadow:0 8px 22px rgba(0,0,0,.34)}.logo img{width:100%;height:100%;object-fit:cover}.brand-title{font-size:19px;font-weight:900;letter-spacing:.3px}.brand-sub{font-size:11px;color:#8196b1;margin-top:4px}.status{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:30px;border:1px solid rgba(105,232,91,.3);background:rgba(91,205,78,.06);color:#69e85b;font-size:9px;font-weight:900;white-space:nowrap}.status-dot{width:7px;height:7px;border-radius:50%;background:#69e85b;box-shadow:0 0 10px rgba(105,232,91,.85)}
+.landing{padding:16px 15px 0}.asset-card,.welcome-card,.mini-panel{border-radius:24px;border:1px solid rgba(112,164,225,.18);box-shadow:0 18px 38px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.03);background:linear-gradient(145deg,#102644,#0b1930 58%,#081426);overflow:hidden;position:relative}.asset-card{padding:18px}.asset-card:after{content:"";position:absolute;width:210px;height:210px;right:-90px;top:-90px;border-radius:50%;background:rgba(46,108,202,.13)}.asset-head{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px}.asset-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:900}.asset-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(45,126,241,.13);border:1px solid rgba(78,155,255,.23);color:#62aaff}.asset-total{font-size:9px;color:#8fa5c0;font-weight:800}.asset-total b{color:var(--lime);font-size:11px}.asset-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;position:relative;z-index:1}.asset-pill{min-height:60px;padding:12px;border-radius:16px;background:rgba(4,12,23,.52);border:1px solid rgba(113,161,219,.12)}.asset-pill small{display:block;color:#8095af;font-size:9px;font-weight:800}.asset-pill b{display:block;margin-top:6px;font-size:15px}.asset-pill .lime{color:var(--lime)}
+.welcome-card{margin-top:15px;padding:27px 19px 19px;text-align:center;background:radial-gradient(circle at 78% 16%,rgba(48,117,221,.28),transparent 34%),linear-gradient(180deg,#111f3a,#09182d)}.eyebrow{font-size:10px;letter-spacing:1.8px;color:#72aefb;font-weight:900}.welcome-card h1{font-size:27px;line-height:1.17;margin-top:11px;letter-spacing:-.7px}.welcome-card p{max-width:470px;margin:10px auto 0;color:#91a5bf;font-size:12px;line-height:1.6}.login-button{display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;width:100%;height:50px;margin-top:20px;border-radius:12px;background:linear-gradient(135deg,#caff3c,#89dc18);color:#122000;font-size:13px;font-weight:1000;box-shadow:0 9px 23px rgba(148,220,27,.16)}.login-icon{width:21px;height:21px;display:grid;place-items:center}.login-icon svg{width:21px;height:21px}.register-button{display:flex;align-items:center;justify-content:center;width:100%;height:45px;margin-top:9px;border-radius:12px;border:1px solid rgba(94,150,224,.26);background:#0b182b;color:#cbd8e8;text-decoration:none;font-size:10px;font-weight:800}.register-button b{color:var(--lime);margin-left:4px}.mini-panel{margin-top:15px;padding:16px 17px;background:linear-gradient(145deg,rgba(14,31,53,.95),rgba(7,18,32,.95))}.mini-title{font-size:11px;font-weight:900;color:#e7eef8;margin-bottom:10px}.mini-title span{color:var(--lime);margin-right:6px}.mini-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid rgba(113,157,211,.1);font-size:10px;color:#8297b0}.mini-row b{font-size:9px;color:#69e85b}.social-area{display:flex;justify-content:center;gap:11px;margin:17px 0 8px}.social{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;text-decoration:none;color:#90a8c3;background:#0d1d32;border:1px solid rgba(112,157,213,.15)}.social svg{width:15px;height:15px;fill:currentColor}.footer{text-align:center;color:#61758f;font-size:9px;margin-top:9px}@media(max-width:430px){.header{padding-left:14px;padding-right:14px}.landing{padding-left:12px;padding-right:12px}.welcome-card h1{font-size:24px}.asset-title{font-size:15px}}@media(max-width:350px){.status{display:none}.welcome-card h1{font-size:22px}.welcome-card{padding:23px 15px 17px}}
+</style>
+
+</head>
+
+
+<body>
+<div class="page">
+<header class="header">
+  <div class="brand">
+    <div class="logo"><img src="logo.png" alt="MyShort"></div>
+    <div><div class="brand-title">MYSHORT</div><div class="brand-sub">XMR Mining Center</div></div>
+  </div>
+  <div class="status"><span class="status-dot"></span>MEMBER AREA</div>
+</header>
+
+<main class="landing">
+  <section class="asset-card">
+    <div class="asset-head"><div class="asset-title"><div class="asset-icon">◈</div><span>MyShort Platform</span></div><div class="asset-total">STATUS: <b>ONLINE</b></div></div>
+    <div class="asset-grid">
+      <div class="asset-pill"><small>PLATFORM</small><b>MYSHORT</b></div>
+      <div class="asset-pill"><small>MINING CENTER</small><b class="lime">XMR</b></div>
+    </div>
+  </section>
+
+  <section class="welcome-card">
+    <div class="eyebrow">MYSHORT MINING CENTER</div>
+    <h1>Kelola akun dan aktivitas mining Anda.</h1>
+    <p>Masuk ke Member Area untuk mengakses dashboard, wallet, misi, referral, dan fitur MyShort lainnya.</p>
+
+    <a href="login.html" class="login-button">
+      <span class="login-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"></rect><path d="M8 12h8"></path><path d="M13 9l3 3-3 3"></path></svg></span>
+      LOGIN / MASUK
+    </a>
+
+    <a href="register.html" class="register-button">BELUM PUNYA AKUN? <b>DAFTAR</b></a>
+  </section>
+
+  <section class="mini-panel">
+    <div class="mini-title"><span>◉</span> MEMBER ACCESS</div>
+    <div class="mini-row"><span>Secure Account</span><b>● READY</b></div>
+    <div class="mini-row"><span>Dashboard</span><b>AVAILABLE</b></div>
+    <div class="mini-row"><span>Wallet & Mission</span><b>AVAILABLE</b></div>
+  </section>
+
+  <div class="social-area">
+
+
+            <!-- FACEBOOK -->
+
+            <a
+                href="#"
+                class="social"
+                title="Facebook"
+                aria-label="Facebook"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                        M14 8h3V4h-3
+                        c-3.3 0-5 1.9-5 5v3H6v4h3v8h4v-8h3.5
+                        l.5-4H13V9c0-.7.3-1 1-1z
+                    "></path>
+
+                </svg>
+
+            </a>
+
+
+            <!-- TELEGRAM -->
+
+            <a
+                href="#"
+                class="social"
+                title="Telegram"
+                aria-label="Telegram"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                        M21.7 3.2L2.9 10.5
+                        c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5
+                        1.8 5.6c.2.6.7.8 1.1.3l2.3-2.2
+                        4.8 3.5c.9.5 1.6.2 1.8-.8l3.1-14.7
+                        c.3-1.2-.5-1.8-1.3-1.5z
+                    "></path>
+
+                </svg>
+
+            </a>
+
+
+            <!-- X / TWITTER -->
+
+            <a
+                href="#"
+                class="social"
+                title="X / Twitter"
+                aria-label="X / Twitter"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                        M18.9 2H22l-6.8 7.8L23 22h-6.1
+                        l-4.8-6.3L6.6 22H3.5l7.3-8.4L3 2h6.2
+                        l4.3 5.7L18.9 2zm-1.1 17.8h1.7L8.3 4.1H6.5z
+                    "></path>
+
+                </svg>
+
+            </a>
+
+
+            <!-- GOOGLE -->
+
+            <a
+                href="#"
+                class="social"
+                title="Google"
+                aria-label="Google"
+            >
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                        M21.8 12.2c0-.7-.1-1.4-.2-2H12v3.8
+                        h5.5a4.7 4.7 0 0 1-2 3.1v2.6h3.2
+                        c1.9-1.8 3.1-4.4 3.1-7.5z
+
+                        M12 22c2.7 0 5-.9 6.7-2.4
+                        l-3.2-2.6c-.9.6-2.1 1-3.5 1
+                        -2.7 0-5-1.8-5.8-4.2H2.9v2.7
+                        A10.1 10.1 0 0 0 12 22z
+
+                        M6.2 13.8A6.1 6.1 0 0 1 5.9 12
+                        c0-.6.1-1.2.3-1.8V7.5H2.9
+                        A10 10 0 0 0 2 12
+                        c0 1.6.4 3.1.9 4.5z
+
+                        M12 6c1.5 0 2.8.5 3.8 1.5
+                        l2.9-2.9C17 2.9 14.7 2 12 2
+                        A10.1 10.1 0 0 0 2.9 7.5
+                        l3.3 2.7C7 7.8 9.3 6 12 6z
+                    "></path>
+
+                </svg>
+
+            </a>
+
+
+        </div>
+  <footer class="footer">© 2026 MYSHORT • Member Area</footer>
+</main>
+</div>
+</body>
+</html>
