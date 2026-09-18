@@ -1,0 +1,1349 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#f4f0e6">
+
+<title>Harga XMR MyShort</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#f4f0e6;
+  --bg2:#fffdf8;
+  --card:#ffffff;
+  --text:#202020;
+  --muted:#77746d;
+  --orange:#f28c18;
+  --orange2:#ffb43b;
+  --border:#e6dfd2;
+  --green:#258a52;
+  --shadow:0 12px 30px rgba(65,52,30,.10);
+}
+
+html{
+  background:var(--bg);
+}
+
+body{
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(242,140,24,.08),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #f8f5ed 0%,
+      #f1ece1 100%
+    );
+
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:35px;
+  -webkit-font-smoothing:antialiased;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+  width:min(760px,100%);
+  margin:0 auto;
+  padding:18px 14px 35px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+  text-align:center;
+  padding:10px 5px 20px;
+}
+
+
+/* LOGO MYSHORT */
+
+.logo{
+  width:58px;
+  height:58px;
+  margin:0 auto 11px;
+
+  border-radius:17px;
+
+  background:#fff;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+
+  border:1px solid #e4ddd0;
+
+  box-shadow:
+    0 8px 22px rgba(65,52,30,.10);
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+
+.header h1{
+  font-size:26px;
+  line-height:1.15;
+  font-weight:850;
+  letter-spacing:-.6px;
+  color:#202020;
+}
+
+.header p{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+
+/* =========================================================
+   RATE CARD
+========================================================= */
+
+.rate-card{
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf8,
+      #ffffff
+    );
+
+  border:1px solid var(--border);
+
+  border-radius:22px;
+
+  padding:18px;
+
+  box-shadow:var(--shadow);
+
+  margin-bottom:16px;
+
+  text-align:center;
+}
+
+.rate-label{
+  font-size:11px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  font-weight:800;
+}
+
+.rate-value{
+  margin-top:7px;
+  color:#d87509;
+  font-size:27px;
+  font-weight:900;
+  letter-spacing:-.5px;
+}
+
+.rate-sub{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.info-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:17px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+}
+
+.info-title{
+  font-size:17px;
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.info-text{
+  color:#5f5c55;
+  font-size:13px;
+  line-height:1.65;
+}
+
+.formula{
+  margin-top:13px;
+
+  background:#fff8ea;
+
+  border:1px solid #f1d7a7;
+
+  border-radius:14px;
+
+  padding:13px;
+
+  text-align:center;
+
+  font-size:14px;
+
+  font-weight:800;
+
+  color:#8b560d;
+
+  line-height:1.6;
+}
+
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.table-card{
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:22px;
+
+  box-shadow:var(--shadow);
+
+  overflow:hidden;
+
+  margin-bottom:18px;
+}
+
+.table-head{
+  padding:17px 17px 13px;
+}
+
+.table-title{
+  font-size:18px;
+  font-weight:850;
+}
+
+.table-subtitle{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+
+/* TABLE */
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.price-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:420px;
+}
+
+.price-table th{
+  background:#f8f4eb;
+  color:#6d685f;
+
+  font-size:11px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.6px;
+
+  font-weight:800;
+
+  padding:12px 14px;
+
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+
+  text-align:left;
+}
+
+.price-table th:last-child,
+.price-table td:last-child{
+  text-align:right;
+}
+
+.price-table td{
+  padding:12px 14px;
+
+  font-size:13px;
+
+  border-bottom:1px solid #eee9df;
+
+  color:#383632;
+}
+
+.price-table tr:last-child td{
+  border-bottom:0;
+}
+
+.price-table tbody tr:nth-child(even){
+  background:#fffdf9;
+}
+
+.price-table td:first-child{
+  font-weight:700;
+  color:#33312d;
+}
+
+.price-table td:last-child{
+  font-weight:800;
+  color:#c66c0a;
+}
+
+
+/* HIGHLIGHT EXAMPLE */
+
+.highlight-row{
+  background:#fff6e5 !important;
+}
+
+.highlight-row td{
+  color:#9b5d0a !important;
+}
+
+.highlight-row td:last-child{
+  color:#d56f00 !important;
+}
+
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+.calculator{
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fffaf0
+    );
+
+  border:1px solid #e1d7c5;
+
+  border-radius:24px;
+
+  padding:19px;
+
+  box-shadow:var(--shadow);
+
+  margin-bottom:18px;
+}
+
+.calc-header{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:16px;
+}
+
+.calc-icon{
+  width:45px;
+  height:45px;
+
+  flex:0 0 45px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:14px;
+
+  background:#fff2d8;
+
+  border:1px solid #efd09d;
+
+  color:#d9790b;
+
+  font-size:21px;
+}
+
+.calc-title{
+  font-size:19px;
+  font-weight:900;
+}
+
+.calc-subtitle{
+  margin-top:2px;
+  color:var(--muted);
+  font-size:11.5px;
+}
+
+
+/* FORM GROUP */
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group label{
+  display:block;
+
+  font-size:12px;
+
+  font-weight:800;
+
+  color:#5e5a53;
+
+  margin-bottom:6px;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap input{
+  width:100%;
+
+  height:48px;
+
+  border:1px solid #ddd5c7;
+
+  border-radius:13px;
+
+  background:#fff;
+
+  color:#242321;
+
+  padding:0 48px 0 13px;
+
+  outline:none;
+
+  font-size:14px;
+
+  font-family:inherit;
+
+  transition:.2s;
+}
+
+.input-wrap input:focus{
+  border-color:#e3a14b;
+
+  box-shadow:
+    0 0 0 3px rgba(242,140,24,.10);
+}
+
+.input-suffix{
+  position:absolute;
+
+  right:13px;
+
+  top:50%;
+
+  transform:translateY(-50%);
+
+  font-size:12px;
+
+  font-weight:800;
+
+  color:#9a948a;
+}
+
+
+/* CALCULATE BUTTON */
+
+.calculate-btn{
+  width:100%;
+
+  height:48px;
+
+  border:0;
+
+  border-radius:13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f6a32a,
+      #e47b09
+    );
+
+  color:#fff;
+
+  font-family:inherit;
+
+  font-size:14px;
+
+  font-weight:850;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 8px 18px rgba(222,125,11,.22);
+
+  transition:.2s;
+}
+
+.calculate-btn:active{
+  transform:scale(.98);
+}
+
+
+/* RESULT */
+
+.result{
+  margin-top:16px;
+
+  border-radius:17px;
+
+  border:1px solid #cde4d5;
+
+  background:#f3fbf6;
+
+  padding:16px;
+
+  text-align:center;
+}
+
+.result-label{
+  font-size:10px;
+
+  text-transform:uppercase;
+
+  letter-spacing:1.2px;
+
+  font-weight:850;
+
+  color:#6a7d70;
+}
+
+.result-value{
+  margin-top:5px;
+
+  font-size:29px;
+
+  line-height:1.15;
+
+  font-weight:950;
+
+  color:var(--green);
+
+  word-break:break-word;
+}
+
+.result-formula{
+  margin-top:8px;
+
+  color:#667168;
+
+  font-size:11.5px;
+
+  line-height:1.5;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.note{
+  background:#f8f5ee;
+
+  border:1px solid #e4ddd1;
+
+  border-radius:17px;
+
+  padding:14px 15px;
+
+  color:#6e6a63;
+
+  font-size:11.5px;
+
+  line-height:1.65;
+
+  margin-bottom:17px;
+}
+
+.note strong{
+  color:#494640;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+  text-align:center;
+
+  color:#969189;
+
+  font-size:10.5px;
+
+  line-height:1.5;
+
+  padding:5px 10px 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:480px){
+
+  .container{
+    padding:14px 11px 28px;
+  }
+
+  .header{
+    padding-top:8px;
+    padding-bottom:17px;
+  }
+
+  .logo{
+    width:54px;
+    height:54px;
+    border-radius:16px;
+  }
+
+  .header h1{
+    font-size:23px;
+  }
+
+  .header p{
+    font-size:12px;
+  }
+
+  .rate-card{
+    border-radius:19px;
+    padding:16px;
+  }
+
+  .rate-value{
+    font-size:24px;
+  }
+
+  .info-card{
+    border-radius:18px;
+    padding:15px;
+  }
+
+  .table-card{
+    border-radius:19px;
+  }
+
+  .table-head{
+    padding:15px;
+  }
+
+  .calculator{
+    border-radius:20px;
+    padding:16px;
+  }
+
+  .calc-title{
+    font-size:18px;
+  }
+
+  .result-value{
+    font-size:26px;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    <img
+      src="logo.png"
+      alt="MyShort Logo"
+    >
+  </div>
+
+  <h1>
+    Harga XMR MyShort
+  </h1>
+
+  <p>
+    Informasi nilai XMR dan perhitungan XMR ke Rupiah
+  </p>
+
+</header>
+
+
+<!-- =======================================================
+     RATE
+======================================================== -->
+
+<section class="rate-card">
+
+  <div class="rate-label">
+    Nilai Referensi
+  </div>
+
+  <div class="rate-value">
+    Rp 9.181.017
+  </div>
+
+  <div class="rate-sub">
+    1 XMR
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     INFO
+======================================================== -->
+
+<section class="info-card">
+
+  <div class="info-title">
+    Cara menghitung XMR menjadi Rupiah
+  </div>
+
+  <div class="info-text">
+
+    Nilai Rupiah dihitung berdasarkan jumlah XMR
+    dikalikan dengan harga 1 XMR yang digunakan
+    pada saat perhitungan atau proses swap.
+
+  </div>
+
+  <div class="formula">
+
+    Jumlah XMR × Harga 1 XMR = Nilai Rupiah
+
+    <br>
+
+    Contoh:
+
+    <br>
+
+    0,000002294676 × Rp 9.181.017
+    = <strong>Rp 21,07</strong>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     TABLE
+======================================================== -->
+
+<section class="table-card">
+
+  <div class="table-head">
+
+    <div class="table-title">
+      Tabel Harga XMR
+    </div>
+
+    <div class="table-subtitle">
+      Perkiraan nilai XMR berdasarkan harga referensi
+      Rp 9.181.017 untuk 1 XMR.
+    </div>
+
+  </div>
+
+
+  <div class="table-wrap">
+
+    <table class="price-table">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Jumlah XMR
+          </th>
+
+          <th>
+            Nilai Rupiah
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr>
+          <td>0,000001 XMR</td>
+          <td>Rp 9,18</td>
+        </tr>
+
+        <tr>
+          <td>0,000002 XMR</td>
+          <td>Rp 18,36</td>
+        </tr>
+
+        <tr class="highlight-row">
+          <td>0,000002294676 XMR</td>
+          <td>Rp 21,07</td>
+        </tr>
+
+        <tr>
+          <td>0,000005 XMR</td>
+          <td>Rp 45,91</td>
+        </tr>
+
+        <tr>
+          <td>0,000010 XMR</td>
+          <td>Rp 91,81</td>
+        </tr>
+
+        <tr>
+          <td>0,000050 XMR</td>
+          <td>Rp 459,05</td>
+        </tr>
+
+        <tr>
+          <td>0,000100 XMR</td>
+          <td>Rp 918,10</td>
+        </tr>
+
+        <tr>
+          <td>0,001000 XMR</td>
+          <td>Rp 9.181,02</td>
+        </tr>
+
+        <tr>
+          <td>0,010000 XMR</td>
+          <td>Rp 91.810,17</td>
+        </tr>
+
+        <tr>
+          <td>0,100000 XMR</td>
+          <td>Rp 918.101,70</td>
+        </tr>
+
+        <tr>
+          <td>1,000000 XMR</td>
+          <td>Rp 9.181.017,00</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     CALCULATOR
+======================================================== -->
+
+<section class="calculator">
+
+  <div class="calc-header">
+
+    <div class="calc-icon">
+      🧮
+    </div>
+
+    <div>
+
+      <div class="calc-title">
+        Hitung XMR → Rupiah
+      </div>
+
+      <div class="calc-subtitle">
+        Gunakan perhitungan seperti pada admin panel
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- JUMLAH COIN -->
+
+  <div class="form-group">
+
+    <label for="coinAmount">
+      Jumlah Coin / XMR
+    </label>
+
+    <div class="input-wrap">
+
+      <input
+        type="text"
+        id="coinAmount"
+        inputmode="decimal"
+        value="0,000002294676"
+        placeholder="Contoh: 0,000002294676"
+      >
+
+      <span class="input-suffix">
+        XMR
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- HARGA XMR -->
+
+  <div class="form-group">
+
+    <label for="xmrRate">
+      Harga 1 XMR
+    </label>
+
+    <div class="input-wrap">
+
+      <input
+        type="text"
+        id="xmrRate"
+        inputmode="numeric"
+        value="9.181.017"
+        placeholder="Contoh: 9.181.017"
+      >
+
+      <span class="input-suffix">
+        IDR
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <button
+    type="button"
+    class="calculate-btn"
+    onclick="calculateXMR()"
+  >
+    HITUNG NILAI RUPIAH
+  </button>
+
+
+  <!-- RESULT -->
+
+  <div class="result">
+
+    <div class="result-label">
+      Nilai Rupiah
+    </div>
+
+    <div
+      class="result-value"
+      id="resultValue"
+    >
+      Rp 21,07
+    </div>
+
+    <div
+      class="result-formula"
+      id="resultFormula"
+    >
+      0,000002294676 XMR × Rp 9.181.017
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     NOTE
+======================================================== -->
+
+<section class="note">
+
+  <strong>Catatan:</strong><br>
+
+  Nilai Rupiah pada tabel menggunakan harga referensi
+  <strong>Rp 9.181.017 untuk 1 XMR</strong>.
+
+  <br><br>
+
+  Kalkulator di atas dapat digunakan untuk memasukkan
+  jumlah XMR dan harga 1 XMR secara manual.
+
+  <br><br>
+
+  Jika harga 1 XMR berubah, nilai Rupiah hasil perhitungan
+  juga akan berubah.
+
+</section>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
+<div class="footer">
+
+  MyShort App<br>
+  XMR Price Information
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PARSE ANGKA INDONESIA
+========================================================= */
+
+function parseNumber(value){
+
+  if(value === null || value === undefined){
+    return 0;
+  }
+
+  let s =
+    String(value)
+      .trim()
+      .replace(/\s/g,"");
+
+  if(!s){
+    return 0;
+  }
+
+
+  /*
+    Untuk input XMR:
+    0,000002294676
+    menjadi
+    0.000002294676
+  */
+
+  if(
+    s.includes(",") &&
+    !s.includes(".")
+  ){
+
+    s =
+      s.replace(",", ".");
+
+  }
+
+  /*
+    Untuk harga:
+    9.181.017
+    menjadi
+    9181017
+  */
+
+  else if(
+    s.includes(".") &&
+    !s.includes(",")
+  ){
+
+    const parts =
+      s.split(".");
+
+    /*
+      Jika titik lebih dari satu,
+      berarti kemungkinan format
+      ribuan Indonesia.
+    */
+
+    if(parts.length > 2){
+
+      s =
+        s.replace(/\./g,"");
+
+    }
+
+    /*
+      Jika satu titik dan 3 angka
+      di belakangnya, anggap
+      sebagai pemisah ribuan.
+    */
+
+    else if(
+      parts.length === 2 &&
+      parts[1].length === 3
+    ){
+
+      s =
+        s.replace(/\./g,"");
+
+    }
+
+  }
+
+  /*
+    Format campuran:
+    9.181.017,50
+  */
+
+  else if(
+    s.includes(".") &&
+    s.includes(",")
+  ){
+
+    s =
+      s.replace(/\./g,"")
+       .replace(",", ".");
+
+  }
+
+  const n =
+    Number(s);
+
+  return Number.isFinite(n)
+    ? n
+    : 0;
+
+}
+
+
+/* =========================================================
+   FORMAT XMR
+========================================================= */
+
+function formatXMR(value){
+
+  return Number(value)
+    .toLocaleString(
+      "id-ID",
+      {
+        minimumFractionDigits:6,
+        maximumFractionDigits:12
+      }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT RUPIAH
+========================================================= */
+
+function formatRupiah(value){
+
+  return Number(value)
+    .toLocaleString(
+      "id-ID",
+      {
+        style:"currency",
+        currency:"IDR",
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT HARGA XMR
+========================================================= */
+
+function formatRate(value){
+
+  return Number(value)
+    .toLocaleString(
+      "id-ID",
+      {
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATE
+========================================================= */
+
+function calculateXMR(){
+
+  const coinInput =
+    document.getElementById(
+      "coinAmount"
+    );
+
+  const rateInput =
+    document.getElementById(
+      "xmrRate"
+    );
+
+  const resultValue =
+    document.getElementById(
+      "resultValue"
+    );
+
+  const resultFormula =
+    document.getElementById(
+      "resultFormula"
+    );
+
+
+  const coin =
+    parseNumber(
+      coinInput.value
+    );
+
+
+  const rate =
+    parseNumber(
+      rateInput.value
+    );
+
+
+  if(
+    !Number.isFinite(coin) ||
+    coin < 0
+  ){
+
+    resultValue.textContent =
+      "Jumlah XMR tidak valid";
+
+    resultFormula.textContent =
+      "Masukkan jumlah XMR yang benar.";
+
+    return;
+
+  }
+
+
+  if(
+    !Number.isFinite(rate) ||
+    rate <= 0
+  ){
+
+    resultValue.textContent =
+      "Harga XMR tidak valid";
+
+    resultFormula.textContent =
+      "Masukkan harga 1 XMR yang benar.";
+
+    return;
+
+  }
+
+
+  /*
+    PERHITUNGAN SAMA DENGAN ADMIN PANEL:
+
+    coin × rate
+
+    kemudian dibulatkan menjadi
+    2 angka desimal.
+  */
+
+  const estimatedRaw =
+    coin * rate;
+
+
+  const estimated =
+    Math.round(
+      estimatedRaw * 100
+    ) / 100;
+
+
+  resultValue.textContent =
+    formatRupiah(
+      estimated
+    );
+
+
+  resultFormula.textContent =
+    formatXMR(coin) +
+    " XMR × Rp " +
+    formatRate(rate);
+
+}
+
+
+/* =========================================================
+   AUTO HITUNG SAAT HALAMAN DIBUKA
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    calculateXMR();
+
+  }
+);
+
+
+/* =========================================================
+   ENTER UNTUK HITUNG
+========================================================= */
+
+document
+  .getElementById("coinAmount")
+  .addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key === "Enter"){
+        calculateXMR();
+      }
+
+    }
+  );
+
+
+document
+  .getElementById("xmrRate")
+  .addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key === "Enter"){
+        calculateXMR();
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
