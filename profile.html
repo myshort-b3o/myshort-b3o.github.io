@@ -1,0 +1,3037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+  name="theme-color"
+  content="#06101f"
+>
+
+<title>Profile - MyShort</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  background:#06101f;
+}
+
+body{
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  color:#f2f6ff;
+
+  min-height:100vh;
+
+  padding-bottom:88px;
+
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(36,113,214,.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 95% 28%,
+      rgba(24,78,150,.18),
+      transparent 32%
+    ),
+    linear-gradient(
+      145deg,
+      #050d19 0%,
+      #08182c 48%,
+      #06101f 100%
+    );
+
+  -webkit-font-smoothing:antialiased;
+
+  overflow-x:hidden;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+
+  --bg:#06101f;
+
+  --bg2:#081a30;
+
+  --card:#0c2038;
+
+  --card2:#0a1a2f;
+
+  --blue:#3187e8;
+
+  --blue2:#65b0ff;
+
+  --blue3:#1d5da8;
+
+  --line:rgba(69,143,226,.30);
+
+  --line-soft:rgba(100,160,220,.13);
+
+  --white:#f4f8ff;
+
+  --text:#dbe8f8;
+
+  --muted:#8fa6c1;
+
+  --green:#39d98a;
+
+  --red:#ff6874;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  pointer-events:none;
+
+  opacity:.13;
+
+  background-image:
+    radial-gradient(
+      rgba(76,151,231,.8) 1px,
+      transparent 1px
+    );
+
+  background-size:30px 30px;
+
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+
+  width:100%;
+
+  max-width:760px;
+
+  margin:0 auto;
+
+  padding:0 15px;
+
+  position:relative;
+
+  z-index:1;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:18px 3px 10px;
+}
+
+.topbar-title{
+
+  font-size:27px;
+
+  line-height:1.1;
+
+  font-weight:800;
+
+  letter-spacing:-.6px;
+
+  color:#f4f8ff;
+}
+
+.topbar-subtitle{
+
+  margin-top:5px;
+
+  font-size:11px;
+
+  color:var(--muted);
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
+.profile-head{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+
+  padding:14px 3px 18px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-box{
+
+  width:70px;
+
+  height:70px;
+
+  min-width:70px;
+
+  border-radius:21px;
+
+  display:grid;
+
+  place-items:center;
+
+  overflow:hidden;
+
+  border:1px solid
+    rgba(74,148,232,.48);
+
+  background:
+    linear-gradient(
+      145deg,
+      #12345a,
+      #071323
+    );
+
+  box-shadow:
+    0 0 25px
+    rgba(32,112,207,.16);
+}
+
+.logo-box img{
+
+  width:53px;
+
+  height:53px;
+
+  object-fit:contain;
+
+  display:block;
+}
+
+
+/* =========================================================
+   MEMBER INFO
+========================================================= */
+
+.member-info{
+
+  min-width:0;
+
+  flex:1;
+}
+
+.member-label{
+
+  color:#6fa9e8;
+
+  font-size:9px;
+
+  letter-spacing:1.8px;
+
+  font-weight:800;
+
+  margin-bottom:5px;
+}
+
+.member-info h1{
+
+  color:#f4f8ff;
+
+  font-size:23px;
+
+  line-height:1.15;
+
+  font-weight:800;
+
+  margin-bottom:4px;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+}
+
+.member-info p{
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  margin-bottom:8px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-badge{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  padding:5px 10px;
+
+  border-radius:999px;
+
+  color:#75e9b0;
+
+  font-size:10px;
+
+  font-weight:800;
+
+  border:1px solid
+    rgba(57,217,138,.30);
+
+  background:
+    rgba(57,217,138,.08);
+}
+
+.status-dot{
+
+  width:6px;
+
+  height:6px;
+
+  border-radius:50%;
+
+  background:#39d98a;
+
+  box-shadow:
+    0 0 8px
+    rgba(57,217,138,.7);
+}
+
+
+/* =========================================================
+   BLUE PROMO
+========================================================= */
+
+.promo-banner{
+
+  position:relative;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  min-height:100px;
+
+  padding:16px 14px;
+
+  margin-bottom:15px;
+
+  overflow:hidden;
+
+  border-radius:21px;
+
+  border:1px solid
+    rgba(54,133,220,.45);
+
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(67,153,239,.23),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #0d2949,
+      #081a2e 62%,
+      #071323
+    );
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,.25);
+}
+
+.promo-banner::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:160px;
+
+  height:160px;
+
+  right:-60px;
+
+  top:-90px;
+
+  border-radius:50%;
+
+  background:
+    rgba(45,126,218,.10);
+
+  filter:blur(4px);
+}
+
+.promo-icon{
+
+  position:relative;
+
+  z-index:1;
+
+  width:50px;
+
+  height:50px;
+
+  min-width:50px;
+
+  border-radius:15px;
+
+  display:grid;
+
+  place-items:center;
+
+  color:#75b9ff;
+
+  font-size:21px;
+
+  font-weight:900;
+
+  border:1px solid
+    rgba(73,154,236,.45);
+
+  background:
+    linear-gradient(
+      145deg,
+      #16457a,
+      #0a2039
+    );
+}
+
+.promo-copy{
+
+  min-width:0;
+
+  flex:1;
+
+  position:relative;
+
+  z-index:1;
+}
+
+.promo-top{
+
+  color:#8fb9e8;
+
+  font-size:8px;
+
+  letter-spacing:1.5px;
+
+  font-weight:800;
+
+  margin-bottom:3px;
+}
+
+.promo-title{
+
+  color:#f1f7ff;
+
+  font-size:19px;
+
+  line-height:1.05;
+
+  font-weight:900;
+
+  letter-spacing:.2px;
+}
+
+.promo-desc{
+
+  color:#91a9c4;
+
+  font-size:10.5px;
+
+  line-height:1.4;
+
+  margin-top:5px;
+}
+
+.promo-btn{
+
+  position:relative;
+
+  z-index:1;
+
+  flex:0 0 auto;
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:4px;
+
+  padding:9px 11px;
+
+  border-radius:12px;
+
+  text-decoration:none;
+
+  color:#fff;
+
+  font-size:10px;
+
+  font-weight:800;
+
+  white-space:nowrap;
+
+  border:1px solid
+    rgba(100,177,255,.42);
+
+  background:
+    linear-gradient(
+      135deg,
+      #2678d1,
+      #17549b
+    );
+
+  box-shadow:
+    0 7px 18px
+    rgba(20,91,168,.22);
+}
+
+.promo-btn span{
+
+  font-size:17px;
+
+  line-height:10px;
+}
+
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:14px 15px;
+
+  margin-bottom:14px;
+
+  border-radius:18px;
+
+  border:1px solid
+    var(--line-soft);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(14,34,58,.96),
+      rgba(8,23,40,.96)
+    );
+}
+
+.welcome-icon{
+
+  width:39px;
+
+  height:39px;
+
+  min-width:39px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:12px;
+
+  background:
+    rgba(42,122,215,.12);
+
+  border:1px solid
+    rgba(57,137,222,.22);
+
+  font-size:18px;
+}
+
+.welcome-main{
+
+  min-width:0;
+
+  flex:1;
+}
+
+.welcome-title{
+
+  color:#dfeeff;
+
+  font-size:13px;
+
+  margin-bottom:3px;
+}
+
+.welcome-desc{
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.45;
+}
+
+
+/* =========================================================
+   MENU CARD
+========================================================= */
+
+.menu-card{
+
+  overflow:hidden;
+
+  margin-bottom:14px;
+
+  border-radius:21px;
+
+  border:1px solid
+    var(--line-soft);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(12,31,53,.98),
+      rgba(7,21,36,.98)
+    );
+
+  box-shadow:
+    0 14px 35px
+    rgba(0,0,0,.20);
+}
+
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+.menu-item{
+
+  width:100%;
+
+  min-height:74px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:11px 14px;
+
+  border:0;
+
+  border-bottom:1px solid
+    rgba(105,157,210,.09);
+
+  background:transparent;
+
+  color:#edf5ff;
+
+  text-decoration:none;
+
+  text-align:left;
+
+  cursor:pointer;
+
+  font-family:inherit;
+}
+
+.menu-item:last-child{
+
+  border-bottom:0;
+}
+
+.menu-item:active{
+
+  background:
+    rgba(49,135,232,.08);
+}
+
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.menu-icon{
+
+  width:45px;
+
+  height:45px;
+
+  min-width:45px;
+
+  border-radius:14px;
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:20px;
+
+  border:1px solid
+    rgba(94,151,215,.15);
+}
+
+.icon-blue{
+
+  color:#6db2ff;
+
+  background:
+    rgba(44,123,219,.13);
+}
+
+.icon-cyan{
+
+  color:#67d9ff;
+
+  background:
+    rgba(31,164,213,.12);
+}
+
+.icon-green{
+
+  color:#58e4a0;
+
+  background:
+    rgba(48,192,128,.11);
+}
+
+.icon-purple{
+
+  color:#a783ff;
+
+  background:
+    rgba(126,78,220,.12);
+}
+
+.icon-gold{
+
+  color:#e8c76c;
+
+  background:
+    rgba(213,169,58,.10);
+}
+
+.icon-red{
+
+  color:#ff6d76;
+
+  background:
+    rgba(202,57,69,.11);
+}
+
+
+/* =========================================================
+   MENU TEXT
+========================================================= */
+
+.menu-text{
+
+  min-width:0;
+
+  flex:1;
+}
+
+.menu-title{
+
+  color:#edf5ff;
+
+  font-size:15px;
+
+  line-height:1.25;
+
+  font-weight:700;
+
+  margin-bottom:3px;
+}
+
+.menu-desc{
+
+  color:#839bb6;
+
+  font-size:11px;
+
+  line-height:1.4;
+}
+
+.menu-arrow{
+
+  color:#7292b2;
+
+  font-size:26px;
+
+  font-weight:300;
+}
+
+
+/* =========================================================
+   LEVEL CARD
+========================================================= */
+
+.level-card{
+
+  padding:16px;
+
+  margin-bottom:14px;
+
+  border-radius:21px;
+
+  border:1px solid
+    rgba(54,133,220,.30);
+
+  background:
+    radial-gradient(
+      circle at 8% 10%,
+      rgba(43,125,220,.10),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #0c2948,
+      #08182b
+    );
+}
+
+.level-row{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:13px;
+}
+
+.level-badge{
+
+  width:56px;
+
+  height:63px;
+
+  min-width:56px;
+
+  border-radius:16px;
+
+  display:grid;
+
+  place-items:center;
+
+  text-align:center;
+
+  color:#75b7ff;
+
+  border:1px solid
+    rgba(69,148,232,.38);
+
+  background:
+    rgba(36,116,210,.11);
+}
+
+.level-badge small{
+
+  color:#7897b7;
+
+  font-size:8px;
+
+  font-weight:800;
+}
+
+.level-badge span{
+
+  font-size:22px;
+
+  font-weight:900;
+}
+
+.level-title{
+
+  color:#829bb7;
+
+  font-size:11px;
+
+  margin-bottom:3px;
+}
+
+.level-name{
+
+  color:#f0f6ff;
+
+  font-size:22px;
+
+  font-weight:800;
+}
+
+.level-arrow{
+
+  margin-left:auto;
+
+  color:#5e9dde;
+
+  font-size:29px;
+}
+
+.progress{
+
+  height:8px;
+
+  margin:16px 0 9px;
+
+  border-radius:999px;
+
+  overflow:hidden;
+
+  background:#05101d;
+}
+
+.progress span{
+
+  display:block;
+
+  width:0;
+
+  height:100%;
+
+  border-radius:inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #216ac0,
+      #68b5ff
+    );
+
+  box-shadow:
+    0 0 12px
+    rgba(58,144,232,.45);
+
+  transition:width .35s ease;
+}
+
+.progress-info{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+  color:#7f98b5;
+
+  font-size:10.5px;
+}
+
+
+/* =========================================================
+   ACCOUNT MODAL
+========================================================= */
+
+.account-modal{
+
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:100;
+}
+
+.account-modal.show{
+
+  display:block;
+}
+
+.account-backdrop{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    rgba(1,7,15,.78);
+
+  backdrop-filter:blur(6px);
+}
+
+.account-panel{
+
+  position:absolute;
+
+  left:50%;
+
+  bottom:0;
+
+  transform:translateX(-50%);
+
+  width:min(760px,100%);
+
+  max-height:90vh;
+
+  overflow:auto;
+
+  padding:20px 15px 30px;
+
+  border-radius:28px 28px 0 0;
+
+  border:1px solid
+    rgba(55,139,226,.36);
+
+  border-bottom:0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0d2947,
+      #071526
+    );
+
+  box-shadow:
+    0 -20px 60px
+    rgba(0,0,0,.55);
+}
+
+.account-panel::before{
+
+  content:"";
+
+  display:block;
+
+  width:45px;
+
+  height:4px;
+
+  margin:0 auto 18px;
+
+  border-radius:99px;
+
+  background:#426484;
+}
+
+.account-panel-head{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin-bottom:15px;
+
+  padding:0 3px;
+}
+
+.account-kicker{
+
+  color:#6ea7df;
+
+  font-size:9px;
+
+  letter-spacing:1.5px;
+
+  font-weight:800;
+
+  margin-bottom:4px;
+}
+
+.account-panel-head h2{
+
+  color:#f2f7ff;
+
+  font-size:23px;
+}
+
+.close-account{
+
+  width:39px;
+
+  height:39px;
+
+  border-radius:50%;
+
+  border:1px solid
+    rgba(92,149,211,.22);
+
+  background:#0b1d31;
+
+  color:#dceaff;
+
+  font-size:25px;
+
+  line-height:1;
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   ACCOUNT LEVEL
+========================================================= */
+
+.account-level{
+
+  padding:16px;
+
+  margin-bottom:13px;
+
+  border-radius:20px;
+
+  border:1px solid
+    rgba(59,137,220,.28);
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c2947,
+      #07172a
+    );
+}
+
+
+/* =========================================================
+   MEMBER INFO CARD
+========================================================= */
+
+.member-info-card{
+
+  padding:16px;
+
+  border-radius:20px;
+
+  border:1px solid
+    rgba(71,142,219,.23);
+
+  background:
+    linear-gradient(
+      145deg,
+      #0b223b,
+      #07172a
+    );
+}
+
+.section-title{
+
+  color:#edf5ff;
+
+  font-size:18px;
+
+  font-weight:800;
+
+  margin-bottom:6px;
+}
+
+.info-row{
+
+  min-height:54px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+
+  border-bottom:1px solid
+    rgba(109,157,207,.09);
+}
+
+.info-row:last-child{
+
+  border-bottom:0;
+}
+
+.label{
+
+  color:#829bb6;
+
+  font-size:12px;
+}
+
+.value{
+
+  max-width:65%;
+
+  color:#edf5ff;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  text-align:right;
+
+  word-break:break-word;
+}
+
+.value.blue{
+
+  color:#70b6ff;
+}
+
+
+/* =========================================================
+   ACCOUNT OPEN
+========================================================= */
+
+body.account-open{
+
+  overflow:hidden;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.nav{
+
+  position:fixed;
+
+  z-index:50;
+
+  left:0;
+
+  right:0;
+
+  bottom:0;
+
+  height:73px;
+
+  display:flex;
+
+  justify-content:space-around;
+
+  background:
+    rgba(5,14,25,.97);
+
+  backdrop-filter:blur(17px);
+
+  border-top:1px solid
+    rgba(63,137,220,.18);
+}
+
+.nav a{
+
+  flex:1;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:3px;
+
+  text-decoration:none;
+
+  color:#7188a3;
+
+  font-size:10.5px;
+}
+
+.nav a.active{
+
+  color:#6db4ff;
+}
+
+.nav i{
+
+  display:block;
+
+  font-style:normal;
+
+  font-size:23px;
+
+  line-height:1;
+}
+
+.nav a.active i{
+
+  filter:
+    drop-shadow(
+      0 0 7px
+      rgba(76,157,239,.45)
+    );
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+
+  position:fixed;
+
+  z-index:200;
+
+  left:50%;
+
+  bottom:88px;
+
+  transform:
+    translate(-50%,15px);
+
+  opacity:0;
+
+  pointer-events:none;
+
+  max-width:
+    calc(100% - 30px);
+
+  padding:10px 15px;
+
+  border-radius:12px;
+
+  text-align:center;
+
+  color:#f4f9ff;
+
+  background:#124c85;
+
+  border:1px solid
+    rgba(100,180,255,.35);
+
+  box-shadow:
+    0 9px 30px
+    rgba(0,0,0,.4);
+
+  font-size:12px;
+
+  font-weight:700;
+
+  transition:.25s;
+}
+
+.toast.show{
+
+  opacity:1;
+
+  transform:
+    translate(-50%,0);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:480px){
+
+  .page{
+
+    padding:0 13px;
+  }
+
+  .topbar{
+
+    padding-top:15px;
+  }
+
+  .topbar-title{
+
+    font-size:24px;
+  }
+
+  .profile-head{
+
+    padding-top:10px;
+  }
+
+  .logo-box{
+
+    width:62px;
+
+    height:62px;
+
+    min-width:62px;
+
+    border-radius:18px;
+  }
+
+  .logo-box img{
+
+    width:46px;
+
+    height:46px;
+  }
+
+  .member-info h1{
+
+    font-size:20px;
+  }
+
+  .promo-banner{
+
+    min-height:98px;
+
+    padding:13px 11px;
+
+    gap:9px;
+
+    border-radius:18px;
+  }
+
+  .promo-icon{
+
+    width:44px;
+
+    height:44px;
+
+    min-width:44px;
+
+    border-radius:13px;
+  }
+
+  .promo-title{
+
+    font-size:17px;
+  }
+
+  .promo-desc{
+
+    font-size:9.5px;
+  }
+
+  .promo-btn{
+
+    font-size:9px;
+
+    padding:8px;
+  }
+
+  .menu-item{
+
+    min-height:72px;
+
+    padding:11px 12px;
+  }
+
+  .menu-icon{
+
+    width:43px;
+
+    height:43px;
+
+    min-width:43px;
+  }
+
+  .menu-title{
+
+    font-size:15px;
+  }
+
+  .menu-desc{
+
+    font-size:10.5px;
+  }
+
+  .account-panel{
+
+    max-height:88vh;
+
+    padding-bottom:25px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media(max-width:360px){
+
+  .promo-btn{
+
+    padding:7px;
+
+    font-size:8px;
+  }
+
+  .promo-icon{
+
+    width:40px;
+
+    height:40px;
+
+    min-width:40px;
+  }
+
+  .promo-title{
+
+    font-size:15px;
+  }
+
+  .menu-icon{
+
+    width:40px;
+
+    height:40px;
+
+    min-width:40px;
+  }
+
+  .menu-title{
+
+    font-size:14px;
+  }
+
+  .menu-desc{
+
+    font-size:10px;
+  }
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *{
+
+    transition:none !important;
+
+    scroll-behavior:auto !important;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="topbar">
+
+    <div>
+
+      <div class="topbar-title">
+        Profile
+      </div>
+
+      <div class="topbar-subtitle">
+        Kelola informasi akun MyShort
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       MEMBER HEADER
+  ====================================================== -->
+
+  <section class="profile-head">
+
+    <div class="logo-box">
+
+      <img
+        src="logo.png"
+        alt="MyShort"
+        onerror="this.style.display='none';"
+      >
+
+    </div>
+
+
+    <div class="member-info">
+
+      <div class="member-label">
+        MYSHORT MEMBER
+      </div>
+
+      <h1 id="headerName">
+        Nama Member
+      </h1>
+
+      <p>
+        Member Area
+      </p>
+
+      <span
+        class="status-badge"
+        id="statusBadge"
+      >
+        <span class="status-dot"></span>
+        MEMBER AKTIF
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       PROMO AI MINING
+  ====================================================== -->
+
+  <section class="promo-banner">
+
+    <div class="promo-icon">
+      M
+    </div>
+
+    <div class="promo-copy">
+
+      <div class="promo-top">
+        MYSHORT
+      </div>
+
+      <div class="promo-title">
+        AI-MINING
+      </div>
+
+      <div class="promo-desc">
+        Aktifkan AI-MINING dan klaim reward XMR
+        harian sesuai ketentuan.
+      </div>
+
+    </div>
+
+    <a
+      class="promo-btn"
+      href="mission.html"
+    >
+      Lihat Misi
+      <span>›</span>
+    </a>
+
+  </section>
+
+
+  <!-- =====================================================
+       WELCOME
+  ====================================================== -->
+
+  <section class="welcome">
+
+    <div class="welcome-icon">
+      👋
+    </div>
+
+    <div class="welcome-main">
+
+      <div class="welcome-title">
+        Selamat datang di MyShort
+      </div>
+
+      <div class="welcome-desc">
+        Kelola wallet, referral, rekening,
+        harga XMR dan aktivitas akun Anda.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       MENU
+  ====================================================== -->
+
+  <section class="menu-card">
+
+
+    <!-- INFORMASI AKUN -->
+
+    <button
+      class="menu-item"
+      type="button"
+      onclick="showAccountInfo()"
+    >
+
+      <div class="menu-icon icon-blue">
+        👤
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Informasi Akun
+        </div>
+
+        <div class="menu-desc">
+          Nama, email, UID, HP dan kode referral
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </button>
+
+
+    <!-- WALLET -->
+
+    <a
+      class="menu-item"
+      href="wallet.html"
+    >
+
+      <div class="menu-icon icon-green">
+        💰
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Wallet
+        </div>
+
+        <div class="menu-desc">
+          Saldo, deposit, withdrawal dan transaksi
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </a>
+
+
+    <!-- REFERRAL -->
+
+    <a
+      class="menu-item"
+      href="referral.html"
+    >
+
+      <div class="menu-icon icon-purple">
+        👥
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Referral
+        </div>
+
+        <div class="menu-desc">
+          Ajak teman dan lihat reward referral
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </a>
+
+
+    <!-- HARGA XMR -->
+
+    <a
+      class="menu-item"
+      href="harga.html"
+    >
+
+      <div class="menu-icon icon-cyan">
+        📊
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Harga XMR
+        </div>
+
+        <div class="menu-desc">
+          Lihat nilai XMR dan kalkulator Rupiah
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </a>
+
+
+    <!-- RIWAYAT -->
+
+    <a
+      class="menu-item"
+      href="history.html"
+    >
+
+      <div class="menu-icon icon-blue">
+        📄
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Riwayat Transaksi
+        </div>
+
+        <div class="menu-desc">
+          Lihat aktivitas dan riwayat transaksi akun
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </a>
+
+
+    <!-- UNDUH APLIKASI -->
+
+    <a
+      class="menu-item"
+      href="https://myshortai-mex.github.io"
+      target="_blank"
+      rel="noopener"
+    >
+
+      <div class="menu-icon icon-cyan">
+        📱
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Unduh Aplikasi
+        </div>
+
+        <div class="menu-desc">
+          Download aplikasi MyShort App
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </a>
+
+
+    <!-- KELUAR -->
+
+    <button
+      class="menu-item"
+      type="button"
+      onclick="profileLogout()"
+    >
+
+      <div class="menu-icon icon-red">
+        ↪
+      </div>
+
+      <div class="menu-text">
+
+        <div class="menu-title">
+          Keluar
+        </div>
+
+        <div class="menu-desc">
+          Keluar dari akun MyShort App
+        </div>
+
+      </div>
+
+      <div class="menu-arrow">
+        ›
+      </div>
+
+    </button>
+
+
+  </section>
+
+
+  <!-- =====================================================
+       LEVEL
+  ====================================================== -->
+
+  <section class="level-card">
+
+    <div class="level-row">
+
+      <div class="level-badge">
+
+        <div>
+
+          <small>
+            LEVEL
+          </small>
+
+          <br>
+
+          <span id="levelShort">
+            1
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <div class="level-title">
+          Level saya
+        </div>
+
+        <div
+          class="level-name"
+          id="levelName"
+        >
+          LV 1
+        </div>
+
+      </div>
+
+
+      <div class="level-arrow">
+        ›
+      </div>
+
+    </div>
+
+
+    <div class="progress">
+
+      <span id="xpBar"></span>
+
+    </div>
+
+
+    <div class="progress-info">
+
+      <span id="xpText">
+        0 / 50 XP
+      </span>
+
+      <span id="nextLevel">
+        Menuju LV 2
+      </span>
+
+    </div>
+
+  </section>
+
+
+</div>
+
+
+<!-- =======================================================
+     ACCOUNT MODAL
+======================================================= -->
+
+<div
+  class="account-modal"
+  id="accountModal"
+  aria-hidden="true"
+>
+
+  <div
+    class="account-backdrop"
+    onclick="hideAccountInfo()"
+  ></div>
+
+
+  <section
+    class="account-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="accountTitle"
+  >
+
+
+    <div class="account-panel-head">
+
+      <div>
+
+        <div class="account-kicker">
+          MYSHORT APP
+        </div>
+
+        <h2 id="accountTitle">
+          Informasi Akun
+        </h2>
+
+      </div>
+
+
+      <button
+        class="close-account"
+        type="button"
+        onclick="hideAccountInfo()"
+        aria-label="Tutup"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- LEVEL MODAL -->
+
+    <div class="account-level">
+
+      <div class="level-row">
+
+        <div class="level-badge">
+
+          <div>
+
+            <small>
+              LEVEL
+            </small>
+
+            <br>
+
+            <span id="levelShortModal">
+              1
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <div class="level-title">
+            Level saya
+          </div>
+
+          <div
+            class="level-name"
+            id="levelNameModal"
+          >
+            LV 1
+          </div>
+
+        </div>
+
+
+        <div class="level-arrow">
+          ›
+        </div>
+
+      </div>
+
+
+      <div class="progress">
+
+        <span id="xpBarModal"></span>
+
+      </div>
+
+
+      <div class="progress-info">
+
+        <span id="xpTextModal">
+          0 / 50 XP
+        </span>
+
+        <span id="nextLevelModal">
+          Menuju LV 2
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- MEMBER INFO -->
+
+    <div class="member-info-card">
+
+      <div class="section-title">
+        Informasi Member
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          Nama
+        </span>
+
+        <span
+          class="value"
+          id="nama"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          UID Member
+        </span>
+
+        <span
+          class="value"
+          id="uid"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          Email
+        </span>
+
+        <span
+          class="value"
+          id="email"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          Nomor HP
+        </span>
+
+        <span
+          class="value"
+          id="phone"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          Kode Referral
+        </span>
+
+        <span
+          class="value blue"
+          id="referral"
+        >
+          —
+        </span>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          Status Member
+        </span>
+
+        <span
+          class="value blue"
+          id="status"
+        >
+          Aktif
+        </span>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <span class="label">
+          Level
+        </span>
+
+        <span
+          class="value"
+          id="level"
+        >
+          LV 1
+        </span>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+</div>
+
+
+<!-- =======================================================
+     BOTTOM NAV
+======================================================= -->
+
+<nav class="nav">
+
+  <a href="dashboard.html">
+
+    <i>⌂</i>
+
+    Home
+
+  </a>
+
+
+  <a href="mission.html">
+
+    <i>◎</i>
+
+    Mission
+
+  </a>
+
+
+  <a href="trading.html">
+
+    <i>↗</i>
+
+    Trading
+
+  </a>
+
+
+  <a
+    class="active"
+    href="profile.html"
+  >
+
+    <i>♙</i>
+
+    Profile
+
+  </a>
+
+</nav>
+
+
+<!-- =======================================================
+     TOAST
+======================================================= -->
+
+<div
+  class="toast"
+  id="toast"
+>
+  Profil berhasil dimuat
+</div>
+
+
+<!-- =======================================================
+     SUPABASE
+======================================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   SUPABASE CLIENT
+========================================================= */
+
+const sb =
+  window.sb ||
+  window.supabaseClient ||
+  window.supabaseClientInstance;
+
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+function $(id){
+
+  return document.getElementById(id);
+
+}
+
+
+/* =========================================================
+   DATA
+========================================================= */
+
+let currentUser = null;
+
+let currentProfile = null;
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function toastMsg(message){
+
+  const el = $("toast");
+
+  if(!el){
+
+    alert(String(message ?? ""));
+
+    return;
+  }
+
+  el.textContent =
+    String(message ?? "");
+
+  el.classList.add("show");
+
+  clearTimeout(
+    window.__myshortProfileToast
+  );
+
+  window.__myshortProfileToast =
+    setTimeout(
+      function(){
+
+        el.classList.remove("show");
+
+      },
+      3000
+    );
+}
+
+
+/* =========================================================
+   SET TEXT
+========================================================= */
+
+function setText(
+  id,
+  value,
+  fallback = "—"
+){
+
+  const el = $(id);
+
+  if(!el){
+    return;
+  }
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === ""
+  ){
+
+    el.textContent =
+      fallback;
+
+    return;
+  }
+
+  el.textContent =
+    String(value);
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function statusText(value){
+
+  if(value === true){
+
+    return "Aktif";
+  }
+
+  if(value === false){
+
+    return "Tidak Aktif";
+  }
+
+  const safe =
+    String(value ?? "").trim();
+
+  if(!safe){
+
+    return "Aktif";
+  }
+
+  const lower =
+    safe.toLowerCase();
+
+  if(
+    lower === "active" ||
+    lower === "aktif"
+  ){
+
+    return "Aktif";
+  }
+
+  if(
+    lower === "inactive" ||
+    lower === "tidak aktif"
+  ){
+
+    return "Tidak Aktif";
+  }
+
+  return (
+    safe.charAt(0).toUpperCase() +
+    safe.slice(1)
+  );
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function renderStatusBadge(status){
+
+  const badge =
+    $("statusBadge");
+
+  if(!badge){
+    return;
+  }
+
+  const safe =
+    String(status ?? "Aktif");
+
+  const upper =
+    safe.toUpperCase();
+
+  if(
+    upper === "AKTIF" ||
+    upper === "ACTIVE"
+  ){
+
+    badge.innerHTML =
+      '<span class="status-dot"></span>MEMBER AKTIF';
+
+  }else{
+
+    badge.innerHTML =
+      '<span class="status-dot"></span>' +
+      upper;
+  }
+}
+
+
+/* =========================================================
+   RENDER PROFILE
+========================================================= */
+
+function renderProfile(){
+
+  try{
+
+    const p =
+      currentProfile || {};
+
+    const u =
+      currentUser || {};
+
+
+    /* NAMA */
+
+    const name =
+      p.full_name ||
+      p.username ||
+      u.user_metadata?.full_name ||
+      (
+        u.email
+          ? u.email.split("@")[0]
+          : ""
+      ) ||
+      "Member";
+
+
+    /* EMAIL */
+
+    const email =
+      p.email ||
+      u.email ||
+      "—";
+
+
+    /* PHONE */
+
+    const phone =
+      p.phone ||
+      u.user_metadata?.phone ||
+      "—";
+
+
+    /* REFERRAL */
+
+    const referral =
+      p.referral_code ||
+      "—";
+
+
+    /* STATUS */
+
+    const status =
+      statusText(
+        p.status
+      );
+
+
+    /* LEVEL */
+
+    let level =
+      Number(
+        p.level ?? 1
+      );
+
+    if(!Number.isFinite(level)){
+
+      level = 1;
+    }
+
+    level =
+      Math.max(
+        1,
+        level
+      );
+
+
+    /* XP */
+
+    let xp =
+      Number(
+        p.xp ?? 0
+      );
+
+    if(!Number.isFinite(xp)){
+
+      xp = 0;
+    }
+
+    xp =
+      Math.max(
+        0,
+        xp
+      );
+
+
+    /* XP */
+
+    const xpNeed =
+      50;
+
+    const percent =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          (xp / xpNeed) * 100
+        )
+      );
+
+
+    /* HEADER */
+
+    setText(
+      "headerName",
+      name,
+      "Member"
+    );
+
+
+    /* ACCOUNT */
+
+    setText(
+      "nama",
+      name
+    );
+
+    setText(
+      "uid",
+      p.uid ||
+      p.username ||
+      u.id ||
+      "—"
+    );
+
+    setText(
+      "email",
+      email
+    );
+
+    setText(
+      "phone",
+      phone
+    );
+
+    setText(
+      "referral",
+      referral
+    );
+
+    setText(
+      "status",
+      status,
+      "Aktif"
+    );
+
+    setText(
+      "level",
+      "LV " + level
+    );
+
+
+    /* LEVEL CARD */
+
+    setText(
+      "levelShort",
+      level
+    );
+
+    setText(
+      "levelName",
+      "LV " + level
+    );
+
+    setText(
+      "xpText",
+      xp + " / " + xpNeed + " XP"
+    );
+
+    setText(
+      "nextLevel",
+      "Menuju LV " + (level + 1)
+    );
+
+
+    /* XP BAR */
+
+    const bar =
+      $("xpBar");
+
+    if(bar){
+
+      bar.style.width =
+        percent + "%";
+    }
+
+
+    /* MODAL LEVEL */
+
+    setText(
+      "levelShortModal",
+      level
+    );
+
+    setText(
+      "levelNameModal",
+      "LV " + level
+    );
+
+    setText(
+      "xpTextModal",
+      xp + " / " + xpNeed + " XP"
+    );
+
+    setText(
+      "nextLevelModal",
+      "Menuju LV " + (level + 1)
+    );
+
+
+    const modalBar =
+      $("xpBarModal");
+
+    if(modalBar){
+
+      modalBar.style.width =
+        percent + "%";
+    }
+
+
+    /* STATUS */
+
+    renderStatusBadge(
+      status
+    );
+
+
+    /* TITLE */
+
+    document.title =
+      name + " - MyShort";
+
+
+  }catch(error){
+
+    console.error(
+      "[MyShort Profile Render]",
+      error
+    );
+
+    toastMsg(
+      "Data profil ditampilkan dengan data yang tersedia."
+    );
+  }
+}
+
+
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
+
+async function initProfile(){
+
+  try{
+
+    if(
+      !sb ||
+      !sb.auth
+    ){
+
+      throw new Error(
+        "Supabase client tidak ditemukan. Periksa supabase-config.js."
+      );
+    }
+
+
+    /* SESSION */
+
+    const sessionResult =
+      await sb.auth.getSession();
+
+    if(sessionResult.error){
+
+      throw sessionResult.error;
+    }
+
+    const session =
+      sessionResult
+        ?.data
+        ?.session;
+
+
+    if(
+      !session ||
+      !session.user
+    ){
+
+      toastMsg(
+        "Sesi login tidak ditemukan. Silakan login terlebih dahulu."
+      );
+
+      setTimeout(
+        function(){
+
+          window.location.href =
+            "index.html";
+
+        },
+        1600
+      );
+
+      return;
+    }
+
+
+    currentUser =
+      session.user;
+
+
+    /* PROFILE */
+
+    const result =
+      await sb
+        .from("profiles")
+        .select(
+          "id,uid,username,full_name,email,phone,referral_code,status,level,xp,role"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+    if(result.error){
+
+      throw result.error;
+    }
+
+
+    if(!result.data){
+
+      throw new Error(
+        "Data member belum ditemukan di tabel profiles."
+      );
+    }
+
+
+    currentProfile =
+      result.data;
+
+
+    renderProfile();
+
+
+  }catch(error){
+
+    console.error(
+      "[MyShort Profile]",
+      error
+    );
+
+    toastMsg(
+      "Gagal memuat profil: " +
+      String(
+        error?.message ||
+        "Kesalahan tidak diketahui"
+      )
+    );
+  }
+}
+
+
+/* =========================================================
+   SHOW ACCOUNT
+========================================================= */
+
+function showAccountInfo(){
+
+  const modal =
+    $("accountModal");
+
+  if(!modal){
+    return;
+  }
+
+  modal.classList.add(
+    "show"
+  );
+
+  modal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  document.body.classList.add(
+    "account-open"
+  );
+}
+
+
+/* =========================================================
+   HIDE ACCOUNT
+========================================================= */
+
+function hideAccountInfo(){
+
+  const modal =
+    $("accountModal");
+
+  if(!modal){
+    return;
+  }
+
+  modal.classList.remove(
+    "show"
+  );
+
+  modal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  document.body.classList.remove(
+    "account-open"
+  );
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function profileLogout(){
+
+  const ok =
+    confirm(
+      "Keluar dari akun MyShort App?"
+    );
+
+  if(!ok){
+    return;
+  }
+
+
+  try{
+
+    if(
+      !sb ||
+      !sb.auth
+    ){
+
+      window.location.href =
+        "index.html";
+
+      return;
+    }
+
+
+    const result =
+      await sb.auth.signOut();
+
+
+    if(result.error){
+
+      throw result.error;
+    }
+
+
+    window.location.href =
+      "index.html";
+
+
+  }catch(error){
+
+    console.error(
+      "[MyShort Logout]",
+      error
+    );
+
+    toastMsg(
+      String(
+        error?.message ||
+        "Gagal keluar dari akun."
+      )
+    );
+  }
+}
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(
+      event.key === "Escape"
+    ){
+
+      hideAccountInfo();
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    initProfile();
+
+  }
+);
+
+</script>
+
+
+</body>
+</html>
